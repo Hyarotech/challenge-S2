@@ -3,7 +3,7 @@ name: deploy to preprod
 on:
   push:
     branches:
-      - feature/ci_cd
+      - develop
 
 
 jobs:
