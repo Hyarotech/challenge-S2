@@ -22,12 +22,12 @@ jobs:
           KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
           source: "."
-          target: "${{ secrets.DEV_TARGET }}"
+          target: "/root/challenge/preprod"
 
       - name: restart docker
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd "${{ secrets.DEV_TARGET }}" && docker compose -f docker-compose.dev.yml down && docker compose -f docker-compose.dev.yml up -d --build
+          command: cd "/root/challenge/preprod" && docker compose -f docker-compose.dev.yml down && docker compose -f docker-compose.dev.yml up -d --build
           host: ${{ secrets.SSH_SERVER }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
