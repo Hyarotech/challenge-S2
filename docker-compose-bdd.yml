@@ -20,4 +20,4 @@ services:
 networks:
   default:
     external:
-      name: challenge_s2
+      name: challenge-s2
