@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: C9ERGFWJs2XjDM
 
   adminer:
-    image: adminer
+    build: ./.docker/adminer
     restart: always
     ports:
       - 6001:8080
