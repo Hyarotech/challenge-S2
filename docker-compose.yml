@@ -11,18 +11,7 @@ services:
      - ./server/apache2.conf:/etc/apache2/apache2.conf
      - ./server/php.ini:/usr/local/etc/php/php.ini
 
-  database:
-    image: postgres
-    restart: always
-    volumes:
-      - ./.volumes/prod:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: esgi
-      POSTGRES_USER: esgi
-      POSTGRES_PASSWORD: grgsDFGHFopfj
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 6003:8080
+networks:
+  default:
+    external:
+      name: challenge_s2
