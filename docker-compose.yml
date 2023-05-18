@@ -2,27 +2,24 @@ version: '3'
 services:
   web:
     build: site
-    container_name: challenge_s2
     ports :
-     - "6002:80"
+     - 6002:80
     volumes:
      - ./www:/var/www/html/
      - ./server/000-default.conf:/etc/apache2/sites-available/000-default.conf
      - ./server/apache2.conf:/etc/apache2/apache2.conf
      - ./server/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - composer
 
-  database:
-    image: postgres
-    restart: always
+  composer:
+    build: ./.docker/composer
     volumes:
-      - ./.volumes/prod:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: esgi
-      POSTGRES_USER: esgi
-      POSTGRES_PASSWORD: grgsDFGHFopfj
+      - ./www:/app
+    command: install --optimize-autoloader
+    restart: "no"
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 6003:8080
+networks:
+  default:
+    external:
+      name: challenge-s2
