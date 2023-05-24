@@ -1,23 +1,29 @@
 /:
   controller: Main
   action: index
+  name: home
 
 /dashboard:
   controller: Main
   action: dashboard
+  name: dashboard
 
 /contact:
   controller: Main
   action: contact
+  name: contact
 
 /login:
   controller: Security
   action: login
+  name: login
 
 /logout:
   controller: Security
   action: logout
+  name: logout
 
 /register:
   controller: Security
   action: register
+  name: register

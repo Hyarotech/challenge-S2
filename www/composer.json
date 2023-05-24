@@ -1,0 +1,16 @@
+{
+  "name": "esgi/challenge",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "App\\": "./app",
+      "Database\\": "./database",
+      "Tests\\": "./tests",
+      "Core\\": "./core"
+    }
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^6.2"
+  }
+}
