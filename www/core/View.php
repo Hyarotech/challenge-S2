@@ -1,5 +1,5 @@
 <?php
-namespace App\Core;
+namespace Core;
 class View {
 
     private String $view;
@@ -19,7 +19,7 @@ class View {
 
     public function setView(String $view): void
     {
-        $view = "Views/".trim($view).".view.php";
+        $view = ROOT."/app/Views/".trim($view).".view.php";
         if(!file_exists($view)){
             die("La vue ".$view." n'existe pas");
         }
@@ -27,7 +27,7 @@ class View {
     }
     public function setTemplate(String $template): void
     {
-        $template = "Views/".trim($template).".tpl.php";
+        $template = ROOT."/app/Views/".trim($template).".tpl.php";
         if(!file_exists($template)){
             die("Le template ".$template." n'existe pas");
         }
@@ -36,7 +36,7 @@ class View {
 
     public function modal($name, $config):void
     {
-        include "Views/Modals/".$name.".php";
+        include ROOT."/app/Views/Modals/".$name.".php";
     }
 
     public function __destruct(){

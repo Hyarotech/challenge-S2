@@ -1,6 +1,6 @@
 <?php
 namespace App\Models;
-use App\Core\Sql;
+use Core\Sql;
 
 class User extends Sql {
 

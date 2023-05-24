@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers;
-use App\Core\View;
+use Core\View;
 
 class Main{
     public function index(){
