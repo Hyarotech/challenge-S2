@@ -142,6 +142,22 @@ class User extends Sql {
         return $this->date_updated;
     }
 
-
-
+    public function login(): void
+    {
+        $sql = "SELECT * FROM public.user WHERE email = :email";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":email", $this->getEmail());
+        $stmt->execute();
+        $user = $stmt->fetch();
+        if ($user) {
+            if (password_verify($this->getPassword(), $user["password"])) {
+                $_SESSION["user"] = $user;
+                header("Location: /");
+            } else {
+                die("Erreur de mot de passe");
+            }
+        } else {
+            die("Erreur d'email");
+        }
+    }
 }

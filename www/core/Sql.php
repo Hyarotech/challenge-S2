@@ -3,13 +3,13 @@ namespace Core;
 
 abstract class Sql{
 
-    private $pdo;
+    protected $pdo;
     private $table;
 
     public function __construct(){
         //Mettre en place un SINGLETON
         try{
-            $this->pdo = new \PDO("pgsql:host=database;port=5432;dbname=esgi" , "esgi" , "Test1234" );
+            $this->pdo = new \PDO("pgsql:host=postgres.hyarotech.com;port=54320;dbname=challenge-dev" , "esgi" , "C9ERGFWJs2XjDM" );
         }catch(\Exception $e){
             die("Erreur SQL : ".$e->getMessage());
         }

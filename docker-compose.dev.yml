@@ -2,6 +2,7 @@ version: '3'
 services:
   web:
     build: site
+    restart: "always"
     ports :
      - 6005:80
     volumes:

@@ -4,6 +4,7 @@ namespace App\Forms\Abstract;
 abstract class AForm
 {
     abstract public function getConfig(): array;
+    abstract public function getRules(): array;
     public function isSubmit(): bool
     {
         $data = ($this->getMethod() == "post")?$_POST:$_GET;

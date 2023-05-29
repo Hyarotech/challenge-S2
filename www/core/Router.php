@@ -7,21 +7,22 @@ use JetBrains\PhpStorm\NoReturn;
 class Router
 {
     private array $routes;
-    private array $indexedRoutes;
+    private array $indexedByNameRoutes;
 
     public function __construct()
     {
         if (!file_exists(__DIR__ . "/../routes.yml")) {
             die("Le fichier de routing n'existe pas");
         }
-        $this->routes = yaml_parse_file(__DIR__ . "/../routes.yml");
-        $this->indexRoutes();
+        $this->setRoutes();
     }
 
-    public function indexRoutes(): void
+    public function setRoutes(): void
     {
-        foreach ($this->routes as $url => $route) {
-            $this->indexedRoutes[$route['name']] = $url;
+        $data = yaml_parse_file(__DIR__ . "/../routes.yml");
+        foreach ($data as $url => $route) {
+            $this->routes[$url] = $route;
+            $this->indexedByNameRoutes[$route['name']] = $url;
         }
     }
 
@@ -33,7 +34,7 @@ class Router
         return false;
     }
 
-    public function getRoutes()
+    public function getRoutes(): array
     {
         return $this->routes;
     }
@@ -64,16 +65,16 @@ class Router
 
     public function getRouteByName(string $name): array|bool
     {
-        if (isset($this->indexedRoutes[$name])) {
-            return $this->getRoute($this->indexedRoutes[$name]);
+        if (isset($this->indexedByNameRoutes[$name])) {
+            return $this->getRoute($this->indexedByNameRoutes[$name]);
         }
         return false;
     }
 
     public function getUrlByName(string $name)
     {
-        if (isset($this->indexedRoutes[$name])) {
-            return $this->indexedRoutes[$name];
+        if (isset($this->indexedByNameRoutes[$name])) {
+            return $this->indexedByNameRoutes[$name];
         }
         return false;
     }
@@ -93,10 +94,11 @@ class Router
         $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
         $uri = (empty($uri)) ? "/" : $uri;
+        $method = $_SERVER["REQUEST_METHOD"];
 
-// Check if the requested URI is for an asset file
+        // Check if the requested URI is for an asset file
         $extension = pathinfo($uri, PATHINFO_EXTENSION);
-        $allowedExtensions = ['css', 'js', 'png', 'jpg', 'jpeg', 'gif'];
+        $allowedExtensions = ['css', 'js', 'png', 'jpg', 'jpeg', 'gif','svg'];
         if (in_array($extension, $allowedExtensions)) {
             // Serve the asset file directly
             $filePath = __DIR__ . '/public/assets' . $uri; // Assuming the assets are located in the 'public' directory
@@ -108,15 +110,15 @@ class Router
                 die("Asset not found");
             }
         }
-//Dans le cas ou nous sommes à la racine $uri sera vide du coup je remets /
+        //Dans le cas ou nous sommes à la racine $uri sera vide du coup je remets /
         $uri = (empty($uri)) ? "/" : $uri;
         $route = $this->getRoute($uri);
-        if (!$route) {
+        if (!$route || $route['method'] !== $method) {
             die("Page 404");
         }
         $controller = "\\App\\Controllers\\" . $route['controller'];
         if (!class_exists($controller)) {
-            die("La class " . $controller . " n'existe pas");
+            die("La classe " . $controller . " n'existe pas");
         }
         $action = $route['action'];
         $objet = new $controller();

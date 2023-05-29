@@ -1,5 +1,5 @@
 <?php
-namespace App\Forms;
+namespace App\Forms\Security;
 
 use App\Forms\Abstract\AForm;
 
@@ -57,4 +57,8 @@ class AddUser extends AForm {
         ];
     }
 
+    public function getRules(): array
+    {
+        return [];
+    }
 }

@@ -10,3 +10,5 @@ www/vendor
 
 .volumes
 
+www/node_modules
+

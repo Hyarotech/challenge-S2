@@ -1,16 +1,15 @@
 <?php
+
 namespace App\Controllers;
-use App\Forms\AddUser;
+
+use App\Forms\Security\AddUser;
+use App\Forms\Security\LoginForm;
+use App\Models\User;
 use Core\Verificator;
 use Core\View;
 
-class Security{
-
-    public function login(): void
-    {
-        echo "Login";
-    }
-
+class Security
+{
     public function register(): void
     {
         $form = new AddUser();
@@ -18,11 +17,11 @@ class Security{
         $view->assign('form', $form->getConfig());
 
 
-        if($form->isSubmit()){
+        if ($form->isSubmit()) {
             $errors = Verificator::form($form->getConfig(), $_POST);
-            if(empty($errors)){
+            if (empty($errors)) {
                 echo "Insertion en BDD";
-            }else{
+            } else {
                 $view->assign('errors', $errors);
             }
         }
@@ -32,6 +31,26 @@ class Security{
         $user->setEmail("test@gmail.com");
         $user->save();
         */
+    }
+
+    public function login(): void
+    {
+        $view = new View("Auth/login", "front");
+    }
+
+    public function handleLogin()
+    {
+        $loginForm = new LoginForm();
+
+        $errors = Verificator::form($loginForm->getConfig(), $_POST);
+        if (empty($errors)) {
+            $user = new User();
+            $user->setEmail($_POST["email"]);
+            $user->setPassword($_POST["password"]);
+            $user->login();
+        } else{
+            die("Erreur");
+        }
     }
 
     public function logout(): void

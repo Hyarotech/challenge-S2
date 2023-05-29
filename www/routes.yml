@@ -2,28 +2,41 @@
   controller: Main
   action: index
   name: home
+  method: GET
 
 /dashboard:
   controller: Main
   action: dashboard
   name: dashboard
+  method: GET
 
 /contact:
   controller: Main
   action: contact
   name: contact
+  method: GET
 
 /login:
   controller: Security
   action: login
-  name: login
+  name: security.login
+  method: GET
+
+
+/login/handle:
+  controller: Security
+  action: handleLogin
+  name: security.login.handle
+  method: POST
 
 /logout:
   controller: Security
   action: logout
   name: logout
+  method: GET
 
 /register:
   controller: Security
   action: register
   name: register
+  method: GET
