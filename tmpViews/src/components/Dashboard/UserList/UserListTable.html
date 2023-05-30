@@ -1,0 +1,30 @@
+<div class="overflow-x-auto w-full">
+  <UserListTableActions w3-include-html="/src/components/Dashboard/UserList/UserListTableActions.html"></UserListTableActions>  
+  
+  <table class="table w-full">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th>
+            <label>
+              <input type="checkbox" class="checkbox" />
+            </label>
+          </th>          
+          <th>E-mail</th>
+          <th>Nom complet</th>
+          <th>Role</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr w3-include-html="/src/components/Dashboard/UserList/UserListTableRow.html"></tr>
+        <tr w3-include-html="/src/components/Dashboard/UserList/UserListTableRow.html"></tr>
+
+      </tbody>
+   
+      
+    </table>
+  </div>
+  <Pagination w3-include-html="/src/components/Pagination.html"></Pagination>
+  

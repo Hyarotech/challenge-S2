@@ -1,0 +1,32 @@
+En vrai pour cette note j'avais la flemme d'utiliser trello (chu un mec à l'ancienne oe oe ROH2FF foolek empire la puissance) et c'est plus simple
+
+voici mon avis sur le déroulé du projet
+
+Features à faire en URGENCE:
+- Routage & Views fonctionnel côté backend (bah oe logique)
+- Routage & View côté frontEnd
+
+
+Features à faire juste après les urgentes : 
+- Gestion du menu
+- Gestion des Utilisateurs (toutes les fonctionnalité en dépendent)
+- Gestion des permissions (car role en dépend)
+
+
+Feature autre: 
+- Role (dépend de permissions)
+- Commentaires (on doit affilier un commentaire à un user et une page)
+- Editeur de page
+- Statistiques (pour le dashboard)
+
+
+Précisions : 
+-----------------
+
+Les Feature à faire en URGENCE le sont car elle dictent l'environnement qui fait intéragir nos différentes features donc sans on peut pas tester lol
+
+Les Feature "juste après les urgentes" doivent être faite car les autres en dépendent
+
+Les Features "Autres" peuvent être faite quasiment en autonomie sans devoir attendre les autres pour les rendre fonctionnelles. Il suffira juste de discuter avec tout le monde avant de les commencer.
+
+PS: Evidemment c'est pour avoir un premier aperçu global pour fournir une trame rien n'est détaillé
