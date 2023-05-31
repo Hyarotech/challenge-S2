@@ -26,10 +26,40 @@
         <Login w3-include-html="src/pages/Login.html"></Login>
         <Signup w3-include-html="src/pages/Signup.html"></Signup>
         <ForgotPassword w3-include-html="src/pages/ForgotPassword.html"></ForgotPassword>
-      -->    
+        <DashboardRole w3-include-html="/src/pages/Dashboard/dashboard-role.html"></DashboardRole>
 
-      <PermissionTable w3-include-html="/src/components/Permission/PermissionTable.html"></PermissionTable>
+      MODAL
+      --------------------------------
+      <RoleUser w3-include-html="/src/components/Dashboard/Role/RoleUser.html"></RoleUser>
+  
+    -->    
+
+
+      <div class = "flex h-auto">
+        <Sider w3-include-html="src/components/DashboardSideBar/DashboardSideBar.html"></Sider>
+        <Navbar w3-include-html="/src/components/Navbar.html"></Navbar>
+        <div class = "w-full mt-[100px] p-4">
+          <DashboardRole w3-include-html="/src/pages/Dashboard/dashboard-role.html"></DashboardRole>
+          <RoleUser w3-include-html="/src/components/Dashboard/Role/RoleUser.html"></RoleUser>
+
+
+        </div>
+
+      </div>
+
       <Footer w3-include-html="/src/components/Footer.html"></Footer>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
+<script>
+    
+
+  /** UNIQUEMENT POUR DEMO NE COMPTE PAS POUR L'INTEGRATION **/
+  setTimeout(() => {
+      $('.mobileToggleNav').on('click',function(){
+          $('.testNav0').toggleClass('hidden');
+          $('.testNav0').toggleClass('flex');
+      });
+  }, 1000);
+
+</script>
