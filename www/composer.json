@@ -15,6 +15,7 @@
   },
   "require": {
     "ext-fileinfo": "*",
-    "ext-yaml": "*"
+    "ext-yaml": "*",
+    "ext-pdo": "*"
   }
 }
