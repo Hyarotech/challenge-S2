@@ -38,5 +38,11 @@
 /register:
   controller: Security
   action: register
-  name: register
+  name: security.register
   method: GET
+
+/register/handle:
+  controller: Security
+  action: handleRegister
+  name: security.register.handle
+  method: POST

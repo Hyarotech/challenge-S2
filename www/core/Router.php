@@ -17,6 +17,16 @@ class Router
         $this->setRoutes();
     }
 
+    #[NoReturn] public static function redirectTo(string $routeName): void
+    {
+        $url = self::generateURl($routeName);
+        if (!$url) {
+            die("La route " . $routeName . " n'existe pas");
+        }
+        header("Location: " . $url);
+        exit;
+    }
+
     public function setRoutes(): void
     {
         $data = yaml_parse_file(__DIR__ . "/../routes.yml");

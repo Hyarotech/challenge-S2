@@ -4,7 +4,7 @@ namespace Core;
 abstract class Sql{
 
     protected $pdo;
-    private $table;
+    protected $table;
 
     public function __construct(){
         //Mettre en place un SINGLETON
@@ -15,7 +15,7 @@ abstract class Sql{
         }
         $classExploded = explode("\\", get_called_class());
         $this->table = end($classExploded);
-        $this->table = "esgi_".$this->table;
+        $this->table = "public.".$this->table;
     }
 
     public function save(): void

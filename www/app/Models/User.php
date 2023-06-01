@@ -7,12 +7,20 @@ class User extends Sql {
     protected Int $id = 0;
     protected String $firstname;
     protected String $lastname;
-    protected String $country;
     protected String $email;
     protected String $password;
     protected Int $status = 0;
     protected $date_inserted;
     protected $date_updated;
+
+    public function alreadyExist(string $email)
+    {
+        $sql = "SELECT * FROM public.user WHERE email = :email";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":email", $email);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 
     /**
      * @return int
@@ -62,21 +70,6 @@ class User extends Sql {
         $this->lastname = strtoupper(trim($lastname));
     }
 
-    /**
-     * @return String
-     */
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    /**
-     * @param String $country
-     */
-    public function setCountry(string $country): void
-    {
-        $this->country = strtoupper(trim($country));
-    }
 
     /**
      * @return String
@@ -107,7 +100,7 @@ class User extends Sql {
      */
     public function setPassword(string $password): void
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $password;
     }
 
     /**
@@ -151,8 +144,7 @@ class User extends Sql {
         $user = $stmt->fetch();
         if ($user) {
             if (password_verify($this->getPassword(), $user["password"])) {
-                $_SESSION["user"] = $user;
-                header("Location: /");
+                die("Connecté");
             } else {
                 die("Erreur de mot de passe");
             }

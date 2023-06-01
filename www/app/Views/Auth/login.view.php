@@ -7,6 +7,7 @@
                     <span class="text-base label-text">Email</span>
                 </label>
                 <input id="email" name="email" type="text" placeholder="xyz@example.com" class="w-full input input-bordered" />
+                <p class="text-xs text-error mt-2"><?=\Core\Session::getError("email")?></p>
             </div>
             <div>
                 <label class="label" for="password">
@@ -14,11 +15,18 @@
                 </label>
                 <input id="password" name="password" type="password" placeholder="**********"
                        class="w-full input input-bordered" />
+                <p class="text-xs text-error mt-2"><?=\Core\Session::getError("password")?></p>
             </div>
             <a href="#" class="text-xs hover:text-primary">mot de passe oublié?</a>
             <div>
                 <button class="btn btn-block btn-primary">Se connecter</button>
             </div>
         </form>
+        <div class="divider">
+            Vous n'avez pas de compte?
+        </div>
+        <div>
+            <a href="<?= \Core\Router::generateURl("security.register")?>" class="btn btn-accent btn-block">S'inscrire</a>
+        </div>
     </div>
 </div>

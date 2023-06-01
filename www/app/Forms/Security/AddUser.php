@@ -1,64 +1,47 @@
 <?php
+
 namespace App\Forms\Security;
 
 use App\Forms\Abstract\AForm;
 
-class AddUser extends AForm {
+class AddUser extends AForm
+{
 
-    protected $method = "POST";
+    protected string $method = "POST";
 
     public function getConfig(): array
     {
         return [
-            "config"=>[
-                "method"=>$this->getMethod(),
-                "action"=>"",
-                "enctype"=>"",
-                "submit"=>"S'inscrire",
-                "cancel"=>"Annuler"
+            "config" => [
+                "method" => $this->getMethod(),
             ],
-            "inputs" =>[
-                "firstname"=>[
-                        "type"=>"text",
-                        "placeholder"=>"Votre prénom",
-                        "min"=>2,
-                        "max"=>60,
-                        "error"=>"Votre prénom doit faire entre 2 et 60 caractères"
-                    ],
-                "lastname"=>[
-                    "type"=>"text",
-                    "placeholder"=>"Votre nom",
-                    "min"=>2,
-                    "max"=>120,
-                    "error"=>"Votre nom doit faire entre 2 et 120 caractères"
+            "inputs" => [
+                "firstname" => [
+                    "rules"=>["required","min:2","max:120"],
+                    "error" => "Votre prénom doit faire entre 2 et 120 caractères"
                 ],
-                "email"=>[
-                    "type"=>"email",
-                    "placeholder"=>"Votre email",
-                    "error"=>"Le format de votre email est incorrect"
+                "lastname" => [
+                    "rules"=>["required","min:2","max:120"],
+                    "error" => "Votre nom doit faire entre 2 et 120 caractères"
                 ],
-                "pwd"=>[
-                    "type"=>"password",
-                    "placeholder"=>"Votre mot de passe",
-                    "error"=>"Votre mot de passe est incorrect"
+                "email" => [
+                    "rules"=>["required","email"],
+                    "error" => "Le format de votre email est incorrect"
                 ],
-                "pwdConfirm"=>[
-                    "type"=>"password",
-                    "placeholder"=>"Confirmation",
-                    "confirm"=>"pwd",
-                    "error"=>"Mot de passe de confirmation incorrect"
+                "password" => [
+                    "rules"=>["required","min:8","regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/"],
+                    "error" => "Votre mot de passe est incorrect"
                 ],
-                "country"=>[
-                    "type"=>"select",
-                    "options"=>["","FR", "PL"],
-                    "error"=>"Pays incorrect"
-                ]
+                "confirm_password" => [
+                    "confirm" => "password",
+                    "rules"=> ["required"],
+                    "error" => "Mot de passe de confirmation incorrect"
+                ],
+                "policy" => [
+                    "rules"=>["required"],
+                    "error" => "Vous devez accepter les conditions d'utilisation"
+                ],
             ]
         ];
-    }
-
-    public function getRules(): array
-    {
-        return [];
     }
 }

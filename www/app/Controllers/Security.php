@@ -5,51 +5,57 @@ namespace App\Controllers;
 use App\Forms\Security\AddUser;
 use App\Forms\Security\LoginForm;
 use App\Models\User;
+use Core\Router;
+use Core\Session;
 use Core\Verificator;
 use Core\View;
 
 class Security
 {
-    public function register(): void
+    public function register(): View
+    {
+        return new View("Auth/register", "front");
+    }
+
+    public function handleRegister(): void
     {
         $form = new AddUser();
-        $view = new View("Auth/register", "front");
-        $view->assign('form', $form->getConfig());
-
-
-        if ($form->isSubmit()) {
-            $errors = Verificator::form($form->getConfig(), $_POST);
-            if (empty($errors)) {
-                echo "Insertion en BDD";
-            } else {
-                $view->assign('errors', $errors);
+        $errors = Verificator::form($form->getConfig(), $_POST);
+        Session::set("errors", $errors);
+        if (empty($errors)) {
+            $user = new User();
+            if($user->alreadyExist($_POST["email"])){
+                die("Already exist");
             }
+            $user->setEmail($_POST["email"]);
+            $user->setFirstname($_POST["firstname"]);
+            $user->setLastname($_POST["lastname"]);
+            $user->setPassword(password_hash($_POST["password"], PASSWORD_DEFAULT));
+            $user->save();
+        } else{
+            Router::redirectTo("security.register");
         }
-        /*
-        $user = new User();
-        $user->setId(2);
-        $user->setEmail("test@gmail.com");
-        $user->save();
-        */
     }
 
-    public function login(): void
+    public function login(): View
     {
-        $view = new View("Auth/login", "front");
+        return new View("Auth/login", "front");
     }
 
-    public function handleLogin()
+    public function handleLogin(): void
     {
         $loginForm = new LoginForm();
 
-        $errors = Verificator::form($loginForm->getConfig(), $_POST);
+        Session::set("errors",Verificator::form($loginForm->getConfig(), $_POST));
+        $errors = Session::get("errors");
         if (empty($errors)) {
             $user = new User();
             $user->setEmail($_POST["email"]);
             $user->setPassword($_POST["password"]);
             $user->login();
         } else{
-            die("Erreur");
+            // go back to login page with errors
+            Router::redirectTo("security.login");
         }
     }
 
