@@ -1,0 +1,1 @@
+Les permissions n'ont pas de page spécifique étant donné qu'elle se trouveront dans les settings d'un compte ou d'un role

@@ -1,0 +1,55 @@
+<h1 class="text-4xl font-bold">Modifier le profil</h1>
+
+<div class = "grid grid-cols-6 gap-4">
+    <form class = "card bg-base-300 col-span-6 grid lg:col-span-3 p-5 gap-4">
+        <p class="text-accent font-bold">Informations générales</p>
+        <div class="grid grid-cols-6 gap-3 w-full">
+            <input type="text" placeholder="Nom" class="col-span-3 input input-bordered" />
+            <input type="text" placeholder="Prénom" class="col-span-3 input input-bordered" />
+            
+        </div>
+        <button type="submit" class="flex self-end justify-self-end btn btn-sm btn-primary">Modifier</button>
+      
+    </form>
+    <form class = "card bg-base-300 col-span-6 lg:col-span-3 p-5 gap-5">
+        <p class="text-accent font-bold">Photo de profil</p>
+        <div class = "flex  items-center gap-4 flex-col">
+            <Avatar w3-include-html="/src/components/User/Avatar.html"></Avatar>
+            <input type="file" class="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+    
+        </div>
+        
+        <button type="submit" class="flex self-end btn btn-sm btn-primary">Modifier</button>
+    </form>
+</div>
+
+<form class = "card bg-base-300 p-5 gap-4">
+    <p class="text-accent font-bold">Description</p>
+    
+    <textarea class="min-h-[200px] w-full textarea textarea-bordered" placeholder="Je suis un bg de l'espace"></textarea>
+
+    
+    <button type="submit" class="flex self-end btn btn-sm btn-primary">Modifier</button>
+  
+</form>
+<form class = "card bg-base-300 p-5 gap-4">
+    <p class="text-accent font-bold">Modifier e-mail</p>
+    <div class="grid grid-cols-6 gap-3 w-full">
+        <input type="text" placeholder="uchihua@m.com" class="col-span-6 input input-bordered" />
+    </div>
+    
+    <button type="submit" class="flex self-end btn btn-sm btn-primary">Modifier</button>
+  
+</form>
+
+       
+<form class = "card bg-base-300 p-5 gap-4">
+    <p class="text-accent font-bold">Modifier mot de passe</p>
+    <div class="grid grid-cols-6 gap-3 w-full">
+        <input type="password" placeholder="Password" class="col-span-3 input input-bordered" />
+        <input type="password" placeholder="Confirm password" class="col-span-3 input input-bordered" />
+    </div>
+    <button type="submit" class="flex self-end btn btn-sm btn-primary">Modifier</button>
+  
+</form>
+

@@ -1,0 +1,55 @@
+<h1 class="text-4xl font-bold">Profil</h1>
+<div class = "w-full">
+    <p class="text-end">Membre depuis le <span class="text-secondary">02/02/2023</span></p>
+</div>
+
+<div class = "card bg-base-300 p-5">
+    <p class="text-accent font-bold">Présentation</p>
+    <hr class = "w-10 border-accent"/>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet condimentum nibh. Mauris vestibulum lectus non pulvinar consectetur. Nunc at elit ligula. Integer ac accumsan lacus. Proin eget justo vitae libero egestas suscipit. Donec pulvinar elit nec neque rhoncus vehicula.
+    
+    
+</div>
+
+<div class = "card bg-base-300 p-5">
+    <p class="text-accent font-bold">Liste des pages</p>
+    <hr class = "w-10 border-accent"/>
+
+    <ProfilePageList w3-include-html="/src/components/User/ProfilePageList.html"></ProfilePageList>
+
+    
+</div>
+<div class = "card bg-base-300 p-5">
+    <p class="text-accent font-bold">Derniers commentaires</p>
+    <hr class = "w-10 border-accent"/>
+
+    <div class = "flex flex-col gap-3 pt-5">
+
+        <CommentBoxForProfile w3-include-html="/src/components/Comment/CommentBoxForProfile.html"></CommentBoxForProfile>
+        <CommentBoxForProfile w3-include-html="/src/components/Comment/CommentBoxForProfile.html"></CommentBoxForProfile>
+        <CommentBoxForProfile w3-include-html="/src/components/Comment/CommentBoxForProfile.html"></CommentBoxForProfile>
+        
+    </div>
+    <div class = "text-center cursor-pointer mt-5">Voir plus <i class="fa-solid fa-chevron-down"></i></div>
+</div>
+
+<div class="stats shadow fle">
+  
+    <div class="stat place-items-center">
+      <div class="stat-title">Vue du profil</div>
+      <div class="stat-value">31K</div>
+      <div class="stat-desc">From January 1st to February 1st</div>
+    </div>
+    
+    <div class="stat place-items-center">
+      <div class="stat-title">Pages créés</div>
+      <div class="stat-value text-secondary">4,200</div>
+    </div>
+    
+    <div class="stat place-items-center">
+      <div class="stat-title">Commentaires</div>
+      <div class="stat-value">1,200</div>
+    </div>
+    
+  </div>
+  

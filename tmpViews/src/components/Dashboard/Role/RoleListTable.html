@@ -1,0 +1,30 @@
+<div class="overflow-x-auto w-full">
+  <RoleListTableActions w3-include-html="/src/components/Dashboard/Role/RoleListTableActions.html"></RoleListTableActions>  
+  
+  <table class="table w-full">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th>
+            <label>
+              <input type="checkbox" class="checkbox" />
+            </label>
+          </th>          
+          <th>Nom</th>
+          <th>Utilisateurs</th>
+          <th>Date de création</th>
+          <th>Par défaut ?</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr w3-include-html="/src/components/Dashboard/Role/RoleListTableRow.html"></tr>
+        <tr w3-include-html="/src/components/Dashboard/Role/RoleListTableRow.html"></tr>
+
+      </tbody>
+   
+      
+    </table>
+  </div>
+  <Pagination w3-include-html="/src/components/Pagination.html"></Pagination>
+  
