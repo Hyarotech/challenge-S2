@@ -9,9 +9,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+$router = new Router();
 
-(new Router)();
+require_once __DIR__ . "/../routes/web.php";
 
+$router->run();
 
 
 

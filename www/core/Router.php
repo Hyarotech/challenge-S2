@@ -6,136 +6,91 @@ use JetBrains\PhpStorm\NoReturn;
 
 class Router
 {
-    private array $routes;
-    private array $indexedByNameRoutes;
 
-    public function __construct()
-    {
-        if (!file_exists(__DIR__ . "/../routes.yml")) {
-            die("Le fichier de routing n'existe pas");
-        }
-        $this->setRoutes();
-    }
+    public array $routeRouter = [];
 
-    #[NoReturn] public static function redirectTo(string $routeName): void
+
+    #[NoReturn] public function redirectTo(string $routeName): void
     {
-        $url = self::generateURl($routeName);
+        $url = $this->getRouteByName($routeName);
         if (!$url) {
             die("La route " . $routeName . " n'existe pas");
         }
-        header("Location: " . $url);
+        header("Location: " . $url->getPath());
         exit;
     }
 
-    public function setRoutes(): void
+    public function getRoute(string $url, string $method = "GET"): Route|bool
     {
-        $data = yaml_parse_file(__DIR__ . "/../routes.yml");
-        foreach ($data as $url => $route) {
-            $this->routes[$url] = $route;
-            $this->indexedByNameRoutes[$route['name']] = $url;
-        }
-    }
-
-    public function getRoute(string $url): array|bool
-    {
-        if (!empty($this->routes[$url])) {
-            return $this->routes[$url];
+        $routes = array_filter($this->routeRouter, function (Route $route) use ($method, $url) {
+            return $route->getPath() === $url && $route->getMethod() === $method;
+        });
+        if (!empty($routes)) {
+            return $routes[array_key_first($routes)];
         }
         return false;
     }
 
-    public function getRoutes(): array
+    public function getRouteByName(string $name)
     {
-        return $this->routes;
-    }
-
-    public function getController(string $url): string|bool
-    {
-        if (!empty($this->routes[$url])) {
-            return $this->routes[$url]['controller'];
+        $routes = array_filter($this->routeRouter, function (Route $route) use ($name) {
+            return $route->getName() === $name;
+        });
+        if (!empty($routes)) {
+            return $routes[array_key_first($routes)];
         }
         return false;
     }
 
-    public function getAction(string $url): string|bool
-    {
-        if (!empty($this->routes[$url])) {
-            return $this->routes[$url]['action'];
-        }
-        return false;
-    }
+    //TODO replace usage by $router->getRouteByName($name)->getPath()
 
-    public function getName(string $url): string|bool
+    public function generateURL(string $name): string|bool
     {
-        if (!empty($this->routes[$url])) {
-            return $this->routes[$url]['name'];
-        }
-        return false;
-    }
-
-    public function getRouteByName(string $name): array|bool
-    {
-        if (isset($this->indexedByNameRoutes[$name])) {
-            return $this->getRoute($this->indexedByNameRoutes[$name]);
-        }
-        return false;
-    }
-
-    public function getUrlByName(string $name)
-    {
-        if (isset($this->indexedByNameRoutes[$name])) {
-            return $this->indexedByNameRoutes[$name];
-        }
-        return false;
-    }
-
-    public static function generateURl(string $name): string|bool
-    {
-        $route = (new self())->getUrlByName($name);
+        $route = $this->getRouteByName($name);
         if (!$route) {
-            return false;
+            return "";
         }
-        return $route;
+        return $route->getPath();
     }
 
-
-    public function __invoke()
+    public function run(): void
     {
         $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
         $uri = (empty($uri)) ? "/" : $uri;
         $method = $_SERVER["REQUEST_METHOD"];
-
-        // Check if the requested URI is for an asset file
-        $extension = pathinfo($uri, PATHINFO_EXTENSION);
-        $allowedExtensions = ['css', 'js', 'png', 'jpg', 'jpeg', 'gif','svg'];
-        if (in_array($extension, $allowedExtensions)) {
-            // Serve the asset file directly
-            $filePath = __DIR__ . '/public/assets' . $uri; // Assuming the assets are located in the 'public' directory
-            if (file_exists($filePath)) {
-                header("Content-Type: " . mime_content_type($filePath));
-                readfile($filePath);
-                exit;
-            } else {
-                die("Asset not found");
-            }
-        }
         //Dans le cas ou nous sommes à la racine $uri sera vide du coup je remets /
         $uri = (empty($uri)) ? "/" : $uri;
-        $route = $this->getRoute($uri);
-        if (!$route || $route['method'] !== $method) {
-            die("Page 404");
+        $route = $this->getRoute($uri, $method);
+        if (!$route) {
+            $this->redirectTo("errors.404");
         }
-        $controller = "\\App\\Controllers\\" . $route['controller'];
-        if (!class_exists($controller)) {
-            die("La classe " . $controller . " n'existe pas");
-        }
-        $action = $route['action'];
+        $controller = $route->getController();
+        $action = $route->getAction();
         $objet = new $controller();
-        if (!method_exists($objet, $action)) {
-            die("L'action " . $action . " n'existe pas");
-        }
         $objet->$action();
+    }
+
+    public function get(string $path, array $callable): Route
+    {
+        $route = new Route();
+        $route->setPath($path);
+        $route->setController($callable[0]);
+        $route->setAction($callable[1]);
+        $route->setMethod("GET");
+        $this->routeRouter[] = $route;
+        return $route;
+    }
+
+    public function post(string $path, array $callable): Route
+    {
+        $route = new Route();
+        $route->setPath($path);
+        $route->setController($callable[0]);
+        $route->setAction($callable[1]);
+        $route->setMethod("POST");
+        $this->routeRouter[] = $route;
+        return $route;
     }
 
 
