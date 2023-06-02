@@ -2,12 +2,14 @@
 namespace App\Controllers;
 use Core\View;
 
-class Main{
-    public function index(){
+class HomeController{
+    public function index(): View
+    {
 
         $pseudo = "Prof";
         $view = new View("Main/index", "front");
         $view->assign("pseudo", $pseudo);
+        return $view;
     }
 
     public function contact(){

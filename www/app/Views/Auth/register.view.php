@@ -1,7 +1,7 @@
 <div class="relative flex flex-col items-center justify-center h-screen overflow-hidden">
     <div class="w-full p-6 bg-base-300  border-t-4 border-primary rounded-md shadow-md border-top lg:max-w-lg">
         <h1 class="text-3xl font-semibold text-center">S'inscrire</h1>
-        <form class="space-y-4" action="<?= \Core\Router::generateURl("security.register.handle") ?>" method="post">
+        <form class="space-y-4" action="<?= \Core\Router::generateRoute("security.register.handle") ?>" method="post">
             <div class="flex gap-4">
                 <div>
                     <label class="label" for="firstname">
@@ -59,7 +59,7 @@
             Vous avez déja un compte?
         </div>
         <div>
-            <a href="<?= \Core\Router::generateURl("security.login")?>" class="btn btn-block btn-accent">Se connecter</a>
+            <a href="<?= \Core\Router::generateRoute("security.login")?>" class="btn btn-block btn-accent">Se connecter</a>
         </div>
     </div>
 </div>

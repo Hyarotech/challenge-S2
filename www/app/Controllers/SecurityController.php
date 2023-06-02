@@ -10,7 +10,7 @@ use Core\Session;
 use Core\Verificator;
 use Core\View;
 
-class Security
+class SecurityController
 {
     public function register(): View
     {
@@ -33,7 +33,7 @@ class Security
             $user->setPassword(password_hash($_POST["password"], PASSWORD_DEFAULT));
             $user->save();
         } else{
-            Router::redirectTo("security.register");
+            $router->redirectTo("security.register");
         }
     }
 
@@ -55,7 +55,7 @@ class Security
             $user->login();
         } else{
             // go back to login page with errors
-            Router::redirectTo("security.login");
+            $router->redirectTo("security.login");
         }
     }
 

@@ -17,7 +17,7 @@ services:
     build: ./.docker/composer
     volumes:
       - ./www:/app
-    command: install --optimize-autoloader
+    command: install --optimize-autoloader --ignore-platform-reqs
     restart: "no"
 
 networks:
