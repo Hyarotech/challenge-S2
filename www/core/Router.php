@@ -7,7 +7,24 @@ use JetBrains\PhpStorm\NoReturn;
 class Router
 {
 
-    public array $routeRouter = [];
+    private array $routes = [];
+    private static ?Router $instance = null;
+
+
+    public static function getInstance(): ?Router
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new Router();
+        }
+        return self::$instance;
+    }
+
+    public static function generateRoute(string $name): bool|string
+    {
+        $router = self::getInstance();
+        require ROOT . "/routes/web.php";
+        return $router->generateURL($name);
+    }
 
 
     #[NoReturn] public function redirectTo(string $routeName): void
@@ -22,7 +39,7 @@ class Router
 
     public function getRoute(string $url, string $method = "GET"): Route|bool
     {
-        $routes = array_filter($this->routeRouter, function (Route $route) use ($method, $url) {
+        $routes = array_filter($this->routes, function (Route $route) use ($method, $url) {
             return $route->getPath() === $url && $route->getMethod() === $method;
         });
         if (!empty($routes)) {
@@ -33,7 +50,7 @@ class Router
 
     public function getRouteByName(string $name)
     {
-        $routes = array_filter($this->routeRouter, function (Route $route) use ($name) {
+        $routes = array_filter($this->routes, function (Route $route) use ($name) {
             return $route->getName() === $name;
         });
         if (!empty($routes)) {
@@ -41,8 +58,6 @@ class Router
         }
         return false;
     }
-
-    //TODO replace usage by $router->getRouteByName($name)->getPath()
 
     public function generateURL(string $name): string|bool
     {
@@ -55,6 +70,7 @@ class Router
 
     public function run(): void
     {
+
         $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
         $uri = (empty($uri)) ? "/" : $uri;
@@ -78,7 +94,7 @@ class Router
         $route->setController($callable[0]);
         $route->setAction($callable[1]);
         $route->setMethod("GET");
-        $this->routeRouter[] = $route;
+        $this->routes[] = $route;
         return $route;
     }
 
@@ -89,7 +105,7 @@ class Router
         $route->setController($callable[0]);
         $route->setAction($callable[1]);
         $route->setMethod("POST");
-        $this->routeRouter[] = $route;
+        $this->routes[] = $route;
         return $route;
     }
 
