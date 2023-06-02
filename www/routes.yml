@@ -41,6 +41,20 @@
   name: security.register
   method: GET
 
+/forgot-password:
+  controller: Security
+  action: forgotPassword
+  name: security.forgot-password
+  method: GET
+
+
+/forgot-password:
+  controller: Security
+  action: handleForgotPassword
+  name: security.forgotPassword.handle
+  method: POST
+
+
 /register/handle:
   controller: Security
   action: handleRegister
