@@ -1,22 +1,44 @@
-<div class="relative flex flex-col items-center justify-center h-screen overflow-hidden">
-    <div class="w-full p-6 bg-base-300  border-t-4 border-primary rounded-md shadow-md border-top lg:max-w-lg">
-        <h1 class="text-3xl font-semibold text-center">Se connecter</h1>
-        <p class="text-xs text-error mt-2"><?=\Core\Session::getError("global")?></p>
-        <form class="space-y-4" action="<?=\Core\Router::generateRoute("security.login.handle")?>" method="post">
-            <div>
-                <label class="label" for="email">
-                    <span class="text-base label-text">Email</span>
-                </label>
-                <input id="email" name="email" type="text" placeholder="xyz@example.com" class="w-full input input-bordered" />
-                <p class="text-xs text-error mt-2"><?=\Core\Session::getError("email")?></p>
-            </div>
-            <div>
-                <label class="label" for="password">
-                    <span class="text-base label-text">Mot de passe</span>
-                </label>
-                <input id="password" name="password" type="password" placeholder="**********"
-                       class="w-full input input-bordered" />
-                <p class="text-xs text-error mt-2"><?=\Core\Session::getError("password")?></p>
+<div class="w-full h-full min-h-[100vh] flex justify-center items-center bg-blue animate__animated animate__fadeIn ">
+
+    <div class="card flex-row w-11/12 max-w-[832px] sm:flex sm:w-11/12 h-auto bg-base-200 shadow-xl">
+        <div class="hidden sm:flex w-2/4">
+            <img class="h-full w-full object-cover"
+                src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" alt="Movie" />
+
+        </div>
+        <form action="<?= \Core\Router::generateURl("security.login.handle") ?>" method="post" class="card-body">
+            <h1 class="text-3xl">Se connecter</h1>
+            <hr />
+
+
+
+            <div class="grid grid-cols-6 gap-6">
+
+
+                <div class=" col-span-6">
+                    <label class="label">
+                        <span class="label-text">E-mail</span>
+                    </label>
+                    <input type="email" placeholder="XxSasukexX@wanadoo.fr" class="input input-bordered w-full" />
+                    <label class="label">
+                        <span class="label-text-alt text-error  ">
+                            <?= \Core\Session::getError("email") ?>
+                        </span>
+                    </label>
+                </div>
+
+
+                <div class=" col-span-6">
+                    <label class="label">
+                        <span class="label-text">Mot de passe</span>
+                    </label>
+                    <input type="password" placeholder="***********" class="input input-bordered w-full" />
+                    <label class="label">
+                        <span class="label-text-alt text-error  ">
+                            <?= \Core\Session::getError("password") ?>
+                        </span>
+                    </label>
+                </div>
             </div>
 
 

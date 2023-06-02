@@ -1,11 +1,25 @@
-<div class="relative flex flex-col items-center justify-center h-screen overflow-hidden">
-    <div class="w-full p-6 bg-base-300  border-t-4 border-primary rounded-md shadow-md border-top lg:max-w-lg">
-        <h1 class="text-3xl font-semibold text-center">S'inscrire</h1>
-        <form class="space-y-4" action="<?= \Core\Router::generateRoute("security.register.handle") ?>" method="post">
-            <div class="flex gap-4">
-                <div>
-                    <label class="label" for="firstname">
-                        <span class="text-base label-text">Firstname</span>
+<div class="w-full h-full flex justify-center items-center bg-blue animate__animated animate__fadeIn ">
+
+    <div class="card flex-row w-11/12 max-w-[832px] sm:flex sm:w-11/12 h-auto bg-base-200 shadow-xl">
+        <div class="hidden sm:flex w-2/4">
+            <img class="h-full w-full object-cover"
+                src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" alt="Movie" />
+
+        </div>
+        <form class="card-body" action="<?= \Core\Router::generateURl("security.register.handle") ?>" method="post">
+            <h1 class="text-3xl">S'inscrire</h1>
+            <hr />
+
+            <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-3 sm:col-span-3">
+                    <label class="label">
+                        <span class="label-text">Nom</span>
+                    </label>
+                    <input type="text" placeholder="Uchihua" name="firstname" class="input input-bordered w-full" />
+                    <label class="label">
+                        <span class="label-text-alt text-error  ">
+                            <?= \Core\Session::getError("firstname") ?>
+                        </span>
                     </label>
 
                 </div>
@@ -90,11 +104,5 @@
             </div>
 
         </form>
-        <div class="divider">
-            Vous avez déja un compte?
-        </div>
-        <div>
-            <a href="<?= \Core\Router::generateRoute("security.login")?>" class="btn btn-block btn-accent">Se connecter</a>
-        </div>
+
     </div>
-</div>
