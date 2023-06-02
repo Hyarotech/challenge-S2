@@ -24,7 +24,7 @@ class SecurityController
         Session::set("errors", $errors);
         if (empty($errors)) {
             $user = new User();
-            if($user->alreadyExist($_POST["email"])){
+            if ($user->alreadyExist($_POST["email"])) {
                 die("Already exist");
             }
             $user->setEmail($_POST["email"]);
@@ -32,8 +32,8 @@ class SecurityController
             $user->setLastname($_POST["lastname"]);
             $user->setPassword(password_hash($_POST["password"], PASSWORD_DEFAULT));
             $user->save();
-        } else{
-            $router->redirectTo("security.register");
+        } else {
+            Router::redirectTo("security.register");
         }
     }
 
@@ -46,16 +46,16 @@ class SecurityController
     {
         $loginForm = new LoginForm();
 
-        Session::set("errors",Verificator::form($loginForm->getConfig(), $_POST));
+        Session::set("errors", Verificator::form($loginForm->getConfig(), $_POST));
         $errors = Session::get("errors");
         if (empty($errors)) {
             $user = new User();
             $user->setEmail($_POST["email"]);
             $user->setPassword($_POST["password"]);
             $user->login();
-        } else{
+        } else {
             // go back to login page with errors
-            $router->redirectTo("security.login");
+            Router::redirectTo("security.login");
         }
     }
 

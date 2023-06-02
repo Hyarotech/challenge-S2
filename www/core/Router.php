@@ -27,13 +27,13 @@ class Router
     }
 
 
-    #[NoReturn] public function redirectTo(string $routeName): void
+    #[NoReturn] public static function redirectTo(string $routeName): void
     {
-        $url = $this->getRouteByName($routeName);
+        $url = self::generateRoute($routeName);
         if (!$url) {
             die("La route " . $routeName . " n'existe pas");
         }
-        header("Location: " . $url->getPath());
+        header("Location: " . $url);
         exit;
     }
 
