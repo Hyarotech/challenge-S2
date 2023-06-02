@@ -21,7 +21,7 @@
                     </label>
                     <input type="email" placeholder="XxSasukexX@wanadoo.fr" class="input input-bordered w-full" />
                     <label class="label">
-                        <span class="label-text-alt text-red-500">
+                        <span class="label-text-alt text-error  ">
                             <?= \Core\Session::getError("email") ?>
                         </span>
                     </label>
@@ -34,7 +34,7 @@
                     </label>
                     <input type="password" placeholder="***********" class="input input-bordered w-full" />
                     <label class="label">
-                        <span class="label-text-alt text-red-500">
+                        <span class="label-text-alt text-error  ">
                             <?= \Core\Session::getError("password") ?>
                         </span>
                     </label>
