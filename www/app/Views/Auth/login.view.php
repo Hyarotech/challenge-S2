@@ -18,10 +18,24 @@
                        class="w-full input input-bordered" />
                 <p class="text-xs text-error mt-2"><?=\Core\Session::getError("password")?></p>
             </div>
-            <a href="#" class="text-xs hover:text-primary">mot de passe oublié?</a>
-            <div>
-                <button class="btn btn-block btn-primary">Se connecter</button>
+
+
+            <div class="flex w-full flex-wrap">
+                <div class="flex w-full justify-center mt-6">
+                    <input type="submit" value="Connexion" class="btn btn-primary">
+
+                </div>
+
+                <div class="flex flex-row gap-2 w-full items-center">
+                    <p class="text-center text-md mt-6">Pas de compte ? <a
+                            href="<?= \Core\Router::generateURl("security.register") ?>"
+                            class="link link-primary">S'inscrire</a></p>
+
+                    <a href="<?= \Core\Router::generateURl("security.forgotPassword") ?>"
+                        class="text-center text-md mt-6">Réinitialiser mot de passe </a>
+                </div>
             </div>
+
         </form>
         <div class="divider">
             Vous n'avez pas de compte?
