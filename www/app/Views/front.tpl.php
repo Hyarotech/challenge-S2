@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div class="w-full mt-[100]">
+        <div class="w-full mt-[100px]">
             <?php include $this->view; ?>
         </div>
 

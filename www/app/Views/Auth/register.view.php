@@ -7,53 +7,88 @@
                     <label class="label" for="firstname">
                         <span class="text-base label-text">Firstname</span>
                     </label>
-                    <input id="firstname" name="firstname" type="text" placeholder="John" class="w-full input input-bordered" />
-                    <p class="text-xs text-error mt-2"><?=\Core\Session::getError("firstname")?></p>
+
                 </div>
 
-                <div>
-                    <label class="label" for="lastname">
-                        <span class="text-base label-text">Lastname</span>
+                <div class="col-span-3 sm:col-span-3">
+                    <label class="label">
+                        <span class="label-text">Prénom</span>
                     </label>
-                    <input id="lastname" name="lastname" type="text" placeholder="Doe" class="w-full input input-bordered" />
-                    <p class="text-xs text-error mt-2"><?=\Core\Session::getError("lastname")?></p>
+                    <input type="text" placeholder="Madara" name="lastname" class="input input-bordered w-full" />
+                    <label class="label">
+                        <span class="label-text-alt text-error  ">
+                            <?= \Core\Session::getError("lastname") ?>
+                        </span>
+                    </label>
+
                 </div>
-            </div>
-            <div>
-                <label class="label" for="email">
-                    <span class="text-base label-text">Email</span>
-                </label>
-                <input id="email" name="email" type="email" placeholder="xyz@example.com" class="w-full input input-bordered" />
-                <p class="text-xs text-error mt-2"><?=\Core\Session::getError("email")?></p>
-            </div>
-            <div>
-                <label class="label" for="password">
-                    <span class="text-base label-text">Mot de passe</span>
-                </label>
-                <input id="password" name="password" type="password" placeholder="**********"
-                       class="w-full input input-bordered" />
-                <p class="text-xs text-error mt-2"><?=\Core\Session::getError("password")?></p>
-            </div>
-            <div>
-                <label class="label" for="confirm_password">
-                    <span class="text-base label-text">Confirmer le Mot de passe</span>
-                </label>
-                <input id="confirm_password" name="confirm_password" type="password" placeholder="**********"
-                       class="w-full input input-bordered" />
-                <p class="text-xs text-error mt-2"><?=\Core\Session::getError("confirm_password")?></p>
+
+                <div class=" col-span-6">
+                    <label class="label">
+                        <span class="label-text">E-mail</span>
+                    </label>
+                    <input type="email" placeholder="XxSasukexX@wanadoo.fr" name="email"
+                        class="input input-bordered w-full" />
+                    <label class="label">
+                        <span class="label-text-alt text-error  ">
+                            <?= \Core\Session::getError("email") ?>
+                        </span>
+                    </label>
+
+                </div>
+
+
+                <div class=" col-span-6">
+                    <label class="label">
+                        <span class="label-text">Mot de passe</span>
+                    </label>
+                    <input type="password" placeholder="***********" name="password"
+                        class="input input-bordered w-full" />
+                    <label class="label">
+                        <span class="label-text-alt text-error  ">
+                            <?= \Core\Session::getError("password") ?>
+                        </span>
+                    </label>
+
+                </div>
+
+                <div class=" col-span-6">
+                    <label class="label">
+                        <span class="label-text">Confirmer le mot de passe</span>
+                    </label>
+                    <input type="password" placeholder="***********" name="confirm_password"
+                        class="input input-bordered w-full" />
+                    <label class="label">
+                        <span class="label-text-alt text-error  ">
+                            <?= \Core\Session::getError("confirm_password") ?>
+                        </span>
+                    </label>
+
+                </div>
             </div>
             <div class="form-control">
                 <label class="cursor-pointer label">
-                    <input type="checkbox" id="policy" name="policy"  class="checkbox checkbox-success" />
+                    <input type="checkbox" id="policy" name="policy" class="checkbox checkbox-success" />
                     <span class="label-text">
                         J'accepte les <a href="#" class="text-xs hover:text-primary">conditions d'utilisation</a>
                     </span>
                 </label>
-                <p class="text-xs text-error mt-2"><?=\Core\Session::getError("policy")?></p>
+                <p class="text-xs text-error mt-2">
+                    <?= \Core\Session::getError("policy") ?>
+                </p>
             </div>
-            <div>
-                <button class="btn btn-block btn-primary">S'inscrire</button>
+
+            <div class="flex w-full flex-wrap">
+                <div class="flex w-full justify-end">
+                    <input type="submit" value="S'inscrire" class="btn btn-primary">
+                </div>
+
+                <p class="text-center mt-6">Déjà un compte ? <a
+                        href="<?= \Core\Router::generateURl("security.login") ?>" class="link link-primary">Se
+                        connecter</a></p>
+
             </div>
+
         </form>
         <div class="divider">
             Vous avez déja un compte?
