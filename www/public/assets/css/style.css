@@ -3240,6 +3240,10 @@ html {
   grid-column: span 6 / span 6;
 }
 
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
+
 .mb-3 {
   margin-bottom: 0.75rem;
 }
@@ -3278,6 +3282,10 @@ html {
 
 .mt-\[100\] {
   margin-top: 100;
+}
+
+.mt-\[50px\] {
+  margin-top: 50px;
 }
 
 .inline-block {
@@ -3392,6 +3400,10 @@ html {
   align-items: center;
 }
 
+.justify-end {
+  justify-content: flex-end;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -3491,9 +3503,22 @@ html {
   padding: 1.5rem;
 }
 
+.p-\[200px\] {
+  padding: 200px;
+}
+
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.py-\[200px\] {
+  padding-top: 200px;
+  padding-bottom: 200px;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .text-center {
@@ -3573,6 +3598,10 @@ html {
 }
 
 @media (min-width: 640px) {
+  .sm\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+
   .sm\:flex {
     display: flex;
   }
