@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use Core\Sql;
+use Core\ORM;
 
-class User extends Sql {
+class User extends ORM {
 
     protected Int $id = 0;
     protected String $firstname;
@@ -135,7 +135,7 @@ class User extends Sql {
         return $this->date_updated;
     }
 
-    public function login(): void
+    public function login(): bool
     {
         $sql = "SELECT * FROM public.user WHERE email = :email";
         $stmt = $this->pdo->prepare($sql);
@@ -144,12 +144,9 @@ class User extends Sql {
         $user = $stmt->fetch();
         if ($user) {
             if (password_verify($this->getPassword(), $user["password"])) {
-                die("Connecté");
-            } else {
-                die("Erreur de mot de passe");
+                return true;
             }
-        } else {
-            die("Erreur d'email");
         }
+        return false;
     }
 }

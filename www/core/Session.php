@@ -27,8 +27,15 @@ class Session
 
     public static function getError(string $input)
     {
+
         if (!empty($_SESSION["errors"][$input])) {
-            return $_SESSION["errors"][$input][0];
+
+            $error = $_SESSION["errors"][$input];
+            if (is_array($error)) {
+                $error = $error[0];
+            }
+            unset($_SESSION["errors"][$input]);
+            return $error;
         }
         return "";
     }

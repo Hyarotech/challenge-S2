@@ -1,7 +1,7 @@
 <?php
 namespace Core;
 
-abstract class Sql{
+abstract class ORM{
 
     protected $pdo;
     protected $table;
@@ -9,7 +9,9 @@ abstract class Sql{
     public function __construct(){
         //Mettre en place un SINGLETON
         try{
-            $this->pdo = new \PDO("pgsql:host=postgres.hyarotech.com;port=54320;dbname=challenge-dev" , "esgi" , "C9ERGFWJs2XjDM" );
+            $this->pdo = new \PDO("pgsql:host=".env("DB_HOST").";port=".env("DB_PORT").";dbname=".env("DB_DATABASE") , env("DB_USERNAME") , env("DB_PASSWORD") );
+            $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
         }catch(\Exception $e){
             die("Erreur SQL : ".$e->getMessage());
         }

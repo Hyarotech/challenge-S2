@@ -29,7 +29,7 @@ class AddUser extends AForm
                     "error" => "Le format de votre email est incorrect"
                 ],
                 "password" => [
-                    "rules"=>["required","min:8","regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/"],
+                    "rules"=>["required","min:8"],
                     "error" => "Votre mot de passe est incorrect"
                 ],
                 "confirm_password" => [

@@ -32,6 +32,7 @@ class SecurityController
             $user->setLastname($_POST["lastname"]);
             $user->setPassword(password_hash($_POST["password"], PASSWORD_DEFAULT));
             $user->save();
+            Router::redirectTo("security.login");
         } else {
             Router::redirectTo("security.register");
         }
@@ -52,7 +53,12 @@ class SecurityController
             $user = new User();
             $user->setEmail($_POST["email"]);
             $user->setPassword($_POST["password"]);
-            $user->login();
+            if($user->login()) {
+                Router::redirectTo("home");
+            } else {
+                Session::set("errors", ["global" => "Email ou mot de passe incorrect"]);
+                Router::redirectTo("security.login");
+            }
         } else {
             // go back to login page with errors
             Router::redirectTo("security.login");

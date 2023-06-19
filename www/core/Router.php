@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use JetBrains\PhpStorm\NoReturn;
+
 
 class Router
 {
@@ -27,7 +27,7 @@ class Router
     }
 
 
-    #[NoReturn] public static function redirectTo(string $routeName): void
+    public static function redirectTo(string $routeName): void
     {
         $url = self::generateRoute($routeName);
         if (!$url) {

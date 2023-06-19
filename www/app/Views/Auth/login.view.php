@@ -1,6 +1,7 @@
 <div class="relative flex flex-col items-center justify-center h-screen overflow-hidden">
     <div class="w-full p-6 bg-base-300  border-t-4 border-primary rounded-md shadow-md border-top lg:max-w-lg">
         <h1 class="text-3xl font-semibold text-center">Se connecter</h1>
+        <p class="text-xs text-error mt-2"><?=\Core\Session::getError("global")?></p>
         <form class="space-y-4" action="<?=\Core\Router::generateRoute("security.login")?>" method="post">
             <div>
                 <label class="label" for="email">
