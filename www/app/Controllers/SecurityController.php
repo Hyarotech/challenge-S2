@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Forms\Security\AddUser;
 use App\Forms\Security\LoginForm;
 use App\Models\User;
+use Core\enums\Role;
 use Core\Router;
 use Core\Session;
 use Core\Verificator;
