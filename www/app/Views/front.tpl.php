@@ -21,16 +21,17 @@
 </head>
 
 <body class="min-h-screen bg-base-100">
+<div class="flex flex-col h-auto">
 
-    <div class="flex flex-col h-auto">
-        <?php include 'Main/navbar.view.php'; ?>
+    <?php $this->component('Nav/navbar'); ?>
 
-        <div class="w-full mt-[100px]">
+        <div class="w-full mt-[84px] relative ">
             <?php include $this->view; ?>
         </div>
     </div>
 
-    <?php include 'Main/footer.view.php'; ?>
+    <?php $this->component('Nav/footer'); ?>
+
 </body>
 
 </html>
