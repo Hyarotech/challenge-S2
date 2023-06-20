@@ -1,11 +1,10 @@
 <?php
 namespace Core;
-class Resource {
+class View {
 
     private String $view;
     private String $template;
     private $data = [];
-
 
     public function __construct(String $view, String $template="back"){
         $this->setView($view);
@@ -34,11 +33,23 @@ class Resource {
         }
         $this->template = $template;
     }
+    public function component(string $component,array $data = []): void {
+        if(count($data) > 0)
+            extract($data);
+        
 
-    public static function asset(string $path):string
-    {
-        return env("APP_URL")."/assets".$path;
+        $file = ROOT."/app/Views/".$component.".view.php";
+        if(is_file($file))
+            include ROOT."/app/Views/".$component.".view.php";
+        else
+            throw new \Exception('Composant "'.$component.'.view.php" inexistant');
     }
+
+    public function modal($name, $config):void
+    {
+        include ROOT."/app/Views/Modals/".$name.".php";
+    }
+
     public function __destruct(){
         extract($this->data);
         include $this->template;
