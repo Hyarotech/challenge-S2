@@ -21,11 +21,14 @@
 </head>
 
 <body class="min-h-screen bg-base-100">
-
+    
     <div class="flex flex-col h-auto">
-        <?php include 'Main/navbar.view.php'; ?>
-        <?php include 'Main/sideBar.view.php'; ?>
-        <div class="w-full mt-[100px]">
+        <div class = "">
+            <?php $this->component('Nav/sidebar'); ?>
+        </div>
+    <?php $this->component('Nav/navbar'); ?>
+
+        <div class="w-full bg-red-500 mt-[84px] md:w-[calc(100% - 80px)] relative md:left-[80px]">
             <?php include $this->view; ?>
         </div>
     </div>

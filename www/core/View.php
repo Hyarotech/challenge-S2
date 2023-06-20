@@ -33,6 +33,17 @@ class View {
         }
         $this->template = $template;
     }
+    public function component(string $component,array $data = []): void {
+        if(count($data) > 0)
+            extract($data);
+        
+
+        $file = ROOT."/app/Views/".$component.".view.php";
+        if(is_file($file))
+            include ROOT."/app/Views/".$component.".view.php";
+        else
+            throw new \Exception('Composant "'.$component.'.view.php" inexistant');
+    }
 
     public function modal($name, $config):void
     {

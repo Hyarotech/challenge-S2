@@ -1,4 +1,4 @@
-<div class="navbar  z-40 w-full fixed top-0 bg-base-100">
+<div class="navbar z-40 w-full md:w-[calc(100% - 80px)] md:left-[80px] fixed top-0  bg-base-100">
             <div class="flex-none">
                 <button class="btn md:hidden mobileToggleNav btn-square btn-ghost">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
