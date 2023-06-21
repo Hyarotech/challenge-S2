@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css" />
+ 
+
     <title>GES CMS</title>
 
     <!-- PROD CSS JS 
@@ -15,23 +17,31 @@
 -->
 
     <!-- DEV CSS JS -->
-    <script type="module" crossorigin src="/assets/js/dev.js"></script>
     <link rel="stylesheet" href="/assets/css/style.css">
 
 </head>
 
 <body class="min-h-screen bg-base-100">
     
-    <div class="flex flex-col h-auto">
-        <div class = "">
+    <div class="flex flex-col min-h-screen h-auto">
             <?php $this->component('Nav/sidebar'); ?>
-        </div>
-    <?php $this->component('Nav/navbar'); ?>
 
-        <div class="w-full bg-red-500 mt-[84px] md:w-[calc(100% - 80px)] relative md:left-[80px]">
+        <div class="z-40 w-full md:w-[calc(100%_-_80px)] md:left-[80px] fixed top-0">
+            <?php $this->component('Nav/navbar'); ?>
+        </div>
+
+        <div class="w-full bg-red-500 mt-[84px] md:w-[calc(100%_-_80px)] relative md:left-[80px]">
             <?php include $this->view; ?>
         </div>
     </div>
+
+
+    <script
+  src="https://code.jquery.com/jquery-3.7.0.min.js"
+  integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+  crossorigin="anonymous"></script>
+  
+  <script type="module" crossorigin src="/assets/js/app.js"></script>
 
 </body>
 
