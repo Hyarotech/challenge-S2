@@ -1,6 +1,6 @@
-<div class="navbar z-40 w-full md:w-[calc(100% - 80px)] md:left-[80px] fixed top-0  bg-base-100">
+<div class="navbar w-full bg-base-100">
             <div class="flex-none">
-                <button class="btn md:hidden mobileToggleNav btn-square btn-ghost">
+                <button class="btn md:hidden mobileToggleNav z-51 btn-square btn-ghost">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         class="inline-block w-5 h-5 stroke-current">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

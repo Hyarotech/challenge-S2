@@ -2364,6 +2364,12 @@ html {
   color: hsl(var(--ac) / var(--tw-text-opacity));
 }
 
+.btm-nav>*:where(.active) {
+  border-top-width: 2px;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+}
+
 .btm-nav>* .label {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -3071,6 +3077,14 @@ html {
   }
 }
 
+.table tr.active th,
+    .table tr.active td,
+    .table tr.active:nth-child(even) th,
+    .table tr.active:nth-child(even) td {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b3, var(--b2)) / var(--tw-bg-opacity));
+}
+
 @keyframes toast-pop {
   0% {
     transform: scale(0.9);
@@ -3085,6 +3099,22 @@ html {
 
 .rounded-box {
   border-radius: var(--rounded-box, 1rem);
+}
+
+.btm-nav-xs>*:where(.active) {
+  border-top-width: 1px;
+}
+
+.btm-nav-sm>*:where(.active) {
+  border-top-width: 2px;
+}
+
+.btm-nav-md>*:where(.active) {
+  border-top-width: 2px;
+}
+
+.btm-nav-lg>*:where(.active) {
+  border-top-width: 4px;
 }
 
 .btn-square:where(.btn-xs) {
@@ -3260,10 +3290,6 @@ html {
   line-height: 1.25rem;
 }
 
-.invisible {
-  visibility: hidden;
-}
-
 .fixed {
   position: fixed;
 }
@@ -3288,14 +3314,6 @@ html {
   top: 0px;
 }
 
-.left-80 {
-  left: 20rem;
-}
-
-.left-\[80px\] {
-  left: 80px;
-}
-
 .z-40 {
   z-index: 40;
 }
@@ -3310,6 +3328,10 @@ html {
 
 .col-span-6 {
   grid-column: span 6 / span 6;
+}
+
+.m-auto {
+  margin: auto;
 }
 
 .mt-10 {
@@ -3328,24 +3350,8 @@ html {
   margin-top: 1.5rem;
 }
 
-.mt-\[100px\] {
-  margin-top: 100px;
-}
-
-.mt-\[48px\] {
-  margin-top: 48px;
-}
-
-.mt-\[60px\] {
-  margin-top: 60px;
-}
-
 .mt-\[84px\] {
   margin-top: 84px;
-}
-
-.block {
-  display: block;
 }
 
 .inline-block {
@@ -3378,10 +3384,6 @@ html {
 
 .h-full {
   height: 100%;
-}
-
-.h-screen {
-  height: 100vh;
 }
 
 .min-h-\[100vh\] {
@@ -3422,14 +3424,6 @@ html {
 
 .w-full {
   width: 100%;
-}
-
-.w-\[150px\] {
-  width: 150px;
-}
-
-.w-\[100px\] {
-  width: 100px;
 }
 
 .max-w-\[832px\] {
@@ -3656,5 +3650,9 @@ html {
 
   .md\:hidden {
     display: none;
+  }
+
+  .md\:w-\[calc\(100\%_-_80px\)\] {
+    width: calc(100% - 80px);
   }
 }
