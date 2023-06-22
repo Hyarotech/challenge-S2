@@ -3,6 +3,8 @@
 namespace Core;
 
 
+use ReflectionMethod;
+
 class Router
 {
 
@@ -108,6 +110,10 @@ class Router
         }
         return $route;
     }
+
+    /**
+     * @throws \ReflectionException
+     */
     public function run(): void
     {
 
@@ -117,8 +123,20 @@ class Router
         }
         $controller = $route->getController();
         $action = $route->getAction();
+
         $objet = new $controller();
-        $objet->$action();
+        $reflectionMethod = new ReflectionMethod($controller, $action);
+        $parameters = $reflectionMethod->getParameters();
+        $args = [];
+        foreach ($parameters as $parameter) {
+            $paramType = $parameter->getType()->getName();
+            if ($paramType === 'Core\Request' || is_subclass_of($paramType,'Core\Request')) {
+                $args[] = new $paramType();
+            } elseif ($paramType === 'Core\Response' || is_subclass_of($paramType,'Core\Response')) {
+                $args[] = $paramType();
+            }
+        }
+        call_user_func_array([$objet, $action], $args);
     }
 
     public function get(string $path, array $callable): Route
