@@ -3,6 +3,7 @@
 namespace Core;
 
 
+use ReflectionMethod;
 
 class Router
 {
@@ -18,11 +19,26 @@ class Router
         return self::$instance;
     }
 
+    public static function getActualRoute(): ?Route
+    {
+        $router = self::getInstance();
+        require ROOT . "/routes/web.php";
+        return $router->resolveRoute();
+
+    }
+
     public static function generateRoute(string $name): bool|string
     {
         $router = self::getInstance();
         require ROOT . "/routes/web.php";
         return $router->generateURL($name);
+    }
+
+    public static function generateDynamicRoute(string $name, array $params): bool|string
+    {
+        $router = self::getInstance();
+        require ROOT . "/routes/web.php";
+        return $router->generateURL($name, $params);
     }
 
 
@@ -60,18 +76,24 @@ class Router
         return false;
     }
 
-    public function generateURL(string $name): string|bool
+    public function generateURL(string $name, ?array $params = null): string|bool
     {
         $route = $this->getRouteByName($name);
         if (!$route) {
             return "";
         }
-        return $route->getPath();
+        if (is_null($params)) {
+            return $route->getPath();
+        }
+        $url = $route->getPath();
+        foreach ($params as $key => $value) {
+            $url = str_replace(":$key", $value, $url);
+        }
+        return $url;
     }
 
-    public function run(): void
+    public function resolveRoute() :Route|null
     {
-
         $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
         $uri = (empty($uri)) ? "/" : $uri;
@@ -84,12 +106,42 @@ class Router
 
  
         if (!$route) {
+            //check for dynamic routes with :id for example
+
+            $route = $this->getRouteByDynamicURL($uri, $method);
+            if (!$route) {
+                return null;
+            }
+        }
+        return $route;
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function run(): void
+    {
+
+        $route = $this->resolveRoute();
+        if(!$route){
             $this->redirectTo("errors.404");
         }
         $controller = $route->getController();
         $action = $route->getAction();
+
         $objet = new $controller();
-        $objet->$action();
+        $reflectionMethod = new ReflectionMethod($controller, $action);
+        $parameters = $reflectionMethod->getParameters();
+        $args = [];
+        foreach ($parameters as $parameter) {
+            $paramType = $parameter->getType()->getName();
+            if ($paramType === 'Core\Request' || is_subclass_of($paramType,'Core\Request')) {
+                $args[] = new $paramType();
+            } elseif ($paramType === 'Core\Response' || is_subclass_of($paramType,'Core\Response')) {
+                $args[] = $paramType();
+            }
+        }
+        call_user_func_array([$objet, $action], $args);
     }
 
     public function get(string $path, array $callable): Route
@@ -112,6 +164,33 @@ class Router
         $route->setMethod("POST");
         $this->routes[] = $route;
         return $route;
+    }
+
+    private function getRouteByDynamicURL($uri, $method)
+    {
+        foreach ($this->routes as $route) {
+            if ($route->getMethod() !== $method) {
+                continue;
+            }
+
+            $pattern = preg_replace_callback('#:(\w+)#', function ($matches) {
+                return '(?<' . $matches[1] . '>[^/]+)';
+            }, $route->getPath());
+            $pattern = "#^$pattern$#";
+
+            if (preg_match($pattern, $uri, $matches)) {
+                $params = [];
+                foreach ($matches as $key => $value) {
+                    if (is_string($key)) {
+                        $params[$key] = $value;
+                    }
+                }
+                $route->setParams($params);
+                return $route;
+            }
+        }
+
+        return null;
     }
 
 

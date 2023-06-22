@@ -6,6 +6,7 @@ class View {
     private String $template;
     private $data = [];
 
+
     public function __construct(String $view, String $template="back"){
         $this->setView($view);
         $this->setTemplate($template);
