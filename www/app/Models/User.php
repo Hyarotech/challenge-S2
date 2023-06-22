@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Core\enums\Role;
+use Core\Mail;
 use Core\ORM;
+use Core\Router;
+use Exception;
 
 class User extends ORM
 {
@@ -16,10 +19,10 @@ class User extends ORM
     protected bool $verified = false;
     protected string $date_inserted;
     protected string $date_updated;
-    protected string $access_token;
-    protected string $user_description;
+    protected ?string $access_token;
+    protected ?string $user_description;
 
-    protected Role $role = Role::USER;
+    protected string $role = "USER";
 
 
     public function alreadyExist(string $email)
@@ -102,12 +105,12 @@ class User extends ORM
         $this->verified = $verified;
     }
 
-    public function getAccessToken(): string
+    public function getAccessToken(): string|null
     {
         return $this->access_token;
     }
 
-    public function setAccessToken(string $access_token): void
+    public function setAccessToken(?string $access_token): void
     {
         $this->access_token = $access_token;
     }
@@ -117,26 +120,26 @@ class User extends ORM
         return $this->user_description;
     }
 
-    public function setUserDescription(string $user_description): void
+    public function setUserDescription(?string $user_description): void
     {
         $this->user_description = $user_description;
     }
 
-    public function setDateInserted(string $date_inserted): void
+    public function setDateInserted(?string $date_inserted): void
     {
         $this->date_inserted = $date_inserted;
     }
 
-    public function setDateUpdated(string $date_updated): void
+    public function setDateUpdated(?string $date_updated): void
     {
         $this->date_updated = $date_updated;
     }
 
-    public function getRole(): Role
+    public function getRole(): string
     {
         return $this->role;
     }
-    public function setRole(Role $role): void
+    public function setRole(string $role): void
     {
         $this->role = $role;
     }
@@ -153,5 +156,43 @@ class User extends ORM
             }
         }
         return false;
+    }
+
+    public function verify(string $token)
+    {
+        $url = env("APP_URL").Router::generateDynamicRoute("security.verifEmail", ["token" => $token,"email" => $this->getEmail()]);
+        $mail = new Mail();
+        $mail->send(
+            "Email verification",
+            "verif_email",
+            env("APP_FROM_EMAIL"),
+            env("APP_NAME"),
+            $this->getEmail(),
+            $this->getFirstname()." ". $this->getLastname(),
+            [
+                "url" => $url,
+            ]
+        );
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function hydrate(array $data): User
+    {
+        $user = new User();
+        $user->setId($data["id"]);
+        $user->setFirstname($data["firstname"]);
+        $user->setLastname($data["lastname"]);
+        $user->setEmail($data["email"]);
+        $user->setPassword($data["password"]);
+        $user->setVerified($data["verified"]);
+        $user->setDateInserted($data["date_inserted"]);
+        $user->setDateUpdated($data["date_updated"]);
+        $user->setAccessToken($data["access_token"]);
+        $user->setUserDescription($data["user_description"]);
+        $user->setRole($data["role"]);
+        return $user;
     }
 }

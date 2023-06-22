@@ -1,6 +1,5 @@
 <?php
 define("ROOT", dirname(__DIR__));
-
 require ROOT . "/vendor/autoload.php";
 use Core\Router;
 use Core\App;

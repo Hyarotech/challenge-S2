@@ -6,6 +6,7 @@ class View {
     private String $template;
     private $data = [];
 
+
     public function __construct(String $view, String $template="back"){
         $this->setView($view);
         $this->setTemplate($template);
@@ -33,12 +34,6 @@ class View {
         }
         $this->template = $template;
     }
-
-    public function modal($name, $config):void
-    {
-        include ROOT."/app/Views/Modals/".$name.".php";
-    }
-
     public function __destruct(){
         extract($this->data);
         include $this->template;

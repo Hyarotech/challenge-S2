@@ -39,6 +39,14 @@ class Route
         return $this->path;
     }
 
+    public function getParam(string $identifier): string|null
+    {
+        if (!isset($this->params[$identifier])) {
+            return null;
+        }
+        return $this->params[$identifier];
+    }
+
     /**
      * @param string $path
      * @return Route
