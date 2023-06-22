@@ -17,6 +17,9 @@ class HomeController{
     }
 
     public function dashboard(){
-        echo "Mon tableau de bord";
+        $pseudo = "test";
+        $view = new View("Main/index", "back");
+        $view->assign("pseudo", $pseudo);
+
     }
 }

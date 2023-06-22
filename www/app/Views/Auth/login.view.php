@@ -28,10 +28,10 @@
 
                 <div class="flex flex-row gap-2 w-full items-center">
                     <p class="text-center text-md mt-6">Pas de compte ? <a
-                            href="<?= \Core\Router::generateURl("security.register") ?>"
+                            href="<?= \Core\Router::generateRoute("security.register") ?>"
                             class="link link-primary">S'inscrire</a></p>
 
-                    <a href="<?= \Core\Router::generateURl("security.forgotPassword") ?>"
+                    <a href="<?= \Core\Router::generateRoute("security.forgotPassword") ?>"
                         class="text-center text-md mt-6">Réinitialiser mot de passe </a>
                 </div>
             </div>

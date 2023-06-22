@@ -20,11 +20,11 @@
 </head>
 
 <body class="min-h-screen bg-base-100">
-<div class="flex flex-col h-auto">
-    <div class="z-40 w-full fixed top-0">
+<div class="flex flex-col h-auto bg-red-500">
+    <div class="z-40 w-full fixed top-0 ">
         <?php $this->component('Nav/navbar'); ?>
     </div>
-        <div class="w-full mt-[84px] relative ">
+        <div class="w-full mt-[66px] relative ">
             <?php include $this->view; ?>
         </div>
     </div>

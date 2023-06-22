@@ -10,13 +10,7 @@
 
     <title>GES CMS</title>
 
-    <!-- PROD CSS JS 
-        <script type="module" crossorigin src="/assets/js/app.js"></script>
-    <link rel="stylesheet" href="/assets/css/style.css">
-
--->
-
-    <!-- DEV CSS JS -->
+   
     <link rel="stylesheet" href="/assets/css/style.css">
 
 </head>
@@ -30,16 +24,13 @@
             <?php $this->component('Nav/navbar'); ?>
         </div>
 
-        <div class="w-full bg-red-500 mt-[84px] md:w-[calc(100%_-_80px)] relative md:left-[80px]">
+        <div class="w-full bg-red-500 mt-[66px] md:w-[calc(100%_-_80px)] relative md:left-[80px]">
             <?php include $this->view; ?>
         </div>
     </div>
 
 
-    <script
-  src="https://code.jquery.com/jquery-3.7.0.min.js"
-  integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
-  crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
   
   <script type="module" crossorigin src="/assets/js/app.js"></script>
 

@@ -10,7 +10,6 @@ class Router
     private array $routes = [];
     private static ?Router $instance = null;
 
-
     public static function getInstance(): ?Router
     {
         if (is_null(self::$instance)) {
@@ -38,10 +37,12 @@ class Router
     }
 
     public function getRoute(string $url, string $method = "GET"): Route|bool
-    {
+    {   
         $routes = array_filter($this->routes, function (Route $route) use ($method, $url) {
             return $route->getPath() === $url && $route->getMethod() === $method;
         });
+
+
         if (!empty($routes)) {
             return $routes[array_key_first($routes)];
         }
@@ -74,10 +75,14 @@ class Router
         $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
         $uri = (empty($uri)) ? "/" : $uri;
+        
         $method = $_SERVER["REQUEST_METHOD"];
+
         //Dans le cas ou nous sommes à la racine $uri sera vide du coup je remets /
         $uri = (empty($uri)) ? "/" : $uri;
         $route = $this->getRoute($uri, $method);
+
+ 
         if (!$route) {
             $this->redirectTo("errors.404");
         }

@@ -84,7 +84,7 @@
                 </div>
 
                 <p class="text-center mt-6">Déjà un compte ? <a
-                        href="<?= \Core\Router::generateURl("security.login") ?>" class="link link-primary">Se
+                        href="<?= \Core\Router::generateRoute("security.login")?>" class="link link-primary">Se
                         connecter</a></p>
 
             </div>
