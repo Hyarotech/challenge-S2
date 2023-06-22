@@ -6,7 +6,7 @@
                 src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" alt="Movie" />
 
         </div>
-        <form action="<?= \Core\Router::generateURl("security.login.handle") ?>" method="post" class="card-body">
+        <form action="<?= \Core\Router::generateRoute("security.login.handle") ?>" method="post" class="card-body">
             <h1 class="text-3xl">Se connecter</h1>
             <hr />
 
@@ -21,7 +21,7 @@
                     </label>
                     <input type="email" placeholder="XxSasukexX@wanadoo.fr" class="input input-bordered w-full" />
                     <label class="label">
-                        <span class="label-text-alt text-error  ">
+                        <span class="label-text-alt text-red-500">
                             <?= \Core\Session::getError("email") ?>
                         </span>
                     </label>
@@ -34,7 +34,7 @@
                     </label>
                     <input type="password" placeholder="***********" class="input input-bordered w-full" />
                     <label class="label">
-                        <span class="label-text-alt text-error  ">
+                        <span class="label-text-alt text-red-500">
                             <?= \Core\Session::getError("password") ?>
                         </span>
                     </label>
@@ -50,20 +50,14 @@
 
                 <div class="flex flex-row gap-2 w-full items-center">
                     <p class="text-center text-md mt-6">Pas de compte ? <a
-                            href="<?= \Core\Router::generateURl("security.register") ?>"
+                            href="<?= \Core\Router::generateRoute("security.register") ?>"
                             class="link link-primary">S'inscrire</a></p>
 
-                    <a href="<?= \Core\Router::generateURl("security.forgotPassword") ?>"
+                    <a href="<?= \Core\Router::generateRoute("security.forgotPassword") ?>"
                         class="text-center text-md mt-6">Réinitialiser mot de passe </a>
                 </div>
             </div>
 
         </form>
-        <div class="divider">
-            Vous n'avez pas de compte?
-        </div>
-        <div>
-            <a href="<?= \Core\Router::generateRoute("security.register")?>" class="btn btn-accent btn-block">S'inscrire</a>
-        </div>
+
     </div>
-</div>

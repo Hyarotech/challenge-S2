@@ -6,7 +6,7 @@
                 src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" alt="Movie" />
 
         </div>
-        <form class="card-body" action="<?= \Core\Router::generateURl("security.register.handle") ?>" method="post">
+        <form class="card-body" action="<?= \Core\Router::generateRoute("security.register.handle") ?>" method="post">
             <h1 class="text-3xl">S'inscrire</h1>
             <hr />
 
@@ -98,7 +98,7 @@
                 </div>
 
                 <p class="text-center mt-6">Déjà un compte ? <a
-                        href="<?= \Core\Router::generateURl("security.login") ?>" class="link link-primary">Se
+                        href="<?= \Core\Router::generateRoute("security.login") ?>" class="link link-primary">Se
                         connecter</a></p>
 
             </div>
