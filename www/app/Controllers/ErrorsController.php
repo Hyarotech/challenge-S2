@@ -2,14 +2,14 @@
 
 namespace App\Controllers;
 
-use Core\View;
+use Core\Resource;
 
 class ErrorsController
 {
-    public function notFound(): View
+    public function notFound(): Resource
     {
         http_response_code(404);
-        return new View("Errors/404","front");
+        return new Resource("Errors/404","front");
     }
 
 }

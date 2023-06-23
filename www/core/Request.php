@@ -63,4 +63,12 @@ class Request
     {
         $this->data = $data;
     }
+
+    public function get(string $key): string|null
+    {
+        if (!isset($this->data[$key])) {
+            return null;
+        }
+        return $this->data[$key];
+    }
 }

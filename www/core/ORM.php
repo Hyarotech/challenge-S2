@@ -10,6 +10,8 @@ abstract class ORM
     protected PDO $pdo;
     protected string $table;
 
+    protected static $singleton;
+
     public function __construct()
     {
         //Mettre en place un SINGLETON
@@ -24,6 +26,17 @@ abstract class ORM
         $this->table = end($classExploded);
         $this->table = env("DB_SCHEMA", "public") . "." . $this->table;
     }
+
+    public static function getInstance(): static
+    {
+        if(!self::$singleton){
+            self::$singleton = new static();
+        }
+        return self::$singleton;
+    }
+
+
+
 
     abstract public static function hydrate(array $data): mixed;
 
@@ -65,21 +78,24 @@ abstract class ORM
         $queryPrepared->execute($columns);
     }
 
-    public function findBy(string $column, string $value)
+    public static function findBy(string $column, string $value)
     {
-        $queryPrepared = $this->pdo->prepare("SELECT * FROM " . $this->table . " WHERE " . $column . " = :value");
+        $instance = self::getInstance();
+        $queryPrepared = $instance->pdo->prepare("SELECT * FROM " . $instance->table . " WHERE " . $column . " = :value");
         $queryPrepared->bindValue(":value", $value);
         $queryPrepared->execute();
         return $queryPrepared->fetch();
     }
 
-    public function findAll(): array
+    public static function findAll(): array
     {
-        return $this->pdo->query("SELECT * FROM " . $this->table)->fetchAll();
+        $instance = self::getInstance();
+        return $instance->pdo->query("SELECT * FROM " . $instance->table)->fetchAll();
     }
 
-    public function findOne(int $id){
-        $queryPrepared = $this->pdo->prepare("SELECT * FROM " . $this->table . " WHERE id = :id");
+    public static function findOne(int $id){
+        $instance = self::getInstance();
+        $queryPrepared = $instance->pdo->prepare("SELECT * FROM " . $instance->table . " WHERE id = :id");
         $queryPrepared->bindValue(":id", $id);
         $queryPrepared->execute();
         return $queryPrepared->fetch();

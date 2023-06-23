@@ -13,6 +13,8 @@ class Route
 
     private string $method = 'GET';
 
+    private array $middlewares = [];
+
     /**
      * @return string
      */
@@ -126,6 +128,23 @@ class Route
     public function setMethod(string $method): Route
     {
         $this->method = $method;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMiddlewares(): array
+    {
+        return $this->middlewares;
+    }
+
+    /**
+     * @param array $middlewares
+     */
+    public function setMiddlewares(array $middlewares): Route
+    {
+        $this->middlewares = $middlewares;
         return $this;
     }
 

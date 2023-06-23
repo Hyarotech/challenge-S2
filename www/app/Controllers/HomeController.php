@@ -1,19 +1,20 @@
 <?php
 namespace App\Controllers;
-use Core\View;
+use App\Models\User;
+use Core\Session;
+use Core\Resource;
 
 class HomeController{
-    public function index(): View
+    public function index(): Resource
     {
-
         $pseudo = "Prof";
-        $view = new View("Main/index", "front");
+        $view = new Resource("Main/index", "front");
         $view->assign("pseudo", $pseudo);
         return $view;
     }
 
     public function contact(){
-        $view = new View("Main/contact", "front");
+        $view = new Resource("Main/contact", "front");
     }
 
     public function dashboard(){

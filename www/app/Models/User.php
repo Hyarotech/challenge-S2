@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Core\enums\Role;
+use Core\FlashNotifier;
 use Core\Mail;
 use Core\ORM;
 use Core\Router;
@@ -19,20 +19,12 @@ class User extends ORM
     protected bool $verified = false;
     protected string $date_inserted;
     protected string $date_updated;
+    protected ?string $verif_token;
     protected ?string $access_token;
     protected ?string $user_description;
 
     protected string $role = "USER";
 
-
-    public function alreadyExist(string $email)
-    {
-        $sql = "SELECT * FROM " . env('DB_SCHEMA', 'public') . ".user WHERE email = :email";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":email", $email);
-        $stmt->execute();
-        return $stmt->fetch();
-    }
 
     public function getId(): int
     {
@@ -105,14 +97,14 @@ class User extends ORM
         $this->verified = $verified;
     }
 
-    public function getAccessToken(): string|null
+    public function getVerifToken(): string|null
     {
-        return $this->access_token;
+        return $this->verif_token;
     }
 
-    public function setAccessToken(?string $access_token): void
+    public function setVerifToken(?string $verif_token): void
     {
-        $this->access_token = $access_token;
+        $this->verif_token = $verif_token;
     }
 
     public function getUserDescription(): string
@@ -139,28 +131,33 @@ class User extends ORM
     {
         return $this->role;
     }
+
     public function setRole(string $role): void
     {
         $this->role = $role;
     }
-    public function login(): bool
+
+    /**
+     * @return string|null
+     */
+    public function getAccessToken(): ?string
     {
-        $sql = "SELECT * FROM " . env('DB_SCHEMA', 'public') . ".user WHERE email = :email";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":email", $this->getEmail());
-        $stmt->execute();
-        $user = $stmt->fetch();
-        if ($user) {
-            if (password_verify($this->getPassword(), $user["password"])) {
-                return true;
-            }
-        }
-        return false;
+        return $this->access_token;
     }
 
-    public function verify(string $token)
+    /**
+     * @param string|null $access_token
+     */
+    public function setAccessToken(?string $access_token): void
     {
-        $url = env("APP_URL").Router::generateDynamicRoute("security.verifEmail", ["token" => $token,"email" => $this->getEmail()]);
+        $this->access_token = $access_token;
+    }
+
+
+
+    public function verifyUserEmail(string $token): void
+    {
+        $url = env("APP_URL") . Router::generateDynamicRoute("security.verifEmail", ["token" => $token, "email" => $this->getEmail()]);
         $mail = new Mail();
         $mail->send(
             "Email verification",
@@ -168,7 +165,7 @@ class User extends ORM
             env("APP_FROM_EMAIL"),
             env("APP_NAME"),
             $this->getEmail(),
-            $this->getFirstname()." ". $this->getLastname(),
+            $this->getFirstname() . " " . $this->getLastname(),
             [
                 "url" => $url,
             ]
@@ -190,9 +187,12 @@ class User extends ORM
         $user->setVerified($data["verified"]);
         $user->setDateInserted($data["date_inserted"]);
         $user->setDateUpdated($data["date_updated"]);
-        $user->setAccessToken($data["access_token"]);
+        $user->setVerifToken($data["verif_token"]);
         $user->setUserDescription($data["user_description"]);
         $user->setRole($data["role"]);
+        $user->setAccessToken($data["access_token"]);
         return $user;
     }
+
+
 }

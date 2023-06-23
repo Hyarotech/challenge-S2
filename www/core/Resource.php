@@ -1,6 +1,6 @@
 <?php
 namespace Core;
-class View {
+class Resource {
 
     private String $view;
     private String $template;
@@ -33,6 +33,11 @@ class View {
             die("Le template ".$template." n'existe pas");
         }
         $this->template = $template;
+    }
+
+    public static function asset(string $path):string
+    {
+        return env("APP_URL")."/assets".$path;
     }
     public function __destruct(){
         extract($this->data);

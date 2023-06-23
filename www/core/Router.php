@@ -91,7 +91,7 @@ class Router
         return $url;
     }
 
-    public function resolveRoute() :Route|null
+    public function resolveRoute(): Route|null
     {
         $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
@@ -118,8 +118,16 @@ class Router
     {
 
         $route = $this->resolveRoute();
-        if(!$route){
+        if (!$route) {
             $this->redirectTo("errors.404");
+        }
+        $request = new Request();
+        $middlewares = $route->getMiddlewares();
+        if (!empty($middlewares)) {
+            foreach ($middlewares as $middleware) {
+                $middleware = new $middleware();
+                $middleware->handle($request);
+            }
         }
         $controller = $route->getController();
         $action = $route->getAction();
@@ -130,9 +138,9 @@ class Router
         $args = [];
         foreach ($parameters as $parameter) {
             $paramType = $parameter->getType()->getName();
-            if ($paramType === 'Core\Request' || is_subclass_of($paramType,'Core\Request')) {
+            if ($paramType === 'Core\Request' || is_subclass_of($paramType, 'Core\Request')) {
                 $args[] = new $paramType();
-            } elseif ($paramType === 'Core\Response' || is_subclass_of($paramType,'Core\Response')) {
+            } elseif ($paramType === 'Core\Response' || is_subclass_of($paramType, 'Core\Response')) {
                 $args[] = $paramType();
             }
         }
