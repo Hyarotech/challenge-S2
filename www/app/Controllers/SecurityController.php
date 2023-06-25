@@ -2,18 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Forms\Security\AddUser;
-use App\Forms\Security\LoginForm;
 use App\Models\User;
+use App\Notifications\VerifyUserEmailNotification;
 use App\Requests\LoginRequest;
 use App\Requests\RegisterRequest;
-use Core\enums\Role;
 use Core\FlashNotifier;
-use Core\Request;
+use Core\Resource;
 use Core\Router;
 use Core\Session;
-use Core\Verificator;
-use Core\Resource;
 use Exception;
 
 class SecurityController
@@ -33,14 +29,16 @@ class SecurityController
             Router::redirectTo("security.register");
         }
         $token = bin2hex(random_bytes(50));
-        $user = new User();
-        $user->setEmail($request->get("email"));
-        $user->setFirstname($request->get("firstname"));
-        $user->setLastname($request->get("lastname"));
-        $user->setPassword(password_hash($request->get("password"), PASSWORD_DEFAULT));
-        $user->setVerifToken(password_hash($token, PASSWORD_DEFAULT));
-        $user->save();
-        $user->verifyUserEmail($token);
+        $data = [
+            "firstname" => $request->get("firstname"),
+            "lastname" => $request->get("lastname"),
+            "email" => $request->get("email"),
+            "password" => password_hash($request->get("password"), PASSWORD_DEFAULT),
+            "verif_token" => password_hash($token, PASSWORD_DEFAULT),
+        ];
+        User::save($data);
+        $data["verif_token"] = $token;
+        new VerifyUserEmailNotification($data);
         Router::redirectTo("security.login");
     }
 
@@ -61,18 +59,20 @@ class SecurityController
             FlashNotifier::error("Invalid user");
             Router::redirectTo("errors.404");
         }
-
-        $user = User::hydrate($user);
         if($user->isVerified()){
             FlashNotifier::error("Your account is already verified");
             Router::redirectTo("errors.404");
         }
         if (password_verify($token, $user->getVerifToken())) {
-            $user->setVerified(true);
-            $user->setVerifToken(null);
-            $user->setId($user->getId());
-            $user->update();
-            Session::set("success", "Votre compte a bien été vérifié");
+            $data=[
+                "firstname" => $user->getFirstname(),
+                "lastname" => $user->getLastname(),
+                "email" => $user->getEmail(),
+                "verified" => true,
+                "verif_token" => null,
+            ];
+            User::update($user->getId(),$data);
+            FlashNotifier::success("Votre compte a bien été vérifié");
             Router::redirectTo("security.login");
         } else {
             FlashNotifier::error("Invalid token or email here");
@@ -95,7 +95,6 @@ class SecurityController
             Session::set("errors", ["global" => "Email ou mot de passe incorrect"]);
             Router::redirectTo("security.login");
         }
-        $userInDb = User::hydrate($userInDb);
 
         if (!password_verify($user->getPassword(), $userInDb->getPassword())) {
             Session::set("errors", ["global" => "Email ou mot de passe incorrect"]);
@@ -106,8 +105,10 @@ class SecurityController
             Router::redirectTo("security.login");
         }
         $setAccessToken = bin2hex(random_bytes(50));
-        $userInDb->setAccessToken($setAccessToken);
-        $userInDb->update();
+        $data = [
+            "access_token" => $setAccessToken
+        ];
+        User::update($userInDb->getId(), $data);
         Session::set("user", [
             "email"=> $userInDb->getEmail(),
             "accessToken" => $setAccessToken,
@@ -119,11 +120,13 @@ class SecurityController
     public function logout(): void
     {
         $userInSession = Session::get("user");
-        Session::set("user", null);
+
         $user = User::findBy("email", $userInSession["email"]);
-        $user = User::hydrate($user);
-        $user->setAccessToken(null);
-        $user->update();
+        $data = [
+            "access_token" => null
+        ];
+        User::update($user->getId(), $data);
+        Session::set("user", null);
         FlashNotifier::success("Vous êtes déconnecté");
         Router::redirectTo("security.login");
     }

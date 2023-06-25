@@ -18,12 +18,11 @@ class AuthMiddleware extends \Core\Middleware
             FlashNotifier::error("You must be logged in to access this page");
             Router::redirectTo("security.login");
         }
-        $user = User::findby('email',$userSession['email']);
+        $user = User::findBy('email',$userSession['email']);
         if(!$user){
             FlashNotifier::error("You must be logged in to access this page");
             Router::redirectTo("security.login");
         }
-        $user = User::hydrate($user);
         $token = $user->getAccessToken();
         if(!$token){
             FlashNotifier::error("You must be logged in to access this page");
