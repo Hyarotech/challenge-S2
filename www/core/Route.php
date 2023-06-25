@@ -109,7 +109,11 @@ class Route
      */
     public function setParams(array $params): Route
     {
-        $this->params = $params;
+        $paramsDecoded = [];
+        foreach ($params as $key => $value) {
+            $paramsDecoded[$key] = urldecode($value);
+        }
+        $this->params = $paramsDecoded;
         return $this;
     }
 

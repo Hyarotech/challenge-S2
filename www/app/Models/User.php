@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use Core\FlashNotifier;
-use Core\Mail;
-use Core\ORM;
-use Core\Router;
-use Exception;
+use Core\Model;
+use DateTime;
 
-class User extends ORM
+class User extends Model
 {
 
     protected int $id = 0;
@@ -17,13 +14,25 @@ class User extends ORM
     protected string $email;
     protected string $password;
     protected bool $verified = false;
-    protected string $date_inserted;
-    protected string $date_updated;
-    protected ?string $verif_token;
-    protected ?string $access_token;
-    protected ?string $user_description;
+    protected DateTime $dateInserted;
+    protected DateTime $dateUpdated;
+    protected ?string $verifToken;
+    protected ?string $accessToken;
+    protected ?string $userDescription;
 
     protected string $role = "USER";
+
+    protected ?array $fillable = [
+        "firstname",
+        "lastname",
+        "email",
+        "password",
+        "verified",
+        "verif_token",
+        "user_description",
+        "role",
+        "access_token"
+    ];
 
 
     public function getId(): int
@@ -77,15 +86,39 @@ class User extends ORM
         $this->password = $password;
     }
 
-    public function getDateInserted(): string
+    /**
+     * @return DateTime
+     */
+    public function getDateInserted(): DateTime
     {
-        return $this->date_inserted;
+        return $this->dateInserted;
     }
 
-    public function getDateUpdated(): string
+    /**
+     * @param DateTime $dateInserted
+     */
+    public function setDateInserted(DateTime $dateInserted): void
     {
-        return $this->date_updated;
+        $this->dateInserted = $dateInserted;
     }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateUpdated(): DateTime
+    {
+        return $this->dateUpdated;
+    }
+
+    /**
+     * @param DateTime $dateUpdated
+     */
+    public function setDateUpdated(DateTime $dateUpdated): void
+    {
+        $this->dateUpdated = $dateUpdated;
+    }
+
+
 
     public function isVerified(): bool
     {
@@ -99,32 +132,22 @@ class User extends ORM
 
     public function getVerifToken(): string|null
     {
-        return $this->verif_token;
+        return $this->verifToken;
     }
 
-    public function setVerifToken(?string $verif_token): void
+    public function setVerifToken(?string $verifToken): void
     {
-        $this->verif_token = $verif_token;
+        $this->verifToken = $verifToken;
     }
 
     public function getUserDescription(): string
     {
-        return $this->user_description;
+        return $this->userDescription;
     }
 
-    public function setUserDescription(?string $user_description): void
+    public function setUserDescription(?string $userDescription): void
     {
-        $this->user_description = $user_description;
-    }
-
-    public function setDateInserted(?string $date_inserted): void
-    {
-        $this->date_inserted = $date_inserted;
-    }
-
-    public function setDateUpdated(?string $date_updated): void
-    {
-        $this->date_updated = $date_updated;
+        $this->userDescription = $userDescription;
     }
 
     public function getRole(): string
@@ -142,57 +165,14 @@ class User extends ORM
      */
     public function getAccessToken(): ?string
     {
-        return $this->access_token;
+        return $this->accessToken;
     }
 
     /**
-     * @param string|null $access_token
+     * @param string|null $accessToken
      */
-    public function setAccessToken(?string $access_token): void
+    public function setAccessToken(?string $accessToken): void
     {
-        $this->access_token = $access_token;
+        $this->accessToken = $accessToken;
     }
-
-
-
-    public function verifyUserEmail(string $token): void
-    {
-        $url = env("APP_URL") . Router::generateDynamicRoute("security.verifEmail", ["token" => $token, "email" => $this->getEmail()]);
-        $mail = new Mail();
-        $mail->send(
-            "Email verification",
-            "verif_email",
-            env("APP_FROM_EMAIL"),
-            env("APP_NAME"),
-            $this->getEmail(),
-            $this->getFirstname() . " " . $this->getLastname(),
-            [
-                "url" => $url,
-            ]
-        );
-
-    }
-
-    /**
-     * @throws Exception
-     */
-    public static function hydrate(array $data): User
-    {
-        $user = new User();
-        $user->setId($data["id"]);
-        $user->setFirstname($data["firstname"]);
-        $user->setLastname($data["lastname"]);
-        $user->setEmail($data["email"]);
-        $user->setPassword($data["password"]);
-        $user->setVerified($data["verified"]);
-        $user->setDateInserted($data["date_inserted"]);
-        $user->setDateUpdated($data["date_updated"]);
-        $user->setVerifToken($data["verif_token"]);
-        $user->setUserDescription($data["user_description"]);
-        $user->setRole($data["role"]);
-        $user->setAccessToken($data["access_token"]);
-        return $user;
-    }
-
-
 }
