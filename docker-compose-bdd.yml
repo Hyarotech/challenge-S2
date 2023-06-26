@@ -19,7 +19,7 @@ services:
     ports:
       - 6001:80
     environment:
-      PGADMIN_DEFAULT_EMAIL: "houmame.lazar@hyarotech.com"
+      PGADMIN_DEFAULT_EMAIL: "admin@cms.com"
       PGADMIN_DEFAULT_PASSWORD: "challengeS2"
     depends_on:
       - database
