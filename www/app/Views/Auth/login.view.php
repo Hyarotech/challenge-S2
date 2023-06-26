@@ -19,7 +19,7 @@
                     <label class="label">
                         <span class="label-text">E-mail</span>
                     </label>
-                    <input type="email" placeholder="XxSasukexX@wanadoo.fr" class="input input-bordered w-full" />
+                    <input type="email" name="email" placeholder="XxSasukexX@wanadoo.fr" class="input input-bordered w-full" />
                     <label class="label">
                         <span class="label-text-alt text-red-500">
                             <?= \Core\Session::getError("email") ?>
@@ -32,7 +32,7 @@
                     <label class="label">
                         <span class="label-text">Mot de passe</span>
                     </label>
-                    <input type="password" placeholder="***********" class="input input-bordered w-full" />
+                    <input type="password" name="password" placeholder="***********" class="input input-bordered w-full" />
                     <label class="label">
                         <span class="label-text-alt text-red-500">
                             <?= \Core\Session::getError("password") ?>

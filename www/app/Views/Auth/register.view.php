@@ -28,7 +28,7 @@
                     <label class="label">
                         <span class="label-text">Prénom</span>
                     </label>
-                    <input type="text" placeholder="Madara" name="lastname" class="input input-bordered w-full" />
+                    <input type="text" laceholder="Madara" name="lastname" class="input input-bordered w-full" />
                     <label class="label">
                         <span class="label-text-alt text-error  ">
                             <?= \Core\Session::getError("lastname") ?>
