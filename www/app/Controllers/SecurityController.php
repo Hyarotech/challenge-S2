@@ -82,6 +82,7 @@ class SecurityController
 
     public function login(): Resource
     {
+       
         return new Resource("Auth/login", "front");
     }
 

@@ -15,6 +15,7 @@ abstract class Model
 
     public function __construct()
     {
+
         //Mettre en place un SINGLETON
         try {
             $this->pdo = new PDO("pgsql:host=" . env("DB_HOST") . ";port=" . env("DB_PORT") . ";dbname=" . env("DB_DATABASE"), env("DB_USERNAME"), env("DB_PASSWORD"));

@@ -2,9 +2,10 @@
 namespace App\Models;
 
 use App\Configs\PageConfig;
-use Core\ORM;
+use Core\Model;
+
 use Core\Verificator;
-class Page extends ORM
+class Page extends Model
 {
     private int $id;
     private int $user_id;

@@ -1,6 +1,6 @@
 <?php
 namespace Core;
-class View {
+class Resource {
 
     private String $view;
     private String $template;

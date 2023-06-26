@@ -9,6 +9,7 @@
         <form class="card-body" action="<?= \Core\Router::generateRoute("security.register.handle") ?>" method="post">
             <h1 class="text-3xl">S'inscrire</h1>
             <hr />
+            <p class = "text-sm mt-2 text-red-500 text-center"><?= \Core\Session::getError("global") ?></p>
 
             <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-3 sm:col-span-3">

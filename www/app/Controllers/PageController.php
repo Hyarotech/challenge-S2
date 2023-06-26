@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use App\Models\Page;
 use App\Requests\PageCreateRequest;
-use Core\View;
+use Core\Resource;
 
 class PageController 
 {
@@ -11,7 +11,7 @@ class PageController
     {
         $page = new Page();
         
-        $view = new View("Page/index", "front");
+        $view = new Resource("Page/index", "front");
         return $view;    
     }
     public function handleCreate(PageCreateRequest $request)

@@ -6,12 +6,13 @@
                 src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" alt="Movie" />
 
         </div>
+
         <form action="<?= \Core\Router::generateRoute("security.login.handle") ?>" method="post" class="card-body">
-            <h1 class="text-3xl">Se connecter</h1>
+      
+        <h1 class="text-3xl">Se connecter</h1>
             <hr />
-
-
-
+                <p class = "text-sm mt-2 text-red-500 text-center"><?= \Core\Session::getError("global") ?></p>
+  
             <div class="grid grid-cols-6 gap-6">
 
 

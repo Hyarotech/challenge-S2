@@ -28,7 +28,7 @@
                             </a>
                         </li>
                         <li><a>Settings</a></li>
-                        <li><a href="<?= \Core\Router::generateURl('security.logout'); ?>">Logout</a></li>
+                        <li><a href="<?= \Core\Router::generateRoute('security.logout'); ?>">Logout</a></li>
                     </ul>
                 </div>
             </div>
