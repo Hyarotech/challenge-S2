@@ -2,7 +2,7 @@
 
 namespace Core;
 
-class Rules
+abstract class Rules
 {
 
     public static function required($value,$data,&$listOfErrors): bool
@@ -45,6 +45,23 @@ class Rules
     {
         if(!preg_match($data["args"][0],$value)){
             $listOfErrors[$data["name"]][] = "Le champ " . $data["name"]." ne répond pas aux règles de validation";
+            return false;
+        }
+        return true;
+    }
+    public static function boolean($value, $data, &$listOfErrors): bool
+    {
+        
+        if (filter_var($value, FILTER_VALIDATE_BOOLEAN) === false) {
+            $listOfErrors[$data["name"]][] = "Le champ " . $data["name"] . " doit être un booléen.";
+            return false;
+        }
+        return true;
+    }
+    public static function integer($value, $data, &$listOfErrors): bool
+    {
+        if(filter_var($value, FILTER_VALIDATE_INT)){
+            $listOfErrors[$data["name"]][] = "Le champ " . $data["name"] . " doit être un nombre entier.";
             return false;
         }
         return true;

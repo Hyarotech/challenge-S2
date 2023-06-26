@@ -133,17 +133,22 @@ class Router
         $action = $route->getAction();
 
         $objet = new $controller();
+
         $reflectionMethod = new ReflectionMethod($controller, $action);
         $parameters = $reflectionMethod->getParameters();
         $args = [];
+        
         foreach ($parameters as $parameter) {
             $paramType = $parameter->getType()->getName();
-            if ($paramType === 'Core\Request' || is_subclass_of($paramType, 'Core\Request')) {
-                $args[] = new $paramType();
-            } elseif ($paramType === 'Core\Response' || is_subclass_of($paramType, 'Core\Response')) {
+      
+            if ($paramType === 'Core\Request' || is_subclass_of($paramType,'Core\Request')) 
+                $args[] = new $paramType();    
+            elseif ($paramType === 'Core\Response' || is_subclass_of($paramType,'Core\Response')) 
                 $args[] = $paramType();
-            }
         }
+
+
+
         call_user_func_array([$objet, $action], $args);
     }
 

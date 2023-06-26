@@ -12,6 +12,7 @@ class AddUser extends AForm
     public function getConfig(): array
     {
         return [
+            "rulesClass" => "Core\Rules",
             "config" => [
                 "method" => $this->getMethod(),
             ],
