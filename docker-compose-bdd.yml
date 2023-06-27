@@ -1,0 +1,25 @@
+version: "3"
+
+
+services:
+  database:
+    image: postgres
+    restart: always
+    ports:
+      - 54320:5432
+    volumes:
+      - ../.volumes:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: esgi
+      POSTGRES_PASSWORD: C9ERGFWJs2XjDM
+
+  adminer:
+    build: ./.docker/adminer
+    restart: always
+    ports:
+      - 6001:8080
+
+networks:
+  default:
+    external:
+      name: challenge-s2
