@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\page;
 
 use App\Models\Page;
 use App\Requests\PageCreateRequest;
