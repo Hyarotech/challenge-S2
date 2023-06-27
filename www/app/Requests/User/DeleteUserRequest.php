@@ -10,12 +10,13 @@ use Core\Request;
 
 class DeleteUserRequest extends Request
 {
-    protected $userId;
 
-    public function __construct($userId)
+    public function __construct()
     {
         parent::__construct();
-        $this->setMethod("DELETE");
-        $this->userId = $userId;
+        $this->setMethod("GET");
+        if(empty($this->getData())){
+            
+        }
     }
 }
