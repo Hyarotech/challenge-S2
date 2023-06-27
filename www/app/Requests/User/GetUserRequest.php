@@ -6,6 +6,8 @@ use Core\Router;
 use Core\Session;
 use Core\Verificator;
 
+// A modifier
+
 class GetUserRequest extends \Core\Request
 {
     protected $userId;
