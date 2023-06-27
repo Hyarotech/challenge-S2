@@ -11,7 +11,6 @@ class Verificator
     {
 
         $listOfErrors = [];
-
         foreach ($config["inputs"] as $name => $input) {
             if (str_starts_with($name, "confirm")) {
                 $toConfirm = explode("_", $name)[1];
@@ -22,8 +21,8 @@ class Verificator
             foreach ($input["rules"] as $rule) {
                 $args = explode(":", $rule);
                 $rule = array_shift($args);
-                if (method_exists(Rules::class, $rule)) {
-                    if (!Rules::$rule($data[$name], [
+                if (method_exists($config['rulesClass'], $rule)) {
+                    if (!$config['rulesClass']::$rule($data[$name], [
                         "name" => $name,
                         "args"=>$args
                     ], $listOfErrors)) {
@@ -36,6 +35,21 @@ class Verificator
 
         }
         return $listOfErrors;
+    }
+
+    public static function one(string $field, array $rules ,mixed $data): array {
+            $input = [ "inputs" => [
+                $field => [
+                    "rules"=>$rules,
+                ],
+            ]];
+        return self::form($input, [$field=>$data]);
+    }
+
+    public static function throwExceptions(array $listOfErrors): void
+    {
+        foreach ($listOfErrors as $error) 
+            throw new \Exception($error[0]);
     }
 
 }

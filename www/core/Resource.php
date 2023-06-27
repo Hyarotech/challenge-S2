@@ -6,7 +6,6 @@ class Resource {
     private String $template;
     private $data = [];
 
-
     public function __construct(String $view, String $template="back"){
         $this->setView($view);
         $this->setTemplate($template);
@@ -35,10 +34,12 @@ class Resource {
         $this->template = $template;
     }
 
-    public static function asset(string $path):string
+
+    public function modal($name, $config):void
     {
-        return env("APP_URL")."/assets".$path;
+        include ROOT."/app/Views/Modals/".$name.".php";
     }
+
     public function __destruct(){
         extract($this->data);
         include $this->template;

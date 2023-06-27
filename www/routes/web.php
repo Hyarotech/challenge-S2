@@ -10,4 +10,8 @@ $router->get("/register", [\App\Controllers\SecurityController::class, "register
 $router->post("/register", [\App\Controllers\SecurityController::class, "handleRegister"])->setName("security.register.handle")->setMiddlewares([\App\Middlewares\GuestMiddleware::class]);
 $router->get("/verif_email/:token/:email", [\App\Controllers\SecurityController::class, "verifEmail"])->setName("security.verifEmail");
 
+
+
+
 include ROOT . "/routes/errors.php";
+include ROOT . "/routes/pages.php";

@@ -18,6 +18,6 @@ class HomeController{
     }
 
     public function dashboard(){
-        echo "Mon tableau de bord";
+        $view = new Resource("Main/index", "back");
     }
 }

@@ -19,3 +19,14 @@ function isDateTime($string): bool
 {
     return (bool) strtotime($string);
 }
+
+function component(string $component,array $data = [], string $type = "view"): void {
+    if(count($data) > 0)
+        extract($data);
+    
+    $file = ROOT."/app/Views/".$component.".".$type.".php";
+    if(is_file($file))
+        include $file;
+    else
+        throw new \Exception('Composant "'.$component.'.'.$type.'.php" inexistant');
+}
