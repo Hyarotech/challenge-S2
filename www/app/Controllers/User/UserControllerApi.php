@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class UserControllerApi
+class UserControllerApi implements ControllerApi
 {
     public function create()
     {
