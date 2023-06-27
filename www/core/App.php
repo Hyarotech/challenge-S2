@@ -2,8 +2,11 @@
 
 namespace Core;
 
+use ReflectionException;
+
 class App
 {
+
     public function __construct(
         private Router $router,
         private string $envFile = ".env"
@@ -11,6 +14,11 @@ class App
     {
         // parse .env file
         $_ENV = parse_ini_file($this->envFile);
+        try{
+            $this->router->run();
+        } catch (\Exception $e){
+
+        }
     }
 
     /**

@@ -11,11 +11,16 @@ class Router
     private array $routes = [];
     private static ?Router $instance = null;
 
+    private function __construct()
+    {
+    }
+
 
     public static function getInstance(): ?Router
     {
         if (is_null(self::$instance)) {
             self::$instance = new Router();
+            require ROOT . "/routes/web.php";
         }
         return self::$instance;
     }
@@ -23,7 +28,6 @@ class Router
     public static function getActualRoute(): ?Route
     {
         $router = self::getInstance();
-        require ROOT . "/routes/web.php";
         return $router->resolveRoute();
 
     }
@@ -31,14 +35,12 @@ class Router
     public static function generateRoute(string $name): bool|string
     {
         $router = self::getInstance();
-        require ROOT . "/routes/web.php";
         return $router->generateURL($name);
     }
 
     public static function generateDynamicRoute(string $name, array $params): bool|string
     {
         $router = self::getInstance();
-        require ROOT . "/routes/web.php";
         return $router->generateURL($name, $params);
     }
 
