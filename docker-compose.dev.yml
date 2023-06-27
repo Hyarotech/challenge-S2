@@ -1,8 +1,8 @@
 version: '3'
 services:
   web:
-    build: ./.docker/site
-    restart: "always"
+    build: site
+    container_name: challenge_s2_dev
     ports :
      - 6005:80
     volumes:
@@ -10,26 +10,19 @@ services:
      - ./server/000-default.conf:/etc/apache2/sites-available/000-default.conf
      - ./server/apache2.conf:/etc/apache2/apache2.conf
      - ./server/php.ini:/usr/local/etc/php/php.ini
-    depends_on:
-      - composer
 
-  composer:
-    build: ./.docker/composer
+  database:
+    image: postgres
+    restart: always
     volumes:
-      - ./www:/app
-    command: install --optimize-autoloader --ignore-platform-reqs
-    restart: "no"
+      - ./.volumes/dev:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: esgi-dev
+      POSTGRES_USER: esgi
+      POSTGRES_PASSWORD: sfdgfGHKGJFfkjfuir
 
-  maildev:
-      image: maildev/maildev
-      container_name: progMail
-      command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
-      ports:
-        - "1080:80"
-        - "26:25"
-      restart: always
-
-networks:
-  default:
-    external:
-      name: challenge-s2
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 6001:8080

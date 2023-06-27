@@ -22,12 +22,19 @@ jobs:
           KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
           source: "."
-          target: "/root/challenge/prod"
+          target: "${{ secrets.PROD_TARGET }}"
 
-      - name: restart project
-        uses: garygrossgarten/github-action-ssh@0.7.0
+      - name: restart docker
+        uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd "/root/challenge/prod" && docker compose -f docker-compose.yml down && docker compose -f docker-compose.yml up -d --build
+          command: cd "${{ secrets.PROD_TARGET }}" && docker compose -f docker-compose.yml down && docker compose -f docker-compose.yml up -d --build
           host: ${{ secrets.SSH_SERVER }}
           username: ${{ secrets.SSH_USER }}
-          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
+      - name: run commands in container
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: docker exec challenge_s2 composer install --no-dev --optimize-autoloader && docker exec challenge_s2
+          host: ${{ secrets.SSH_SERVER }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
