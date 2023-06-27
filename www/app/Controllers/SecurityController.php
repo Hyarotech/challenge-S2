@@ -101,10 +101,13 @@ class SecurityController
             Session::set("errors", ["global" => "Email ou mot de passe incorrect"]);
             Router::redirectTo("security.login");
         }
+
+
         if (!$userInDb->isVerified()) {
             FlashNotifier::error("Your account is not verified");
             Router::redirectTo("security.login");
         }
+
         $setAccessToken = bin2hex(random_bytes(50));
         $data = [
             "access_token" => $setAccessToken
@@ -114,6 +117,7 @@ class SecurityController
             "email"=> $userInDb->getEmail(),
             "accessToken" => $setAccessToken,
         ]);
+
         FlashNotifier::success("Vous êtes connecté");
         Router::redirectTo("home");
     }

@@ -10,7 +10,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $router = new Router();
-
 require_once ROOT . "/routes/web.php";
 $app = new App($router, ROOT . "/.env");
 $router->run();

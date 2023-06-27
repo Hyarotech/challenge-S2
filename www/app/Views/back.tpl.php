@@ -24,10 +24,10 @@
 <body class="min-h-screen bg-base-100">
     
     <div class="flex flex-col min-h-screen h-auto">
-            <?php $this->component('Nav/sidebar'); ?>
+            <?php component('Nav/sidebar'); ?>
 
         <div class="z-40 w-full md:w-[calc(100%_-_80px)] md:left-[80px] fixed top-0">
-            <?php $this->component('Nav/navbar'); ?>
+            <?php component('Nav/navbar'); ?>
         </div>
 
         <div class="w-full mt-[66px] md:w-[calc(100%_-_80px)] relative md:left-[80px]">

@@ -1,4 +1,5 @@
 <div class="w-full h-full flex justify-center items-center bg-blue animate__animated animate__fadeIn ">
+<?php component("partials/flash",[],'tpl'); ?>
 
     <div class="card flex-row w-11/12 max-w-[832px] sm:flex sm:w-11/12 h-auto bg-base-200 shadow-xl">
         <div class="hidden sm:flex w-2/4">

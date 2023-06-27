@@ -17,10 +17,10 @@
                 </button>
         </div>
         <div class="flex flex-col flex-grow items-center justify-center overflow-auto gap-3 py-4 ">
-           <?= $this->component('Nav/sideLinkCategory', ['title' => 'Category Title', 'icon' => 'fas fa-home']) ?>
-           <?= $this->component('Nav/sideLinkCategory', ['title' => 'Category Title', 'icon' => 'fas fa-home']) ?>
-           <?= $this->component('Nav/sideLinkCategory', ['title' => 'Category Title', 'icon' => 'fas fa-home']) ?>
-           <?= $this->component('Nav/sideLinkCategory', ['title' => 'Category Title', 'icon' => 'fas fa-home']) ?>
+           <?= component('Nav/sideLinkCategory', ['title' => 'Category Title', 'icon' => 'fas fa-home']) ?>
+           <?= component('Nav/sideLinkCategory', ['title' => 'Category Title', 'icon' => 'fas fa-home']) ?>
+           <?= component('Nav/sideLinkCategory', ['title' => 'Category Title', 'icon' => 'fas fa-home']) ?>
+           <?= component('Nav/sideLinkCategory', ['title' => 'Category Title', 'icon' => 'fas fa-home']) ?>
 
         </div>
         <div class="flex justify-center items-center h-[64px]  p-2">

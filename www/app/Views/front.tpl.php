@@ -22,14 +22,14 @@
 <body class="min-h-screen bg-base-100">
 <div class="flex flex-col h-auto">
     <div class="z-40 w-full fixed top-0 ">
-        <?php $this->component('Nav/navbar'); ?>
+        <?php component('Nav/navbar'); ?>
     </div>
         <div class="w-full mt-[66px] relative ">
             <?php include $this->view; ?>
         </div>
     </div>
 
-    <?php $this->component('Nav/footer'); ?>
+    <?php component('Nav/footer'); ?>
 
     <script
   src="https://code.jquery.com/jquery-3.7.0.min.js"
