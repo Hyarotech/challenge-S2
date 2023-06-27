@@ -14,6 +14,13 @@ class Request
         $this->method = $_SERVER["REQUEST_METHOD"];
         $this->url = $_SERVER["REQUEST_URI"];
         $this->data = $_REQUEST;
+        $actualRoute = Router::getActualRoute();
+        $params = $actualRoute->getParams();
+        if(!empty($params)){
+            foreach ($params as $paramName=>$param){
+                $this->data[$paramName] = $param;
+            }
+        }
     }
 
     /**
