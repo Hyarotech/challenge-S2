@@ -6,6 +6,8 @@ use Core\Router;
 use Core\Session;
 use Core\Request;
 
+// A modifier
+
 class DeleteUserRequest extends Request
 {
     protected $userId;
