@@ -1,0 +1,30 @@
+version: "3"
+
+
+services:
+  database:
+    image: postgres
+    restart: always
+    ports:
+      - 54320:5432
+    volumes:
+      - ../.volumes:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: esgi
+      POSTGRES_PASSWORD: C9ERGFWJs2XjDM
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - 6001:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@cms.com"
+      PGADMIN_DEFAULT_PASSWORD: "challengeS2"
+    depends_on:
+      - database
+
+networks:
+  default:
+    external:
+      name: challenge-s2

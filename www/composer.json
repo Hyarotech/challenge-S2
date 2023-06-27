@@ -1,0 +1,22 @@
+{
+  "name": "esgi/challenge",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "App\\": "./app",
+      "Database\\": "./database",
+      "Core\\": "./core"
+    },
+    "files": [
+      "helpers.php"
+    ]
+  },
+  "require": {
+    "phpmailer/phpmailer": "^6.8",
+    "ext-pdo": "*"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "6.0"
+  }
+}
