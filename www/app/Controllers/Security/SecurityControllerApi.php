@@ -1,28 +1,24 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Security;
 
 use App\Models\User;
 use App\Notifications\VerifyUserEmailNotification;
 use App\Requests\LoginRequest;
 use App\Requests\RegisterRequest;
+use Core\ControllerApi;
 use Core\FlashNotifier;
 use Core\Resource;
 use Core\Router;
 use Core\Session;
 use Exception;
 
-class SecurityController
+class SecurityControllerApi
 {
-    public function register(): Resource
-    {
-        return new Resource("Auth/register", "front");
-    }
-
     /**
      * @throws Exception
      */
-    public function handleRegister(RegisterRequest $request): void
+    public function register(RegisterRequest $request): void
     {
         if (User::findBy("email",$request->get("email"))) {
             Session::set("errors", ["email" => "This email already exist"]);
@@ -80,13 +76,7 @@ class SecurityController
         }
     }
 
-    public function login(): Resource
-    {
-       
-        return new Resource("Auth/login", "front");
-    }
-
-    public function handleLogin(LoginRequest $request): void
+    public function login(LoginRequest $request): void
     {
         $user = new User();
         $user->setEmail($request->get("email"));

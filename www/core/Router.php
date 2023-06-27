@@ -20,7 +20,7 @@ class Router
     {
         if (is_null(self::$instance)) {
             self::$instance = new Router();
-            require ROOT . "/routes/web.php";
+            require ROOT . "/routes/web.routes.php";
         }
         return self::$instance;
     }
