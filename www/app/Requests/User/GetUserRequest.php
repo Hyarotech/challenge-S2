@@ -10,13 +10,14 @@ use Core\Verificator;
 
 class GetUserRequest extends \Core\Request
 {
-    protected $userId;
 
-    public function __construct($userId)
+    public function __construct()
     {
         parent::__construct();
         $this->setMethod("GET");
-        $this->userId = $userId;
+        if(empty($this->getData())){
+            
+        }
     }
 
 }
