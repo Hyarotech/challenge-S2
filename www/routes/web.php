@@ -1,5 +1,5 @@
 <?php
-
+$router = \Core\Router::getInstance();
 $router->get("/", [\App\Controllers\HomeController::class, "index"])->setName("home");
 $router->get("/dashboard", [\App\Controllers\HomeController::class, "dashboard"])->setName("dashboard");
 $router->get("/contact", [\App\Controllers\HomeController::class, "contact"])->setName("contact");
