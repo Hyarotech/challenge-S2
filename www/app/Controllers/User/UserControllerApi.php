@@ -4,23 +4,29 @@ namespace App\Controllers;
 
 class UserControllerApi implements ControllerApi
 {
-    public function create()
+
+    public function read(GetUserRequest $request)
+    {
+      
+    }
+    
+    public function readAll(){
+        
+    }
+
+    public function create(CreateUserRequest $request)
     {
         
     }
 
-    public function read()
-    {
-      
-    }
-
-    public function update()
+    public function update(UpdateUserRequest $request)
     {
         
     }
 
-    public function delete()
+    public function delete(DeleteUserRequest $request)
     {
       
     }
+
 }
