@@ -18,6 +18,17 @@ class Page extends Model
     private bool $isNoFollow;
     private $visibility;
 
+    protected ?array $fillable = [
+        "user_id",
+        "title",
+        "content",
+        "date_updated",
+        "slug",
+        "description",
+        "is_no_follow",
+        "visibility"
+    ];
+
 
     public function __construct()
     {
@@ -150,3 +161,5 @@ class Page extends Model
         return $page;
     }
 }
+
+
