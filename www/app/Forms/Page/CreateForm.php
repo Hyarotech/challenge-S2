@@ -28,7 +28,7 @@ class CreateForm extends AForm
                     "rules" => ["required", "boolean"],
                 ],
                 "visibility" => [
-                    "rules" => ["required", "integer"],
+                    "rules" => ["required", "integer","visibility"],
                 ],
                 "user_id" => [
                     "rules" => ["required", "integer"],

@@ -1,6 +1,7 @@
 <?php
 namespace App\Rules;
 
+use App\Configs\PageConfig;
 use Core\Rules;
 
 class PageRules extends Rules {
@@ -22,5 +23,12 @@ class PageRules extends Rules {
         }
         return true;
     }
-
+    public static function visibility($value, $data, &$listOfErrors): bool
+    {   
+        if (!in_array((int)$value,PageConfig::VISIBILITY)) {
+            $listOfErrors[$data["name"]][] = "La visibilité de votre page doit être publique ou privée.";
+            return false;
+        }
+        return true;
+    }
 }

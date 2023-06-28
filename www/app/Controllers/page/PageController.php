@@ -16,6 +16,8 @@ class PageController
     }
     public function handleCreate(PageCreateRequest $request)
     {
+        $page = new Page();
+        $page->setTitle($request->get("title"));
         
     }
 
