@@ -6,14 +6,14 @@ use App\Models\User;
 use App\Notifications\VerifyUserEmailNotification;
 use App\Requests\LoginRequest;
 use App\Requests\RegisterRequest;
-use Core\ControllerApi;
+use Core\IControllerApi;
 use Core\FlashNotifier;
 use Core\Resource;
 use Core\Router;
 use Core\Session;
 use Exception;
 
-class SecurityControllerApi
+class SecurityIControllerApi
 {
     /**
      * @throws Exception

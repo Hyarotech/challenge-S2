@@ -24,7 +24,7 @@ class CreateForm extends AForm
                 "slug" => [
                     "rules" => ["required", "min:2", "max:60", "slug"],
                 ],
-                "isNoFollow" => [
+                "is_no_follow" => [
                     "rules" => ["required", "boolean"],
                 ],
                 "visibility" => [

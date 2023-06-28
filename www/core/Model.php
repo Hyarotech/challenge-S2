@@ -68,8 +68,9 @@ abstract class Model
         return $result;
     }
 
-    public static function save(array $data): void
+    public static function save(array $data = []): bool
     {
+       
         $instance = self::getInstance();
         if ($instance->fillable) {
             $data = array_intersect_key($data, array_flip($instance->fillable));
@@ -77,7 +78,7 @@ abstract class Model
         $columns = array_keys($data);
         $queryPrepared = $instance->pdo->prepare("INSERT INTO " . $instance->table . " (" . implode(",", $columns) . ") 
                             VALUES (:" . implode(",:", $columns) . ")");
-        $queryPrepared->execute($data);
+        return $queryPrepared->execute($data);
     }
 
     public static function update(string $id, array $data): void
