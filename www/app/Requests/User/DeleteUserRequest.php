@@ -15,8 +15,8 @@ class DeleteUserRequest extends Request
     {
         parent::__construct();
         $this->setMethod("GET");
-        if(empty($this->getData())){
-            
+        if(!$this->hasId()){
+            echo("erreur id");
         }
     }
 }

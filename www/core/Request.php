@@ -78,4 +78,14 @@ class Request
         }
         return $this->data[$key];
     }
+
+    public function hasId(){
+        $data = $this->getData();
+        if(!empty($data)){
+            if(isset($data["id"])){
+                return is_int($data["id"]);
+            }
+        }
+        return false;
+    }
 }
