@@ -7,20 +7,30 @@ use Core\Model;
 use Core\Verificator;
 class Page extends Model
 {
-    private int $id;
-    private int $user_id;
-    private string $title;
-    private string $content;
-    private string $date;
-    private string $date_updated;
-    private string $slug;
-    private string $description;
-    private bool $isNoFollow;
-    private $visibility;
+    protected int $id;
+    protected int $userId;
+    protected string $title;
+    protected string $date;
+    protected string $dateUpdated;
+    protected string $slug;
+    protected string $description;
+    protected bool $isNoFollow;
+    protected $visibility;
+
+    protected ?array $fillable = [
+        "user_id",
+        "title",
+        "date_updated",
+        "slug",
+        "description",
+        "is_no_follow",
+        "visibility"
+    ];
 
 
     public function __construct()
     {
+        parent::__construct();
         $this->setId(-1);
         $this->setUserId(-1);
     }
@@ -37,12 +47,12 @@ class Page extends Model
 
     public function getUserId(): int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(int $User_id): void
+    public function setUserId(int $userId): void
     {
-        $this->user_id = $User_id;
+        $this->userId = $userId;
     }
 
     public function getTitle(): string
@@ -57,15 +67,7 @@ class Page extends Model
         $this->title = $title;
     }
 
-    public function getContent(): string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): void
-    {
-        $this->content = $content;
-    }
+  
 
     public function getDate(): string
     {
@@ -79,12 +81,12 @@ class Page extends Model
 
     public function getDateUpdated(): string
     {
-        return $this->date_updated;
+        return $this->dateUpdated;
     }
 
-    public function setDateUpdated(string $date_updated): void
+    public function setDateUpdated(string $dateUpdated): void
     {
-        $this->date_updated = $date_updated;
+        $this->dateUpdated = $dateUpdated;
     }
 
     public function getSlug(): string
@@ -107,12 +109,12 @@ class Page extends Model
         $this->description = $description;
     }
 
-    public function isNoFollow(): bool
+    public function getIsNoFollow(): bool
     {
         return $this->isNoFollow;
     }
 
-    public function setNoFollow(bool $isNoFollow): void
+    public function setIsNoFollow(bool $isNoFollow): void
     {
         $this->isNoFollow = $isNoFollow;
     }
@@ -122,7 +124,7 @@ class Page extends Model
         return $this->visibility;
     }
 
-    public function setVisibility($visibility): void
+    public function setVisibility(int $visibility): void
     {
         $this->visibility = $visibility;
     }
@@ -133,20 +135,7 @@ class Page extends Model
 
         return $pageData;
     }
-
-    public static function hydrate(array $data): Page
-    {
-        $page = new Page();
-        $page->setId($data["id"]);
-        $page->setUserId($data["User_id"]);
-        $page->setTitle($data["title"]);
-        $page->setContent($data["content"]);
-        $page->setDate($data["date"]);
-        $page->setDateUpdated($data["date_updated"]);
-        $page->setSlug($data["slug"]);
-        $page->setDescription($data["description"]);
-        $page->setNoFollow($data["isNoFollow"]);
-        $page->setVisibility($data["visibility"]);
-        return $page;
-    }
+    
 }
+
+

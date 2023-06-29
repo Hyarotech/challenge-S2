@@ -24,11 +24,11 @@ class CreateForm extends AForm
                 "slug" => [
                     "rules" => ["required", "min:2", "max:60", "slug"],
                 ],
-                "isNoFollow" => [
+                "is_no_follow" => [
                     "rules" => ["required", "boolean"],
                 ],
                 "visibility" => [
-                    "rules" => ["required", "integer"],
+                    "rules" => ["required", "integer","visibility"],
                 ],
                 "user_id" => [
                     "rules" => ["required", "integer"],

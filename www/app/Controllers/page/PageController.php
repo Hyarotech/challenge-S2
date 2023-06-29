@@ -1,20 +1,20 @@
 <?php
-namespace App\Controllers\page;
+namespace App\Controllers\Page;
 
+use Core\Resource;
 use App\Models\Page;
 use App\Requests\PageCreateRequest;
-use Core\Resource;
+use App\Controllers\page\PageControllerApi;
 
 class PageController 
 {
     public function page()
     {
-        $page = new Page();
         
         $view = new Resource("Page/index", "front");
         return $view;    
     }
-    public function handleCreate(PageCreateRequest $request)
+    public function create(PageCreateRequest $request)
     {
         
     }

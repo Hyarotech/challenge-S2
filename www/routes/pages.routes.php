@@ -5,6 +5,7 @@ si le temps se présente on pourra faire un système de catégorie de page.
 */
 
 use App\Controllers\page\PageController;
+use App\Controllers\page\PageControllerApi;
 use Core\Router;
 
 $router = Router::getInstance();
@@ -27,7 +28,7 @@ $router->get("/dashboard/page/builder/:id", [PageController::class, "builder"])-
 $router->get("/dashboard/page/delete/:id", [PageController::class, "delete"])->setName("page.delete");
 
 // Créer une page
-$router->post("/dashboard/page/create", [PageController::class, "handleCreate"])->setName("page.create.handle");
+$router->post("/dashboard/page/create", [PageControllerApi::class, "create"])->setName("page.create.handle");
 
 // Editer une page
 $router->post("/dashboard/page/edit/:id", [PageController::class, "handleEdit"])->setName("page.edit.handle");

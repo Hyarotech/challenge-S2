@@ -14,6 +14,7 @@ class PageCreateRequest extends Request
         $form = new CreateForm();
         $errors = Verificator::form($form->getConfig(), $this->getData());
         Session::set("errors", $errors);
+    
         if(!empty($errors)) {
             var_dump($errors);
             die();
