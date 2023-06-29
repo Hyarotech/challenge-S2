@@ -8,7 +8,7 @@ class Comment extends \Core\Model
     protected string $content;
     protected \DateTime $createdAt;
     protected \DateTime $updatedAt;
-    protected int|User $userId;
+    protected User|int $userId;
 
     protected ?array $fillable = [
         "content",
