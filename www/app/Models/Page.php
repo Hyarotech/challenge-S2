@@ -10,18 +10,16 @@ class Page extends Model
     private int $id;
     private int $user_id;
     private string $title;
-    private string $content;
     private string $date;
     private string $date_updated;
     private string $slug;
     private string $description;
-    private bool $isNoFollow;
+    private bool $is_no_follow;
     private $visibility;
 
     protected ?array $fillable = [
         "user_id",
         "title",
-        "content",
         "date_updated",
         "slug",
         "description",
@@ -32,6 +30,7 @@ class Page extends Model
 
     public function __construct()
     {
+        parent::__construct();
         $this->setId(-1);
         $this->setUserId(-1);
     }
@@ -51,9 +50,9 @@ class Page extends Model
         return $this->user_id;
     }
 
-    public function setUserId(int $User_id): void
+    public function setUserId(int $user_id): void
     {
-        $this->user_id = $User_id;
+        $this->user_id = $user_id;
     }
 
     public function getTitle(): string
@@ -68,15 +67,7 @@ class Page extends Model
         $this->title = $title;
     }
 
-    public function getContent(): string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): void
-    {
-        $this->content = $content;
-    }
+  
 
     public function getDate(): string
     {
@@ -118,14 +109,14 @@ class Page extends Model
         $this->description = $description;
     }
 
-    public function isNoFollow(): bool
+    public function getIsNoFollow(): bool
     {
-        return $this->isNoFollow;
+        return $this->is_no_follow;
     }
 
-    public function setNoFollow(bool $isNoFollow): void
+    public function setIsNoFollow(bool $is_no_follow): void
     {
-        $this->isNoFollow = $isNoFollow;
+        $this->is_no_follow = $is_no_follow;
     }
 
     public function getVisibility()
@@ -133,7 +124,7 @@ class Page extends Model
         return $this->visibility;
     }
 
-    public function setVisibility($visibility): void
+    public function setVisibility(int $visibility): void
     {
         $this->visibility = $visibility;
     }
@@ -144,22 +135,8 @@ class Page extends Model
 
         return $pageData;
     }
+    
 
-    public static function hydrate(array $data): Page
-    {
-        $page = new Page();
-        $page->setId($data["id"]);
-        $page->setUserId($data["User_id"]);
-        $page->setTitle($data["title"]);
-        $page->setContent($data["content"]);
-        $page->setDate($data["date"]);
-        $page->setDateUpdated($data["date_updated"]);
-        $page->setSlug($data["slug"]);
-        $page->setDescription($data["description"]);
-        $page->setNoFollow($data["isNoFollow"]);
-        $page->setVisibility($data["visibility"]);
-        return $page;
-    }
 }
 
 
