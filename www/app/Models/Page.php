@@ -7,15 +7,15 @@ use Core\Model;
 use Core\Verificator;
 class Page extends Model
 {
-    private int $id;
-    private int $user_id;
-    private string $title;
-    private string $date;
-    private string $date_updated;
-    private string $slug;
-    private string $description;
-    private bool $is_no_follow;
-    private $visibility;
+    protected int $id;
+    protected int $userId;
+    protected string $title;
+    protected string $date;
+    protected string $dateUpdated;
+    protected string $slug;
+    protected string $description;
+    protected bool $isNoFollow;
+    protected $visibility;
 
     protected ?array $fillable = [
         "user_id",
@@ -47,12 +47,12 @@ class Page extends Model
 
     public function getUserId(): int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(int $user_id): void
+    public function setUserId(int $userId): void
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
     }
 
     public function getTitle(): string
@@ -81,12 +81,12 @@ class Page extends Model
 
     public function getDateUpdated(): string
     {
-        return $this->date_updated;
+        return $this->dateUpdated;
     }
 
-    public function setDateUpdated(string $date_updated): void
+    public function setDateUpdated(string $dateUpdated): void
     {
-        $this->date_updated = $date_updated;
+        $this->dateUpdated = $dateUpdated;
     }
 
     public function getSlug(): string
@@ -111,12 +111,12 @@ class Page extends Model
 
     public function getIsNoFollow(): bool
     {
-        return $this->is_no_follow;
+        return $this->isNoFollow;
     }
 
-    public function setIsNoFollow(bool $is_no_follow): void
+    public function setIsNoFollow(bool $isNoFollow): void
     {
-        $this->is_no_follow = $is_no_follow;
+        $this->isNoFollow = $isNoFollow;
     }
 
     public function getVisibility()
@@ -136,7 +136,6 @@ class Page extends Model
         return $pageData;
     }
     
-
 }
 
 
