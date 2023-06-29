@@ -8,12 +8,13 @@ class Comment extends \Core\Model
     protected string $content;
     protected \DateTime $createdAt;
     protected \DateTime $updatedAt;
-    protected User|int $userId;
+    protected int|User $userId;
 
     protected ?array $fillable = [
         "content",
         "user_id"
     ];
+    protected string $table = "comment";
 
     /**
      * @return int
