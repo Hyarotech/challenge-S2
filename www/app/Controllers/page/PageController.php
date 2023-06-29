@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers\page;
+namespace App\Controllers\Page;
 
 use Core\Resource;
 use App\Models\Page;
@@ -10,6 +10,7 @@ class PageController
 {
     public function page()
     {
+
         $page = new PageControllerApi();
         
         $view = new Resource("Page/index", "front");

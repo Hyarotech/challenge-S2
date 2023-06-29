@@ -52,7 +52,7 @@ abstract class Rules
     public static function boolean($value, $data, &$listOfErrors): bool
     {
         
-        if (filter_var($value, FILTER_VALIDATE_BOOLEAN) === false) {
+        if (!filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
             $listOfErrors[$data["name"]][] = "Le champ " . $data["name"] . " doit être un booléen.";
             return false;
         }
@@ -60,7 +60,7 @@ abstract class Rules
     }
     public static function integer($value, $data, &$listOfErrors): bool
     {
-        if(filter_var($value, FILTER_VALIDATE_INT)){
+        if(!filter_var($value, FILTER_VALIDATE_INT)){
             $listOfErrors[$data["name"]][] = "Le champ " . $data["name"] . " doit être un nombre entier.";
             return false;
         }
