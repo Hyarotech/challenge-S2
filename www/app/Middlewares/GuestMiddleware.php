@@ -8,10 +8,9 @@ use Core\Session;
 
 class GuestMiddleware extends \Core\Middleware
 {
-
     public function handle(Request $request): void
     {
-        if (Session::has("user")){
+        if (Session::has("user")) {
             Router::redirectTo("home");
         }
     }

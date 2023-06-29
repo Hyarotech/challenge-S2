@@ -1,6 +1,7 @@
 <?php
 
 namespace Core;
+
 interface IControllerApi
 {
     public function readOne(Request $request);

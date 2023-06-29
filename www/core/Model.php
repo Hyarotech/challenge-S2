@@ -1,4 +1,5 @@
 <?php
+
 namespace Core;
 
 use Exception;
@@ -58,15 +59,15 @@ abstract class Model
         if ($fillable && is_array($data)) {
             $instance = new static();
             $data = array_intersect_key($data, array_flip($fillable));
-        }
-        else if ($data instanceof Model) {
+        } elseif ($data instanceof Model) {
             foreach ($fillable as $value) {
                 $valueCamel = toCamelCase($value);
                 // Vérifier si la méthode getValeurFilled existe
                 $getterMethod = 'get' . ucfirst($valueCamel);
 
-                if (method_exists($data, $getterMethod))
+                if (method_exists($data, $getterMethod)) {
                     $listData[$value] = $data->{$getterMethod}();
+                }
 
 
             }

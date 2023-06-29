@@ -2,12 +2,10 @@
 
 namespace Core;
 
-
 use ReflectionMethod;
 
 class Router
 {
-
     private array $routes = [];
     private static ?Router $instance = null;
 
@@ -138,29 +136,29 @@ class Router
 
         $reflectionMethod = new ReflectionMethod($controller, $action);
         $parameters = $reflectionMethod->getParameters();
-        
-        
+
+
 
         $args = [];
-            
 
-            foreach($parameters as $parameter){
-                $paramType = $parameter->getType()->getName();
-                
-                if($paramType === 'Core\Request'){
-                    $attributes = $reflectionMethod->getAttributes();
 
-                    if (empty($attributes)) {
-                        $args[] = new $paramType();
-                        continue;
-                    }
-                    $requestClass = $attributes[0]->getName();
+        foreach($parameters as $parameter) {
+            $paramType = $parameter->getType()->getName();
 
-                    assert(is_subclass_of($requestClass, $paramType));
-                    $args[] = new $requestClass();
+            if($paramType === 'Core\Request') {
+                $attributes = $reflectionMethod->getAttributes();
+
+                if (empty($attributes)) {
+                    $args[] = new $paramType();
+                    continue;
                 }
+                $requestClass = $attributes[0]->getName();
+
+                assert(is_subclass_of($requestClass, $paramType));
+                $args[] = new $requestClass();
             }
-       
+        }
+
 
 
 

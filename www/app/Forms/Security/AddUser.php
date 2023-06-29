@@ -6,7 +6,6 @@ use App\Forms\Abstract\AForm;
 
 class AddUser extends AForm
 {
-
     protected string $method = "POST";
 
     public function getConfig(): array

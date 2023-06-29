@@ -16,8 +16,8 @@ class Request
         $this->data = $_REQUEST;
         $actualRoute = Router::getActualRoute();
         $params = $actualRoute->getParams();
-        if(!empty($params)){
-            foreach ($params as $paramName=>$param){
+        if(!empty($params)) {
+            foreach ($params as $paramName=>$param) {
                 $this->data[$paramName] = $param;
             }
         }

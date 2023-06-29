@@ -11,4 +11,3 @@ $router->get("/logout", [SecurityControllerApi::class, "logout"])->setName("secu
 $router->get("/register", [SecurityController::class, "register"])->setName("security.register")->setMiddlewares([\App\Middlewares\GuestMiddleware::class]);
 $router->post("/register", [SecurityControllerApi::class, "register"])->setName("security.register.handle")->setMiddlewares([\App\Middlewares\GuestMiddleware::class]);
 $router->get("/verif_email/:token/:email", [SecurityControllerApi::class, "verifEmail"])->setName("security.verifEmail");
-

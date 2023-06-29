@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Requests;
+
 use App\Forms\Security\LoginForm;
 use Core\Request;
 use Core\Router;

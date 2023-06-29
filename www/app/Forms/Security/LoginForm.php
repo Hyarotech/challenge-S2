@@ -7,7 +7,6 @@ use Core\Router;
 
 class LoginForm extends AForm
 {
-
     protected $method = "POST";
 
     public function getConfig(): array

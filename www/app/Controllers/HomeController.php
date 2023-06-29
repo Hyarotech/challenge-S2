@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Controllers;
+
 use App\Models\User;
 use Core\Session;
 use Core\Resource;
 
-class HomeController{
+class HomeController
+{
     public function index(): Resource
     {
         $pseudo = "Prof";
@@ -13,11 +16,13 @@ class HomeController{
         return $view;
     }
 
-    public function contact(){
+    public function contact()
+    {
         $view = new Resource("Main/contact", "front");
     }
 
-    public function dashboard(){
+    public function dashboard()
+    {
         $view = new Resource("Main/index", "back");
     }
 }
