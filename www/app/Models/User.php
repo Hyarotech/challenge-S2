@@ -7,7 +7,6 @@ use DateTime;
 
 class User extends Model
 {
-
     protected int $id = 0;
     protected string $firstname;
     protected string $lastname;

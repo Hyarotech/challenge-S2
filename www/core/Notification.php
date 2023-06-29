@@ -33,7 +33,7 @@ abstract class Notification
         return $this->data[$key] ?? null;
     }
 
-    abstract public function execute() :void;
+    abstract public function execute(): void;
 
 
 }

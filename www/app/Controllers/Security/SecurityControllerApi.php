@@ -20,7 +20,7 @@ class SecurityIControllerApi
      */
     public function register(RegisterRequest $request): void
     {
-        if (User::findBy("email",$request->get("email"))) {
+        if (User::findBy("email", $request->get("email"))) {
             Session::set("errors", ["email" => "This email already exist"]);
             Router::redirectTo("security.register");
         }
@@ -55,7 +55,7 @@ class SecurityIControllerApi
             FlashNotifier::error("Invalid user");
             Router::redirectTo("errors.404");
         }
-        if($user->isVerified()){
+        if($user->isVerified()) {
             FlashNotifier::error("Your account is already verified");
             Router::redirectTo("errors.404");
         }
@@ -67,7 +67,7 @@ class SecurityIControllerApi
                 "verified" => true,
                 "verif_token" => null,
             ];
-            User::update($user->getId(),$data);
+            User::update($user->getId(), $data);
             FlashNotifier::success("Votre compte a bien été vérifié");
             Router::redirectTo("security.login");
         } else {

@@ -37,9 +37,11 @@ class Mail
         return $this->mailer;
     }
 
-    public function getView(string $view,$data): false|string
+    public function getView(string $view, $data): false|string
     {
-        if(!file_exists(ROOT . "/resources/mails/" . $view . ".mail.php")) die("View not found");
+        if(!file_exists(ROOT . "/resources/mails/" . $view . ".mail.php")) {
+            die("View not found");
+        }
 
         ob_start();
         extract($data);
@@ -55,10 +57,11 @@ class Mail
         string $toEmail,
         string $toName,
         array $data = []
-    ): bool
-    {
-        $content = $this->getView($view,$data);
-        if($content === false) return false;
+    ): bool {
+        $content = $this->getView($view, $data);
+        if($content === false) {
+            return false;
+        }
         try {
             $this->mailer->setFrom($fromEmail, $fromName);
             $this->mailer->addAddress($toEmail, $toName);

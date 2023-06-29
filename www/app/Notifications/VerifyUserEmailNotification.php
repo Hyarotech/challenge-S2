@@ -7,11 +7,9 @@ use Core\Router;
 
 class VerifyUserEmailNotification extends \Core\Notification
 {
-
     public function __construct(
         array $data
-    )
-    {
+    ) {
         parent::__construct();
         $this->setData($data);
         $this->execute();

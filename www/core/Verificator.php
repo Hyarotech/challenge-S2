@@ -6,7 +6,6 @@ use Core\Rules;
 
 class Verificator
 {
-
     public static function form(array $config, array $data): array
     {
 
@@ -37,19 +36,21 @@ class Verificator
         return $listOfErrors;
     }
 
-    public static function one(string $field, array $rules ,mixed $data): array {
-            $input = [ "inputs" => [
-                $field => [
-                    "rules"=>$rules,
-                ],
-            ]];
+    public static function one(string $field, array $rules, mixed $data): array
+    {
+        $input = [ "inputs" => [
+            $field => [
+                "rules"=>$rules,
+            ],
+        ]];
         return self::form($input, [$field=>$data]);
     }
 
     public static function throwExceptions(array $listOfErrors): void
     {
-        foreach ($listOfErrors as $error) 
+        foreach ($listOfErrors as $error) {
             throw new \Exception($error[0]);
+        }
     }
 
 }

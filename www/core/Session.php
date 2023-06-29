@@ -4,7 +4,6 @@ namespace Core;
 
 class Session
 {
-
     public static function set(string $key, mixed $value): void
     {
         $_SESSION[$key] = $value;
