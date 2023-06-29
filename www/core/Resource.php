@@ -29,8 +29,6 @@ class Resource
         $this->view = $view;
     }
     public function setTemplate(String $template): void
-
-
     {
         $template = ROOT."/app/Views/".trim($template).".tpl.php";
         if(!file_exists($template)) {
