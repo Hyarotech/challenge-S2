@@ -5,8 +5,7 @@ class PageConfig {
 
     public const VISIBILITY = [
         'private' => 0,
-        'public' => 1,
-        ''
+        'public' => 1
     ];
 
     

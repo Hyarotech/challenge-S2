@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Controllers\page;
+namespace App\Controllers\Page;
 
-use Core\Request;
 use App\Models\Page;
+use App\Models\User;
 use App\Requests\PageCreateRequest;
-use Core\Session;
 use Core\IControllerApi;
+use Core\Request;
+use Core\Session;
 
 class PageControllerApi implements IControllerApi
 {
@@ -24,15 +25,19 @@ class PageControllerApi implements IControllerApi
     #[PageCreateRequest]
     public function create(Request $request)
     {
+
         $page = new Page();
 
         $page->setTitle($request->get('title'));
         $page->setSlug($request->get('slug'));
         $page->setUserId($request->get('user_id'));
         $page->setDescription($request->get('description'));
-        $page->setNoFollow($request->get('is_no_follow'));
+        $page->setIsNoFollow($request->get('is_no_follow'));
         $page->setVisibility($request->get('visibility'));
-        
+
+        $dateUpdated = new \DateTime();
+        $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
+        $page->setDateUpdated($dateUpdated);
         if(Page::findBy('slug', $page->getSlug())){
             Session::set("errors", ["slug" => "Votre slug existe déjà"]);
             return false;
@@ -43,7 +48,7 @@ class PageControllerApi implements IControllerApi
             return false;
         }
     
-        return $page::save();
+        return Page::save($page);
 
     }
 
