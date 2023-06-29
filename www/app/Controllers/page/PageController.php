@@ -10,8 +10,6 @@ class PageController
 {
     public function page()
     {
-
-        $page = new PageControllerApi();
         
         $view = new Resource("Page/index", "front");
         return $view;    

@@ -79,6 +79,8 @@ abstract class Model
         $queryPrepared = $pdo->prepare("INSERT INTO " . $instance->table . " (" . implode(",", $columns) . ") 
                             VALUES (:" . implode(",:", $columns) . ")");
         return  $queryPrepared->execute($data);
+
+      
     }
 
     public static function update(string $id, array $data): void
@@ -99,6 +101,7 @@ abstract class Model
         }
         $data["id"] = $id;
         $queryPrepared = $pdo->prepare("UPDATE " . $instance->table . " SET " . implode(",", $columns) . " WHERE id=:id");
+       
         $queryPrepared->execute($data);
     }
 

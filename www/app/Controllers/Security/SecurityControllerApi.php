@@ -13,7 +13,7 @@ use Core\Router;
 use Core\Session;
 use Exception;
 
-class SecurityIControllerApi
+class SecurityControllerApi
 {
     /**
      * @throws Exception
