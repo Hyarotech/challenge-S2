@@ -12,4 +12,5 @@ $router->get("/contact", [HomeController::class, "contact"])->setName("contact")
 
 
 include ROOT . "/routes/errors.routes.php";
-include ROOT."/routes/security.routes.php";
+include ROOT . "/routes/security.routes.php";
+include ROOT . "/routes/comment.routes.php";

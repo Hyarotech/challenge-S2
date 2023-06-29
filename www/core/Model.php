@@ -51,8 +51,7 @@ abstract class Model
 
     public static function save(Model|array $data = []): bool
     {
-        $dbConnector = DBConnector::getInstance();
-        $pdo = $dbConnector->getPDO();
+        $pdo = self::getPdo();
 
         $fillable = new static();
         $fillable = $fillable->fillable;
@@ -65,17 +64,17 @@ abstract class Model
                 $valueCamel = toCamelCase($value);
                 // Vérifier si la méthode getValeurFilled existe
                 $getterMethod = 'get' . ucfirst($valueCamel);
-                
+
                 if (method_exists($data, $getterMethod))
                     $listData[$value] = $data->{$getterMethod}();
-                
-                
+
+
             }
-            $instance = $data;    
+            $instance = $data;
             $data = $listData;
         }
         $columns = array_keys($data);
-        
+
         $queryPrepared = $pdo->prepare("INSERT INTO " . $instance->table . " (" . implode(",", $columns) . ") 
                             VALUES (:" . implode(",:", $columns) . ")");
         return  $queryPrepared->execute($data);
@@ -83,8 +82,7 @@ abstract class Model
 
     public static function update(string $id, array $data): void
     {
-        $dbConnector = DBConnector::getInstance();
-        $pdo = $dbConnector->getPDO();
+        $pdo = self::getPdo();
 
         $instance = new static();
         if ($instance->fillable) {
@@ -105,15 +103,14 @@ abstract class Model
     public static function findBy(string $column, string $value): ?Model
     {
 
-        $dbConnector = DBConnector::getInstance();
-        $pdo = $dbConnector->getPDO();
+        $pdo = self::getPdo();
 
         $instance = new static();
 
         $queryPrepared = $pdo->prepare("SELECT * FROM " . $instance->table . " WHERE " . $column . " = :value");
         $queryPrepared->bindValue(":value", $value);
         $queryPrepared->execute();
-        
+
         $result = $queryPrepared->fetch();
         if ($result) {
             return static::hydrate($result);
@@ -123,21 +120,23 @@ abstract class Model
 
     public static function findAll(): array
     {
-        $dbConnector = DBConnector::getInstance();
-        $pdo = $dbConnector->getPDO();
-
-        $instance = new static();
+        $pdo = self::getPdo();
+        $instance= new static();
         $results = $pdo->query("SELECT * FROM " . $instance->table)->fetchAll();
         return array_map(function ($result) {
             return static::hydrate($result);
         }, $results);
     }
 
-    public static function findOne(int $id): ?Model
+    private static function getPdo(): \PDO
     {
         $dbConnector = DBConnector::getInstance();
-        $pdo = $dbConnector->getPDO();
+        return $dbConnector->getPDO();
+    }
 
+    public static function findOne(int $id): ?Model
+    {
+        $pdo = self::getPdo();
         $instance = new static();
         $queryPrepared = $pdo->prepare("SELECT * FROM " . $instance->table . " WHERE id = :id");
         $queryPrepared->bindValue(":id", $id);
@@ -147,5 +146,36 @@ abstract class Model
             return static::hydrate($result);
         }
         return null;
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function __get(string $name)
+    {
+        //get type of property
+        $reflection = new \ReflectionClass($this);
+        $property = $reflection->getProperty($name);
+        $propertyUnionType = $property->getType();
+        $propertyType = null;
+        if ($propertyUnionType instanceof ReflectionNamedType) {
+            $propertyType = $propertyUnionType->getName();
+        } else {
+            $propertyType = $propertyUnionType->getTypes()[0]->getName();
+        }
+        //get value of property
+        $value = $this->$name;
+        if ($value === null) {
+            return null;
+        }
+        //value is ID of another model so i have to find it
+        if (is_numeric($value) && $propertyType !== "int") {
+            $model = $propertyType::findOne($value);
+            if ($model) {
+                $this->$name = $model;
+                return $model;
+            }
+        }
+        return $value;
     }
 }
