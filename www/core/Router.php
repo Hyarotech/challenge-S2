@@ -39,6 +39,10 @@ class Router
     public static function generateDynamicRoute(string $name, array $params): bool|string
     {
         $router = self::getInstance();
+        //urlencode params
+        foreach ($params as $key => $value) {
+            $params[$key] = urlencode($value);
+        }
         return $router->generateURL($name, $params);
     }
 

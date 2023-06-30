@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Requests;
+namespace App\Requests\Security;
 
-use App\Forms\Security\AddUser;
+use App\Forms\Security\LoginForm;
+use Core\Request;
 use Core\Router;
 use Core\Session;
 use Core\Verificator;
 
-class RegisterRequest extends \Core\Request
+class LoginRequest extends Request
 {
     public function __construct()
     {
         parent::__construct();
         $this->setMethod("POST");
-        $form = new AddUser();
-        $errors = Verificator::form($form->getConfig(), $this->getData());
+        $loginForm = new LoginForm();
+        $errors = Verificator::form($loginForm->getConfig(), $this->getData());
         Session::set("errors", $errors);
         if(!empty($errors)) {
             Session::set("old", $this->getData());
-            Router::redirectTo("security.register");
+            Router::redirectTo("security.login");
         }
     }
 

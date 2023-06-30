@@ -2,13 +2,9 @@
 
 namespace App\Controllers\Security;
 
-use App\Models\User;
-use App\Requests\LoginRequest;
-use Core\FlashNotifier;
+use App\Requests\Security\ForgotPasswordRequest;
+use Core\Request;
 use Core\Resource;
-use Core\Router;
-use Core\Session;
-use Exception;
 
 class SecurityController
 {
@@ -21,5 +17,16 @@ class SecurityController
     {
 
         return new Resource("Auth/login", "front");
+    }
+
+
+    public function forgot_password(): Resource
+    {
+        return new Resource("Auth/forgot_password", "front");
+    }
+
+    public function reset_password(): Resource
+    {
+        return new Resource("Auth/reset_password", "front");
     }
 }

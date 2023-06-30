@@ -16,6 +16,7 @@ class User extends Model
     protected DateTime $dateInserted;
     protected DateTime $dateUpdated;
     protected ?string $verifToken;
+    protected ?string $resetToken;
     protected ?string $accessToken;
     protected ?string $userDescription;
 
@@ -30,7 +31,8 @@ class User extends Model
         "verif_token",
         "user_description",
         "role",
-        "access_token"
+        "access_token",
+        "reset_token"
     ];
 
 
@@ -174,4 +176,23 @@ class User extends Model
     {
         $this->accessToken = $accessToken;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    /**
+     * @param string|null $resetToken
+     * @return User
+     */
+    public function setResetToken(?string $resetToken): User
+    {
+        $this->resetToken = $resetToken;
+        return $this;
+    }
+
 }

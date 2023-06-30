@@ -3,22 +3,24 @@
 namespace App\Controllers\Security;
 
 use App\Models\User;
+use App\Notifications\ForgotPasswordNotification;
 use App\Notifications\VerifyUserEmailNotification;
-use App\Requests\LoginRequest;
-use App\Requests\RegisterRequest;
-use Core\IControllerApi;
+use App\Requests\Security\LoginRequest;
+use App\Requests\Security\RegisterRequest;
+use App\Requests\Security\ForgotPasswordRequest;
 use Core\FlashNotifier;
-use Core\Resource;
+use Core\Request;
 use Core\Router;
 use Core\Session;
 use Exception;
 
-class SecurityIControllerApi
+class SecurityControllerApi
 {
     /**
      * @throws Exception
      */
-    public function register(RegisterRequest $request): void
+    #[RegisterRequest]
+    public function register(Request $request): void
     {
         if (User::findBy("email", $request->get("email"))) {
             Session::set("errors", ["email" => "This email already exist"]);
@@ -51,16 +53,16 @@ class SecurityIControllerApi
             Router::redirectTo("errors.404");
         }
         $user = User::findBy("email", $email);
-        if(!$user) {
+        if (!$user) {
             FlashNotifier::error("Invalid user");
             Router::redirectTo("errors.404");
         }
-        if($user->isVerified()) {
+        if ($user->isVerified()) {
             FlashNotifier::error("Your account is already verified");
             Router::redirectTo("errors.404");
         }
         if (password_verify($token, $user->getVerifToken())) {
-            $data=[
+            $data = [
                 "firstname" => $user->getFirstname(),
                 "lastname" => $user->getLastname(),
                 "email" => $user->getEmail(),
@@ -76,7 +78,8 @@ class SecurityIControllerApi
         }
     }
 
-    public function login(LoginRequest $request): void
+    #[LoginRequest]
+    public function login(Request $request): void
     {
         $user = new User();
         $user->setEmail($request->get("email"));
@@ -86,25 +89,21 @@ class SecurityIControllerApi
             Session::set("errors", ["global" => "Email ou mot de passe incorrect"]);
             Router::redirectTo("security.login");
         }
-
         if (!password_verify($user->getPassword(), $userInDb->getPassword())) {
             Session::set("errors", ["global" => "Email ou mot de passe incorrect"]);
             Router::redirectTo("security.login");
         }
-
-
         if (!$userInDb->isVerified()) {
             FlashNotifier::error("Your account is not verified");
             Router::redirectTo("security.login");
         }
-
         $setAccessToken = bin2hex(random_bytes(50));
         $data = [
             "access_token" => $setAccessToken
         ];
         User::update($userInDb->getId(), $data);
         Session::set("user", [
-            "email"=> $userInDb->getEmail(),
+            "email" => $userInDb->getEmail(),
             "accessToken" => $setAccessToken,
         ]);
 
@@ -115,7 +114,6 @@ class SecurityIControllerApi
     public function logout(): void
     {
         $userInSession = Session::get("user");
-
         $user = User::findBy("email", $userInSession["email"]);
         $data = [
             "access_token" => null
@@ -126,4 +124,23 @@ class SecurityIControllerApi
         Router::redirectTo("security.login");
     }
 
+    #[ForgotPasswordRequest]
+    public function forgot_password(Request $request)
+    {
+        $user = User::findBy("email", $request->get("email"));
+        if(!$user) {
+            Session::set("errors", ["email" => "Email not found"]);
+            Router::redirectTo("security.forgotPassword");
+        }
+        $token = bin2hex(random_bytes(50));
+        $data = [
+            "reset_token" => password_hash($token, PASSWORD_DEFAULT),
+        ];
+        User::update($user->getId(), $data);
+        $data["reset_token"] = $token;
+        $data["email"] = $user->getEmail();
+        new ForgotPasswordNotification($data);
+        FlashNotifier::success("Un email vous a été envoyé pour réinitialiser votre mot de passe");
+        Router::redirectTo("security.login");
+    }
 }
