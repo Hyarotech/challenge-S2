@@ -4,17 +4,20 @@ namespace App\Models;
 
 class Comment extends \Core\Model
 {
-    protected int $id;
+    protected int $id =0;
+
     protected string $content;
     protected \DateTime $createdAt;
     protected \DateTime $updatedAt;
     protected User|int $userId;
+    protected Page|int $pageId;
+    protected string $table = "comment";
 
     protected ?array $fillable = [
         "content",
+        "created_at",
         "user_id"
     ];
-    protected string $table = "comment";
 
     /**
      * @return int
@@ -105,5 +108,25 @@ class Comment extends \Core\Model
         $this->userId = $userId;
         return $this;
     }
+
+    /**
+     * @return Post|int
+     */
+    public function getPostId(): int|Post
+    {
+        return $this->postId;
+    }
+
+    /**
+     * @param Post|int $postId
+     * @return Comment
+     */
+    public function setPostId(int|Post $postId): Comment
+    {
+        $this->postId = $postId;
+        return $this;
+    }
+
+
 
 }
