@@ -4,16 +4,16 @@ namespace App\Models;
 
 class CatPage extends \Core\Model
 {
-    protected int $id=0;
+    protected int $id = 0;
     protected Page|int $pageId;
     protected Category|int $categoryId;
-    protected string $table = "catPage";
+    protected string $table = "cat_page";
+
     protected ?array $fillable = [
         "page_id",
         "category_id"
 
     ];
-
     /**
      * @return int
      */
@@ -69,22 +69,26 @@ class CatPage extends \Core\Model
     }
 
     /**
-     * @return array|null
+     * @return string
      */
-    public function getFillable(): ?array
+    public function getTable(): string
     {
-        return $this->fillable;
+        return $this->table;
     }
 
     /**
-     * @param array|null $fillable
+     * @param string $table
      * @return CatPage
      */
-    public function setFillable(?array $fillable): CatPage
+    public function setTable(string $table): CatPage
     {
-        $this->fillable = $fillable;
+        $this->table = $table;
         return $this;
     }
+
+    /**
+     * @return array|null
+     */
 
 
 }
