@@ -86,9 +86,6 @@ class CatPage extends \Core\Model
         return $this;
     }
 
-    /**
-     * @return array|null
-     */
 
 
 }
