@@ -1,4 +1,4 @@
-import render from './render';
+import render from '/assets/js/vdom/render.js';
 
 const zip = (xs, ys) => {
     const zipped = [];

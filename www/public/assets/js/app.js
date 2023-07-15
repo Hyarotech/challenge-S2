@@ -1,32 +1,24 @@
-import createElement from './vdom/createElement'
-import render from './vdom/render';
-import mount from './vdom/mount';
-import diff from './vdom/diff';
+import createElement from '/assets/js/vdom/createElement.js'
+import render from '/assets/js/vdom/render.js';
+import mount from '/assets/js/vdom/mount.js';
+import diff from '/assets/js/vdom/diff.js';
 
-const createVApp = (count) => createElement('div', {
-    attrs: {
-        id: 'app',
-        dataCount: count,
-    },
-    children: [
-        createElement('input'),
-        String(count),
-        ...Array.from({ length: count }, () => createElement('img', {
-            attrs: {
-                src: 'https://media.giphy.com/media/cuPm4p4pClZVC/giphy.gif',
-            },
-        })),
-    ],
-});
 
-let count = 0;
-let vApp = createVApp(count);
+const createVApp = () => {
+	return createElement('div', {
+       children:[
+           "Hello World",
+       ]
+    });
+}
+
+let vApp = createVApp();
 const $app = render(vApp);
 
-let $rootEl = mount($app, document.getElementById('app'));
+let $rootEl = mount($app, document.getElementById('root'));
 
 setInterval(() => {
-    const vNewApp = createVApp(Math.floor(Math.random() * 10));
+    const vNewApp = createVApp();
     const patch = diff(vApp, vNewApp);
     $rootEl = patch($rootEl);
     vApp = vNewApp;
