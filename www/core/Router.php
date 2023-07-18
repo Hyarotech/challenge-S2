@@ -93,12 +93,17 @@ class Router
 
     public function resolveRoute(): Route|null
     {
+
         $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
         $uri = (empty($uri)) ? "/" : $uri;
         $method = $_SERVER["REQUEST_METHOD"];
         //Dans le cas ou nous sommes à la racine $uri sera vide du coup je remets /
         $uri = (empty($uri)) ? "/" : $uri;
+        if(!file_exists(ROOT . "/.env") || !str_contains($uri, "/api")) {
+            $uri = "/install";
+            $method = "GET";
+        }
         $route = $this->getRoute($uri, $method);
         if (!$route) {
             //check for dynamic routes with :id for example
@@ -116,7 +121,6 @@ class Router
      */
     public function run(): void
     {
-
         $route = $this->resolveRoute();
         if (!$route) {
             $this->redirectTo("errors.404");
@@ -131,37 +135,23 @@ class Router
         }
         $controller = $route->getController();
         $action = $route->getAction();
-
         $objet = new $controller();
-
         $reflectionMethod = new ReflectionMethod($controller, $action);
         $parameters = $reflectionMethod->getParameters();
-
-
-
         $args = [];
-
-
         foreach($parameters as $parameter) {
             $paramType = $parameter->getType()->getName();
-
             if($paramType === 'Core\Request') {
                 $attributes = $reflectionMethod->getAttributes();
-
                 if (empty($attributes)) {
                     $args[] = new $paramType();
                     continue;
                 }
                 $requestClass = $attributes[0]->getName();
-
                 assert(is_subclass_of($requestClass, $paramType));
                 $args[] = new $requestClass();
             }
         }
-
-
-
-
         call_user_func_array([$objet, $action], $args);
     }
 

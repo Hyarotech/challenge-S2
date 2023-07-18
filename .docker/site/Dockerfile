@@ -8,10 +8,10 @@ RUN apt-get install -y libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
 
-RUN apt-get update -y && apt-get install -y libpng-dev libfreetype6-dev libyaml-dev
+RUN apt-get update -y && apt-get install -y libpng-dev libfreetype6-dev libyaml-dev libxml2-dev
 
 RUN  docker-php-ext-configure gd --with-freetype
-RUN  docker-php-ext-install gd
+RUN  docker-php-ext-install gd xml
 
 RUN pecl install yamL
 

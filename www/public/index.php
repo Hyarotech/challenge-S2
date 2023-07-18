@@ -6,10 +6,6 @@ require ROOT . "/vendor/autoload.php";
 use Core\Router;
 use Core\App;
 
-if (!file_exists(ROOT . "/.env")) {
-    header("Location: /install.php");
-    exit;
-}
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
