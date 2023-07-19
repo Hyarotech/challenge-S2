@@ -16,8 +16,8 @@ class Request
         $this->data = $_REQUEST;
         $actualRoute = Router::getActualRoute();
         $params = $actualRoute->getParams();
-        if(!empty($params)) {
-            foreach ($params as $paramName=>$param) {
+        if(!empty($params)){
+            foreach ($params as $paramName=>$param){
                 $this->data[$paramName] = $param;
             }
         }
@@ -77,5 +77,15 @@ class Request
             return null;
         }
         return $this->data[$key];
+    }
+
+    public function hasId(){
+        $data = $this->getData();
+        if(!empty($data)){
+            if(isset($data["id"])){
+                return is_int($data["id"]);
+            }
+        }
+        return false;
     }
 }
