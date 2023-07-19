@@ -4,8 +4,8 @@ namespace App\Forms\User;
 
 use App\Forms\Abstract\AForm;
 
-class UpdateUserForm extends AForm{
-    
+class UpdateUser extends AForm{
+
     protected $method = "POST";
 
     public function getConfig(): array

@@ -2,7 +2,7 @@
 
 namespace App\Requests\User;
 
-use App\Forms\User\UpdateUserForm;
+use App\Forms\User\UpdateUser;
 use Core\Router;
 use Core\Session;
 use Core\Verificator;
@@ -13,7 +13,7 @@ class UpdateUserRequest extends \Core\Request
     {
         parent::__construct();
         $this->setMethod("POST");
-        $form = new UpdateUserForm();
+        $form = new UpdateUser();
         $errors = Verificator::form($form->getConfig(), $this->getData());
         Session::set("errors", $errors);
         if(!empty($errors)) {

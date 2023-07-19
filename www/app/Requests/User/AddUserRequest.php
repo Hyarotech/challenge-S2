@@ -2,18 +2,18 @@
 
 namespace App\Requests\User;
 
-use App\Forms\User\CreateUserForm;
+use App\Forms\User\AddUser;
 use Core\Router;
 use Core\Session;
 use Core\Verificator;
 
-class CreateUserRequest extends \Core\Request
+class AddUserRequest extends \Core\Request
 {
     public function __construct()
     {
         parent::__construct();
         $this->setMethod("POST");
-        $form = new CreateUserForm();
+        $form = new AddUser();
         $errors = Verificator::form($form->getConfig(), $this->getData());
         Session::set("errors", $errors);
         if(!empty($errors)) {

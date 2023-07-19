@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Category;
 use App\Models\User;
 use Core\Session;
 use Core\Resource;
@@ -10,6 +11,7 @@ class HomeController
 {
     public function index(): Resource
     {
+        dd(Category::findAll());
         $pseudo = "Prof";
         $view = new Resource("Main/index", "front");
         $view->assign("pseudo", $pseudo);

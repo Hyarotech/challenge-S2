@@ -5,7 +5,7 @@ namespace App\Forms\User;
 use App\Forms\Abstract\AForm;
 use Core\Router;
 
-class CreateUserForm extends AForm{
+class AddUser extends AForm{
 
     protected $method = "POST";
 
