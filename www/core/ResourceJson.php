@@ -34,6 +34,7 @@ class ResourceJson
         ]);
     }
 
+
     public function __destruct()
     {
         header('Content-Type: application/json; charset=utf-8');

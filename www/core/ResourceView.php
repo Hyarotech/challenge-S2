@@ -24,6 +24,7 @@ class ResourceView
         $this->data[$key] = $value;
     }
 
+
     public function setView(string $view): void
     {
         $view = ROOT . "/app/Views/" . trim($view) . ".view.php";
