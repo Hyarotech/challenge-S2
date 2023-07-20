@@ -1,18 +1,38 @@
 import env from "/assets/js/env.js";
-
 export default async () => {
     let builtUrl = new URL("/api/install/state", env.apiUrl);
     let res = await fetch(builtUrl);
     let data = await res.json();
-    if (data.dbState) {
+    if (data.success && data.data?.dbState) {
         window.location.href = "/install/step2";
     }
-    function handleSubmit(e){
+    let erreur = "";
+
+    async function handleSubmit(e) {
         e.preventDefault();
-        console.log(e.target)
         let formData = new FormData(e.target);
-        console.log(formData);
+        let dbData = {
+            bddName: formData.get("bddName"),
+            bddHost: formData.get("bddHost"),
+            bddPort: formData.get("bddPort"),
+            bddUser: formData.get("bddUser"),
+            bddPwd: formData.get("bddPwd")
+        };
+        let builtUrl = new URL("/api/install/db", env.apiUrl);
+        let res = await fetch(builtUrl, {
+            method: "POST",
+            body: JSON.stringify(dbData),
+        });
+        let data = await res.json();
+        if (data.success) {
+            window.location.href = "/install/step2";
+        } else{
+            erreur = data.errors.global;
+            console.log(data.errors.global)
+            window.dispatchEvent(new Event('popstate'));
+        }
     }
+
     return {
         "type": "div",
         "attributes": {
@@ -28,12 +48,11 @@ export default async () => {
                     {
                         "type": "form",
                         "attributes": {
-                            "onsubmit": "",
                             "method": "post",
                             "class": "card-body"
                         },
-                        "events":{
-                            submit:handleSubmit
+                        "events": {
+                            submit: handleSubmit
                         },
                         "children": [
                             {
@@ -52,7 +71,10 @@ export default async () => {
                                 "type": "p",
                                 "attributes": {
                                     "class": "text-sm mt-2 text-red-500 text-center"
-                                }
+                                },
+                                "children": [
+                                    erreur ? erreur : ""
+                                ]
                             },
                             {
                                 "type": "div",
@@ -93,23 +115,6 @@ export default async () => {
                                                     "class": "input input-bordered w-full",
                                                 }
                                             },
-                                            {
-                                                "type": "label",
-                                                "attributes": {
-                                                    "class": "label"
-                                                },
-                                                "children": [
-                                                    {
-                                                        "type": "span",
-                                                        "attributes": {
-                                                            "class": "label-text-alt text-red-500"
-                                                        },
-                                                        "children": [
-                                                            "\r\n                            erreur ici\r\n                        "
-                                                        ]
-                                                    }
-                                                ]
-                                            }
                                         ]
                                     },
                                     {
@@ -145,23 +150,6 @@ export default async () => {
                                                     "class": "input input-bordered w-full",
                                                 }
                                             },
-                                            {
-                                                "type": "label",
-                                                "attributes": {
-                                                    "class": "label"
-                                                },
-                                                "children": [
-                                                    {
-                                                        "type": "span",
-                                                        "attributes": {
-                                                            "class": "label-text-alt text-red-500"
-                                                        },
-                                                        "children": [
-                                                            "\r\n                            erreur ici\r\n                        "
-                                                        ]
-                                                    }
-                                                ]
-                                            }
                                         ]
                                     },
                                     {
@@ -197,23 +185,6 @@ export default async () => {
                                                     "class": "input input-bordered w-full",
                                                 }
                                             },
-                                            {
-                                                "type": "label",
-                                                "attributes": {
-                                                    "class": "label"
-                                                },
-                                                "children": [
-                                                    {
-                                                        "type": "span",
-                                                        "attributes": {
-                                                            "class": "label-text-alt text-red-500"
-                                                        },
-                                                        "children": [
-                                                            "\r\n                            erreur ici\r\n                        "
-                                                        ]
-                                                    }
-                                                ]
-                                            }
                                         ]
                                     },
                                     {
@@ -249,23 +220,6 @@ export default async () => {
                                                     "class": "input input-bordered w-full",
                                                 }
                                             },
-                                            {
-                                                "type": "label",
-                                                "attributes": {
-                                                    "class": "label"
-                                                },
-                                                "children": [
-                                                    {
-                                                        "type": "span",
-                                                        "attributes": {
-                                                            "class": "label-text-alt text-red-500"
-                                                        },
-                                                        "children": [
-                                                            "\r\n                            erreur ici\r\n                        "
-                                                        ]
-                                                    }
-                                                ]
-                                            }
                                         ]
                                     },
                                     {
@@ -301,23 +255,6 @@ export default async () => {
                                                     "class": "input input-bordered w-full",
                                                 }
                                             },
-                                            {
-                                                "type": "label",
-                                                "attributes": {
-                                                    "class": "label"
-                                                },
-                                                "children": [
-                                                    {
-                                                        "type": "span",
-                                                        "attributes": {
-                                                            "class": "label-text-alt text-red-500"
-                                                        },
-                                                        "children": [
-                                                            "\r\n                            erreur ici\r\n                        "
-                                                        ]
-                                                    }
-                                                ]
-                                            }
                                         ]
                                     }
                                 ]

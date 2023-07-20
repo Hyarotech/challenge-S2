@@ -10,7 +10,6 @@ const zip = (xs, ys) => {
 
 const diffAttrs = (oldAttrs, newAttrs) => {
     const patches = [];
-
     // set new attributes
     for (const [k, v] of Object.entries(newAttrs)) {
         patches.push($node => {
@@ -83,18 +82,15 @@ const diff = (vOldNode, vNewNode) => {
             return $node => undefined;
         }
     }
-
-    if (vOldNode.tagName !== vNewNode.tagName) {
+    if (vOldNode.type !== vNewNode.type) {
         return $node => {
             const $newNode = render(vNewNode);
             $node.replaceWith($newNode);
             return $newNode;
         };
     }
-
-    const patchAttrs = diffAttrs(vOldNode.attributes, vNewNode.attributes);
-    const patchChildren = diffChildren(vOldNode.children??[], vNewNode.children??[]);
-
+    const patchAttrs = diffAttrs(vOldNode.attributes ?? {}, vNewNode.attributes ?? {});
+    const patchChildren = diffChildren(vOldNode.children ?? [], vNewNode.children ?? []);
     return $node => {
         patchAttrs($node);
         patchChildren($node);

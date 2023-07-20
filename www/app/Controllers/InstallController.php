@@ -32,4 +32,20 @@ class InstallController
         echo (new ResourceView($viewAsked,"back",true))->getVDom();
         exit();
     }
+
+    public function installDb(): ResourceJson
+    {
+
+        $actualRoute = Router::getActualRoute();
+        $dbInfos = $actualRoute->getBody();
+        $installer = Installer::getInstance();
+        $installDb = $installer->installDb($dbInfos);
+        if ($installDb) {
+            return $response = new ResourceJson();
+        } else{
+            $response = new ResourceJson();
+            $response->addError("global", "Impossible de se connecter à la base de données");
+            return $response;
+        }
+    }
 }

@@ -5,7 +5,6 @@ const renderElem = ({type, attributes, children, events}) => {
     if (!events) events = {};
     // set attributes
     for (const [k, v] of Object.entries(attributes)) {
-        console.log(k, v)
         $el.setAttribute(k, v);
     }
     // set children
