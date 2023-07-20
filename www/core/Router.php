@@ -108,6 +108,7 @@ class Router
         if (!$route) {
             //check for dynamic routes with :id for example
             $route = $this->getRouteByDynamicURL($uri, $method);
+
             if (!$route) {
                 return null;
             }

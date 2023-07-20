@@ -1,39 +1,40 @@
 import env from "/assets/js/env.js";
 
 let erreur = ""
-export default async () => {
+export default async function () {
     let builtUrl = new URL("/api/install/state", env.apiUrl);
     let res = await fetch(builtUrl);
     let data = await res.json();
+    console.log(data)
     if (data.success) {
         if (!data.data?.dbState) {
             window.location.href = "/install/step1";
         }
-        if (data.data?.settingsState) {
-            window.location.href = "/install/step3";
+        if (!data.data?.settingsState) {
+            window.location.href = "/install/step2";
+        }
+        if (data.data?.smtpState) {
+            window.location.href = "/install/step4";
         }
     }
-    const handleSubmit = async (e) => {
+    let handleSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData(e.target);
-        let builtUrl = new URL("/api/install/settings", env.apiUrl);
-        let settingsData = {
-            appUrl: formData.get("appUrl"),
-            appName: formData.get("appName"),
-            appFromEmail: formData.get("appFromEmail")
-        }
+        let smtpData = {};
+        formData.forEach((value, key) => smtpData[key] = value);
+        let builtUrl = new URL("/api/install/smtp", env.apiUrl);
         let res = await fetch(builtUrl, {
             method: "POST",
-            body: JSON.stringify(settingsData),
+            body: JSON.stringify(smtpData),
         });
         let data = await res.json();
         if (data.success) {
-            window.location.href = "/install/step3";
+            window.location.href = "/install/step4";
         } else {
             erreur = data.errors.global;
             window.dispatchEvent(new Event('popstate'));
         }
-    }
+    };
     return {
         "type": "div",
         "attributes": {
@@ -62,7 +63,7 @@ export default async () => {
                                     "class": "text-3xl text-center"
                                 },
                                 "children": [
-                                    "Informations du site"
+                                    "Informations SMTP"
                                 ]
                             },
                             {
@@ -93,7 +94,7 @@ export default async () => {
                                                 type: "label",
                                                 attributes: {
                                                     class: "label",
-                                                    for: "appUrl"
+                                                    for: "smtpPort"
                                                 },
                                                 children: [
                                                     {
@@ -102,7 +103,7 @@ export default async () => {
                                                             class: "label-text"
                                                         },
                                                         children: [
-                                                            "Your app url"
+                                                            "SMTP_PORT"
                                                         ]
                                                     }
                                                 ]
@@ -110,12 +111,12 @@ export default async () => {
                                             {
                                                 type: "input",
                                                 attributes: {
-                                                    id: "appUrl",
+                                                    id: "smtpPort",
                                                     type: "text",
-                                                    name: "appUrl",
-                                                    class: "input input-bordered w-full",
+                                                    name: "smtpPort",
+                                                    class: "input input-bordered w-full"
                                                 }
-                                            },
+                                            }
                                         ]
                                     },
                                     {
@@ -128,7 +129,7 @@ export default async () => {
                                                 type: "label",
                                                 attributes: {
                                                     class: "label",
-                                                    for: "appName"
+                                                    for: "smtpUser"
                                                 },
                                                 children: [
                                                     {
@@ -137,7 +138,7 @@ export default async () => {
                                                             class: "label-text"
                                                         },
                                                         children: [
-                                                            "Your app name"
+                                                            "SMTP_USER"
                                                         ]
                                                     }
                                                 ]
@@ -145,15 +146,88 @@ export default async () => {
                                             {
                                                 type: "input",
                                                 attributes: {
-                                                    id: "appName",
+                                                    id: "smtpUser",
                                                     type: "text",
-                                                    name: "appName",
+                                                    name: "smtpUser",
                                                     class: "input input-bordered w-full"
                                                 }
                                             }
                                         ]
                                     },
                                     {
+                                        type: "div",
+                                        attributes: {
+                                            class: "col-span-6"
+                                        },
+                                        children: [
+                                            {
+                                                type: "label",
+                                                attributes: {
+                                                    class: "label",
+                                                    for: "smtpPassword"
+                                                },
+                                                children: [
+                                                    {
+                                                        type: "span",
+                                                        attributes: {
+                                                            class: "label-text"
+                                                        },
+                                                        children: [
+                                                            "SMTP_PASSWORD"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                type: "input",
+                                                attributes: {
+                                                    id: "smtpPassword",
+                                                    type: "password",
+                                                    name: "smtpPassword",
+                                                    class: "input input-bordered w-full"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        type: "div",
+                                        attributes: {
+                                            class: "col-span-6"
+                                        },
+                                        children: [
+                                            {
+                                                type: "label",
+                                                attributes: {
+                                                    class: "label",
+                                                    for: "smtpSecureProtocol"
+                                                },
+                                                children: [
+                                                    {
+                                                        type: "span",
+                                                        attributes: {
+                                                            class: "label-text"
+                                                        },
+                                                        children: [
+                                                            "Smtp protocol"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                type: 'select',
+                                                attributes: {
+                                                    id: 'smtpSecureProtocol',
+                                                    name: 'smtpSecureProtocol',
+                                                    class: 'select select-bordered w-full'
+                                                },
+                                                children: [
+                                                    {type: 'option', attributes: {value: 'none'}, children: ['None']},
+                                                    {type: 'option', attributes: {value: 'ssl'}, children: ['SSL']},
+                                                    {type: 'option', attributes: {value: 'tls'}, children: ['TLS']}
+                                                ]
+                                            }
+                                        ]
+                                    }, {
                                         type: "div",
                                         attributes: {
                                             class: "col-span-full"
@@ -163,7 +237,7 @@ export default async () => {
                                                 type: "label",
                                                 attributes: {
                                                     class: "label",
-                                                    for: "appFromEmail"
+                                                    for: "smtpHost"
                                                 },
                                                 children: [
                                                     {
@@ -172,7 +246,7 @@ export default async () => {
                                                             class: "label-text"
                                                         },
                                                         children: [
-                                                            "Your app from email"
+                                                            "SMTP_HOST"
                                                         ]
                                                     }
                                                 ]
@@ -180,14 +254,14 @@ export default async () => {
                                             {
                                                 type: "input",
                                                 attributes: {
-                                                    id: "appFromEmail",
-                                                    type: "email",
-                                                    name: "appFromEmail",
-                                                    class: "input input-bordered w-full"
+                                                    id: "smtpHost",
+                                                    type: "text",
+                                                    name: "smtpHost",
+                                                    class: "input input-bordered w-full",
                                                 }
-                                            }
+                                            },
                                         ]
-                                    }
+                                    },
                                 ]
                             },
                             {

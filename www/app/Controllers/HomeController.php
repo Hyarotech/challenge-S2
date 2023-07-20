@@ -12,6 +12,7 @@ class HomeController
     {
         $pseudo = "Prof";
         $view = new ResourceView("Main/index", "front");
+
         $view->assign("pseudo", $pseudo);
         return $view;
     }
