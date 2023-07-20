@@ -92,8 +92,8 @@ const diff = (vOldNode, vNewNode) => {
         };
     }
 
-    const patchAttrs = diffAttrs(vOldNode.attrs, vNewNode.attrs);
-    const patchChildren = diffChildren(vOldNode.children, vNewNode.children);
+    const patchAttrs = diffAttrs(vOldNode.attributes, vNewNode.attributes);
+    const patchChildren = diffChildren(vOldNode.children??[], vNewNode.children??[]);
 
     return $node => {
         patchAttrs($node);

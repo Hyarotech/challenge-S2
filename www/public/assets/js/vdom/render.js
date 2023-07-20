@@ -1,17 +1,20 @@
-const renderElem = ({ tagName, attrs, children }) => {
-    const $el = document.createElement(tagName);
-
+const renderElem = ({type, attributes, children, events}) => {
+    const $el = document.createElement(type);
+    if (!attributes) attributes = {};
+    if (!children) children = [];
+    if (!events) events = {};
     // set attributes
-    for (const [k, v] of Object.entries(attrs)) {
+    for (const [k, v] of Object.entries(attributes)) {
+        console.log(k, v)
         $el.setAttribute(k, v);
     }
-
     // set children
-    for (const child of children) {
-        const $child = render(child);
-        $el.appendChild($child);
+    for (let i = 0; i < children?.length ?? 0; i++) {
+        $el.appendChild(render(children[i]));
     }
-
+    for (const [k, v] of Object.entries(events)) {
+        $el.addEventListener(k, v);
+    }
     return $el;
 };
 

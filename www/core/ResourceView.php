@@ -6,13 +6,13 @@ use DOMDocument;
 use DOMElement;
 use DOMText;
 
-class Resource
+class ResourceView
 {
     private string $view;
     private string $template;
     private $data = [];
 
-    public function __construct(string $view, string $template = "back")
+    public function __construct(string $view, string $template = "back",private $isJson = false)
     {
         $this->setView($view);
         $this->setTemplate($template);
@@ -42,12 +42,6 @@ class Resource
         $this->template = $template;
     }
 
-
-    public function modal($name, $config): void
-    {
-        include ROOT . "/app/Views/Modals/" . $name . ".php";
-    }
-
     public function getVDom():string
     {
         ob_start();
@@ -61,7 +55,7 @@ class Resource
     {
         libxml_use_internal_errors(true);
         $dom = new DOMDocument();
-        $dom->loadHTML($html);
+        $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         libxml_clear_errors();
         libxml_use_internal_errors(false);
         $root = $dom->documentElement;
@@ -98,8 +92,12 @@ class Resource
 
     public function __destruct()
     {
-        extract($this->data);
-        include $this->template;
+        if($this->isJson){
+            echo $this->getVDom();
+        }else{
+            extract($this->data);
+            include $this->template;
+        }
     }
 
 }

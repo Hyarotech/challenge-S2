@@ -15,6 +15,8 @@ class Route
 
     private array $middlewares = [];
 
+    private array $body = [];
+
     /**
      * @return string
      */
@@ -149,6 +151,27 @@ class Route
     public function setMiddlewares(array $middlewares): Route
     {
         $this->middlewares = $middlewares;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBody(): array
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param array|null $body
+     * @return Route
+     */
+    public function setBody(?array $body): self
+    {
+        if($body === null) {
+            $body = [];
+        }
+        $this->body = $body;
         return $this;
     }
 

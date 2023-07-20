@@ -8,7 +8,7 @@ use App\Requests\LoginRequest;
 use App\Requests\RegisterRequest;
 use Core\IControllerApi;
 use Core\FlashNotifier;
-use Core\Resource;
+use Core\ResourceView;
 use Core\Router;
 use Core\Session;
 use Exception;

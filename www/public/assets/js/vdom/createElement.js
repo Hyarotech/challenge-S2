@@ -1,7 +1,17 @@
-export default (tagName, { attrs = {}, children = [] } = {}) => {
+export default ({type, attributes = {}, children = [], events = {}} = {}) => {
+    if (!attributes) {
+        attributes = {};
+    }
+    if (!children) {
+        children = {};
+    }
+    if (!events) {
+        events = {};
+    }
     return {
-        tagName,
-        attrs,
+        type,
+        attributes,
         children,
+        events
     };
 };
