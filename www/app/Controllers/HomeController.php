@@ -4,25 +4,26 @@ namespace App\Controllers;
 
 use App\Models\User;
 use Core\Session;
-use Core\Resource;
+use Core\ResourceView;
 
 class HomeController
 {
-    public function index(): Resource
+    public function index(): ResourceView
     {
         $pseudo = "Prof";
-        $view = new Resource("Main/index", "front");
+        $view = new ResourceView("Main/index", "front");
+
         $view->assign("pseudo", $pseudo);
         return $view;
     }
 
     public function contact()
     {
-        $view = new Resource("Main/contact", "front");
+        $view = new ResourceView("Main/contact", "front");
     }
 
     public function dashboard()
     {
-        $view = new Resource("Main/index", "back");
+        $view = new ResourceView("Main/index", "back");
     }
 }

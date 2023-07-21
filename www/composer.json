@@ -17,7 +17,9 @@
   },
   "require": {
     "phpmailer/phpmailer": "^6.8",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "ext-libxml": "*",
+    "ext-dom": "*"
   },
   "require-dev": {
     "symfony/var-dumper": "6.0",

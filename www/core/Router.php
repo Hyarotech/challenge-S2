@@ -93,17 +93,22 @@ class Router
 
     public function resolveRoute(): Route|null
     {
+
         $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
         $uri = rtrim(strtolower(trim($uriExploded[0])), "/");
         $uri = (empty($uri)) ? "/" : $uri;
         $method = $_SERVER["REQUEST_METHOD"];
         //Dans le cas ou nous sommes à la racine $uri sera vide du coup je remets /
         $uri = (empty($uri)) ? "/" : $uri;
+        if (!str_contains($uri, "/api") && !file_exists(ROOT . "/.env")) {
+            $uri = "/install";
+            $method = "GET";
+        }
         $route = $this->getRoute($uri, $method);
         if (!$route) {
             //check for dynamic routes with :id for example
-
             $route = $this->getRouteByDynamicURL($uri, $method);
+
             if (!$route) {
                 return null;
             }
@@ -116,7 +121,6 @@ class Router
      */
     public function run(): void
     {
-
         $route = $this->resolveRoute();
         if (!$route) {
             $this->redirectTo("errors.404");
@@ -131,37 +135,23 @@ class Router
         }
         $controller = $route->getController();
         $action = $route->getAction();
-
         $objet = new $controller();
-
         $reflectionMethod = new ReflectionMethod($controller, $action);
         $parameters = $reflectionMethod->getParameters();
-
-
-
         $args = [];
-
-
-        foreach($parameters as $parameter) {
+        foreach ($parameters as $parameter) {
             $paramType = $parameter->getType()->getName();
-
-            if($paramType === 'Core\Request') {
+            if ($paramType === 'Core\Request') {
                 $attributes = $reflectionMethod->getAttributes();
-
                 if (empty($attributes)) {
                     $args[] = new $paramType();
                     continue;
                 }
                 $requestClass = $attributes[0]->getName();
-
                 assert(is_subclass_of($requestClass, $paramType));
                 $args[] = new $requestClass();
             }
         }
-
-
-
-
         call_user_func_array([$objet, $action], $args);
     }
 
@@ -183,6 +173,11 @@ class Router
         $route->setController($callable[0]);
         $route->setAction($callable[1]);
         $route->setMethod("POST");
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+        $route->setBody(
+            $data
+        );
         $this->routes[] = $route;
         return $route;
     }

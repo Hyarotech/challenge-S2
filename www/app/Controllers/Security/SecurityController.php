@@ -5,21 +5,21 @@ namespace App\Controllers\Security;
 use App\Models\User;
 use App\Requests\LoginRequest;
 use Core\FlashNotifier;
-use Core\Resource;
+use Core\ResourceView;
 use Core\Router;
 use Core\Session;
 use Exception;
 
 class SecurityController
 {
-    public function register(): Resource
+    public function register(): ResourceView
     {
-        return new Resource("Auth/register", "front");
+        return new ResourceView("Auth/register", "front");
     }
 
-    public function login(): Resource
+    public function login(): ResourceView
     {
 
-        return new Resource("Auth/login", "front");
+        return new ResourceView("Auth/login", "front");
     }
 }

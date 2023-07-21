@@ -6,19 +6,19 @@ use App\Models\User;
 use App\Notifications\VerifyUserEmailNotification;
 use App\Requests\LoginRequest;
 use App\Requests\RegisterRequest;
-use Core\IControllerApi;
 use Core\FlashNotifier;
-use Core\Resource;
+use Core\Request;
 use Core\Router;
 use Core\Session;
 use Exception;
 
-class SecurityIControllerApi
+class SecurityControllerApi
 {
     /**
      * @throws Exception
      */
-    public function register(RegisterRequest $request): void
+    #[RegisterRequest]
+    public function register(Request $request): void
     {
         if (User::findBy("email", $request->get("email"))) {
             Session::set("errors", ["email" => "This email already exist"]);
@@ -51,16 +51,16 @@ class SecurityIControllerApi
             Router::redirectTo("errors.404");
         }
         $user = User::findBy("email", $email);
-        if(!$user) {
+        if (!$user) {
             FlashNotifier::error("Invalid user");
             Router::redirectTo("errors.404");
         }
-        if($user->isVerified()) {
+        if ($user->isVerified()) {
             FlashNotifier::error("Your account is already verified");
             Router::redirectTo("errors.404");
         }
         if (password_verify($token, $user->getVerifToken())) {
-            $data=[
+            $data = [
                 "firstname" => $user->getFirstname(),
                 "lastname" => $user->getLastname(),
                 "email" => $user->getEmail(),
@@ -76,7 +76,8 @@ class SecurityIControllerApi
         }
     }
 
-    public function login(LoginRequest $request): void
+    #[LoginRequest]
+    public function login(Request $request): void
     {
         $user = new User();
         $user->setEmail($request->get("email"));
@@ -104,10 +105,9 @@ class SecurityIControllerApi
         ];
         User::update($userInDb->getId(), $data);
         Session::set("user", [
-            "email"=> $userInDb->getEmail(),
+            "email" => $userInDb->getEmail(),
             "accessToken" => $setAccessToken,
         ]);
-
         FlashNotifier::success("Vous êtes connecté");
         Router::redirectTo("home");
     }
