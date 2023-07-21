@@ -27,7 +27,7 @@ function component(string $component, array $data = [], string $type = "view"): 
     }
 
     $file = ROOT."/app/Views/".$component.".".$type.".php";
-    if(is_file($file)) {
+    if(is_file($file))
         include $file;
     else
         throw new \Exception('Composant "'.$component.'.'.$type.'.php" inexistant');
