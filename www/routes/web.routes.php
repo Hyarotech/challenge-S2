@@ -16,3 +16,4 @@ include ROOT . "/routes/pages.routes.php";
 include ROOT . "/routes/security.routes.php";
 include ROOT . "/routes/comment.routes.php";
 include ROOT . "/routes/install.routes.php";
+include ROOT . "/routes/users.routes.php";

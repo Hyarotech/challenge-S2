@@ -80,15 +80,10 @@ abstract class Model
         
         $queryPrepared = $pdo->prepare("INSERT INTO " . $instance->table . " (" . implode(",", $columns) . ") 
                             VALUES (:" . implode(",:", $columns) . ")");
-        
-        return $queryPrepared->execute($data);
-                            
-                           
-
-      
+        return  $queryPrepared->execute($data);
     }
 
-    public static function update(string $id, array $data): void
+    public static function update(string $id, array $data): bool
     {
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
@@ -106,8 +101,7 @@ abstract class Model
         }
         $data["id"] = $id;
         $queryPrepared = $pdo->prepare("UPDATE " . $instance->table . " SET " . implode(",", $columns) . " WHERE id=:id");
-       
-        $queryPrepared->execute($data);
+        return $queryPrepared->execute($data);
     }
 
     public static function findBy(string $column, string $value): ?Model

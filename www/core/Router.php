@@ -53,6 +53,16 @@ class Router
         exit;
     }
 
+    public static function redirectDynamicTo(string $routeName, array $params)
+    {
+        $url =  self::generateDynamicRoute($routeName,$params);
+        if (!$url) {
+            die("La route " . $routeName . " n'existe pas");
+        }
+        header("Location: " . $url);
+        exit;
+    }
+
     public function getRoute(string $url, string $method = "GET"): Route|bool
     {
         $routes = array_filter($this->routes, function (Route $route) use ($method, $url) {
