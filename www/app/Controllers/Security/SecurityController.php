@@ -19,7 +19,6 @@ class SecurityController
 
     public function login(): ResourceView
     {
-
         return new ResourceView("Auth/login", "front");
     }
 }
