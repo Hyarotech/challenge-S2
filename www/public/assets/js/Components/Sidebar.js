@@ -1,4 +1,4 @@
-class SideBar {
+class Sidebar {
     #sideElement = null;
 
     constructor() {
@@ -25,5 +25,5 @@ class SideBar {
 }
   
 // Exporter une seule instance de Navbar
-export default new SideBar();
+export default new Sidebar();
   

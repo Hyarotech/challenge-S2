@@ -6,9 +6,14 @@ class FlashNotifier
 {
     public static function error(string $message): void
     {
+        
         if (!isset($_SESSION["flash"])) {
             $_SESSION["flash"] = [];
         }
+        
+        if(!is_array($_SESSION["flash"]))
+            $_SESSION["flash"] = [];
+
         $_SESSION["flash"]["error"] = $message;
     }
 
