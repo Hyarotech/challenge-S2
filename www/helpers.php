@@ -41,7 +41,7 @@ function getJS(){
             return $scriptName;
         $path = dirname($path);            
     }
-    return '/assets/js/app.js';
+    return '/assets/js/m.js';
 }
 
 function frenchDate(){

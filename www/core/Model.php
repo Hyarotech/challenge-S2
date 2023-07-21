@@ -16,7 +16,7 @@ abstract class Model
         $classExploded = explode("\\", get_called_class());
         $this->table = end($classExploded);
 
-        $this->table = env("DB_SCHEMA", "public") . "." . $this->table;
+        $this->table = env("DB_SCHEMA", "esgi") . "." . $this->table;
     }
 
     public static function hydrate(array $data = []): static
@@ -77,6 +77,7 @@ abstract class Model
         }
         $columns = array_keys($data);
         
+        
         $queryPrepared = $pdo->prepare("INSERT INTO " . $instance->table . " (" . implode(",", $columns) . ") 
                             VALUES (:" . implode(",:", $columns) . ")");
         
@@ -111,17 +112,20 @@ abstract class Model
 
     public static function findBy(string $column, string $value): ?Model
     {
-
+        
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
-
         $instance = new static();
 
         $queryPrepared = $pdo->prepare("SELECT * FROM " . $instance->table . " WHERE " . $column . " = :value");
         $queryPrepared->bindValue(":value", $value);
+      
+      
         $queryPrepared->execute();
         
         $result = $queryPrepared->fetch();
+
+      
         if ($result) {
             return static::hydrate($result);
         }
