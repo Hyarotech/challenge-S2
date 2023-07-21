@@ -39,6 +39,11 @@ class Request
         $this->method = $method;
     }
 
+    public function set(string $key, $value): void
+    {
+        $this->data[$key] = $value;
+    }
+
     /**
      * @return string
      */
@@ -79,7 +84,7 @@ class Request
         return $this->data[$key];
     }
 
-    public function hasId(){
+    public function hasId(): bool{
         $data = $this->getData();
         if(!empty($data)){
             if(isset($data["id"])){

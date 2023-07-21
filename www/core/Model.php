@@ -81,6 +81,15 @@ abstract class Model
         return  $queryPrepared->execute($data);
     }
 
+    public static function delete(string $id): void
+    {
+        $pdo = self::getPdo();
+
+        $instance = new static();
+        $queryPrepared = $pdo->prepare("DELETE FROM " . $instance->table . " WHERE id=:id");
+        $queryPrepared->execute(['id' => $id]);
+    }
+
     public static function update(string $id, array $data): void
     {
         $pdo = self::getPdo();
