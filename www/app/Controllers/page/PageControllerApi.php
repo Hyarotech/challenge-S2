@@ -52,17 +52,17 @@ class PageControllerApi implements IControllerApi
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
         $page->setUpdatedAt($dateUpdated);
         if(Page::findBy('slug', $page->getSlug())){
-  //          FlashNotifier::error("Le slug existe déjà");
+            FlashNotifier::error("Le slug existe déjà");
             Router::redirectTo("page.create");
             return false;
         }
         if(!User::findBy('id', $page->getUserId())){
-//            FlashNotifier::error("L'utilisateur n'existe pas");
+            FlashNotifier::error("L'utilisateur n'existe pas");
             Router::redirectTo("page.create");
             return false;
         }
         
-    //    FlashNotifier::success("La page a bien été créée");
+        FlashNotifier::success("La page a bien été créée");
         Page::save($page);
         Router::redirectTo("page.create");
 
