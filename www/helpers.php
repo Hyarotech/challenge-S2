@@ -30,3 +30,43 @@ function component(string $component,array $data = [], string $type = "view"): v
     else
         throw new \Exception('Composant "'.$component.'.'.$type.'.php" inexistant');
 }
+
+function getJS(){
+    $path = strtok($_SERVER['REQUEST_URI'],'?');
+    while($path != "/"){
+        $scriptName = "/assets/js".$path.".js";
+        if(file_exists(ROOT.'/public'.$scriptName))
+            return $scriptName;
+        $path = dirname($path);            
+    }
+    return '/assets/js/app.js';
+}
+
+function frenchDate(){
+    $tz = new DateTimeZone('Europe/Paris');
+    $date = new DateTime('now', $tz);
+
+    return $date;
+}
+
+/*function formatFrenchDate(string $date) {
+    $dateTime = new DateTime($date);
+
+    $formatter = new \IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+    $formatter->setPattern('dd MMMM yyyy \'à\' HH\hmm');
+
+    $jour = $formatter->format($dateTime);
+    $dateFr = $dateTime->format('d F Y');
+    $heure = $dateTime->format('H\hi');
+
+    return $jour .', le '. $dateFr. ' à ' .$heure;
+}*/
+
+
+
+function realEmpty($value){
+    if($value == 0 || $value == false)
+        return false;
+        
+    return empty($value);
+}

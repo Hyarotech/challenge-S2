@@ -55,6 +55,7 @@ abstract class Model
         $pdo = $dbConnector->getPDO();
 
         $fillable = new static();
+
         $fillable = $fillable->fillable;
         if ($fillable && is_array($data)) {
             $instance = new static();
@@ -78,7 +79,10 @@ abstract class Model
         
         $queryPrepared = $pdo->prepare("INSERT INTO " . $instance->table . " (" . implode(",", $columns) . ") 
                             VALUES (:" . implode(",:", $columns) . ")");
-        return  $queryPrepared->execute($data);
+        
+        return $queryPrepared->execute($data);
+                            
+                           
 
       
     }
@@ -131,6 +135,7 @@ abstract class Model
 
         $instance = new static();
         $results = $pdo->query("SELECT * FROM " . $instance->table)->fetchAll();
+
         return array_map(function ($result) {
             return static::hydrate($result);
         }, $results);
@@ -151,4 +156,31 @@ abstract class Model
         }
         return null;
     }
+
+    public static function delete(string $attribute,mixed $value): void
+    {
+        $dbConnector = DBConnector::getInstance();
+        $pdo = $dbConnector->getPDO();
+
+        $instance = new static();
+        $queryPrepared = $pdo->prepare("DELETE FROM " . $instance->table . " WHERE ".$attribute ." = " . ":".$attribute);
+        $queryPrepared->bindValue($attribute, $value);
+        $queryPrepared->execute();
+    }
+
+
+    public function toArray(): array
+    {
+        $result = [];
+        $reflection = new \ReflectionClass($this);
+        $properties = $reflection->getProperties();
+        foreach ($properties as $property) {
+            $property = $property->getName();
+            if ($property !== "table" && $property !== "fillable") 
+                $result[$property] = $this->$property;
+            
+        }
+        return $result;
+    }
+    
 }

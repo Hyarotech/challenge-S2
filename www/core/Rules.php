@@ -7,7 +7,7 @@ abstract class Rules
 
     public static function required($value,$data,&$listOfErrors): bool
     {
-        if(empty($value)){
+        if(realEmpty($value) ){
             $listOfErrors[$data["name"]][] = "Le champ " . $data["name"]." est requis";
             return false;
         }
@@ -60,8 +60,23 @@ abstract class Rules
     }
     public static function integer($value, $data, &$listOfErrors): bool
     {
+        if($value === 0 || $value === "0")
+            return true;
+            
         if(!filter_var($value, FILTER_VALIDATE_INT)){
             $listOfErrors[$data["name"]][] = "Le champ " . $data["name"] . " doit être un nombre entier.";
+            return false;
+        }
+        return true;
+    }
+
+    public static function json($value, $data, &$listOfErrors): bool
+    {
+        
+        json_decode($value);
+        
+        if(json_last_error() !== JSON_ERROR_NONE){
+            $listOfErrors[$data["name"]][] = "Le champ " . $data["name"] . " doit être un json valide";
             return false;
         }
         return true;

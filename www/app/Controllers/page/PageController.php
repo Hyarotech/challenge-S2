@@ -2,99 +2,78 @@
 namespace App\Controllers\Page;
 
 use Core\Resource;
-use App\Models\Page;
-use App\Requests\PageCreateRequest;
 use App\Controllers\page\PageControllerApi;
-
+use App\Models\Page;
+use Core\Request;
+use Core\Router;
+use App\Models\PageBuilderManager;
+use App\Configs\PageConfig;
 class PageController 
 {
     public function page()
     {
+        $page = new PageControllerApi();
+        $pageDataResponse = $page->readOne(new Request())->getData();
         
-        $view = new Resource("Page/index", "front");
+        if($pageDataResponse['success'] === false)
+            Router::redirectTo("errors.404");
+
+        $pageDataResponse = $pageDataResponse['data']['page'];
+
+        if($pageDataResponse['visibility'] === PageConfig::VISIBILITY['private'])
+            Router::redirectTo("errors.404");
+        
+        $pageLastState = PageBuilderManager::getLast($pageDataResponse['id']);
+
+        /*
+         Si j'ai le temps : mettre une page d'erreur avec un modal au milieu qui dit que la page n'a pas de contenu
+        */
+        if(count($pageLastState) === 0)
+            Router::redirectTo("errors.404");
+
+        $pageLastState = $pageLastState[0]->toArray();
+        $view = new Resource("Page/index","front");
+        $view->assign('isNoFollow',$pageDataResponse['isNoFollow']);
+        $view->assign('title',$pageDataResponse['title']);
+        $view->assign('description',$pageDataResponse['description']);
+        $view->assign('createdAt',$pageDataResponse['createdAt']);
+        $view->assign('content',json_decode($pageLastState['state']));
+        
         return $view;    
     }
-    public function create(PageCreateRequest $request)
+    public function create()
     {
+        $view = new Resource("Page/pageSetting","back");
+        $formAction = Router::generateRoute("page.create.handle");
+        $view->assign('formAction',$formAction);
+
         
+        return $view;
     }
 
  
 
-    /*
-    public function list()
+    public function edit()
     {
-        // Logique pour récupérer la liste des pages
-        $pages = Page::findAll();
+        
+        $route = Router::getActualRoute();
+        $page = Page::findBy('id', $route->getParam('id'));
 
-        // Exemple de rendu de la liste des pages
-        View::render('page.list', ['pages' => $pages]);
+        if(!$page)
+            Router::redirectTo("errors.404");        
+        
+        $view = new Resource("Page/pageSetting","back");
+        $formAction = Router::generateRoute("page.edit.handle");
+        $view->assign('formAction',$formAction);
+        $view->assign('pageId',$route->getParam('id'));
+        $view->assign('title',$page->getTitle());
+        $view->assign('slug',$page->getSlug());
+        $view->assign('userId',$page->getUserId());
+        $view->assign('createdAt',$page->getCreatedAt());
+        $view->assign('description',$page->getDescription());
+        $view->assign('isNoFollow',$page->getisNoFollow());
+        $view->assign('visibility',$page->getVisibility());
+
+        return $view;
     }
-
-    public function edit($params)
-    {
-        $id = $params['id'];
-        // Logique pour récupérer et afficher la page à éditer
-        // ...
-
-        // Exemple de rendu du formulaire d'édition de la page
-        View::render('page.edit', ['id' => $id]);
-    }
-
-    public function create()
-    {
-        // Afficher le formulaire de création de page
-        View::render('page.create');
-    }
-
-    public function delete($params)
-    {
-        $id = $params['id'];
-        // Logique pour supprimer la page correspondant à l'ID
-        // ...
-
-        // Redirection vers la liste des pages après la suppression
-        $this->redirect('/dashboard/page');
-    }
-
-    public function handleCreate()
-    {
-        // Récupérer les données du formulaire de création de page
-        $data = $_POST;
-
-        // Créer une nouvelle instance de la classe Page
-        $page = new Page();
-        $page->setTitle($data['title']);
-        $page->setContent($data['content']);
-        // ... Définir les autres propriétés de la page
-
-        // Enregistrer la page dans la base de données
-        $page->save();
-
-        // Redirection vers la liste des pages après la création
-        $this->redirect('/dashboard/page');
-    }
-
-    public function handleEdit($params)
-    {
-        $id = $params['id'];
-
-        // Récupérer les données du formulaire d'édition de page
-        $data = $_POST;
-
-        // Récupérer la page correspondant à l'ID
-        $page = Page::findOne($id);
-        if ($page) {
-            // Mettre à jour les propriétés de la page
-            $page->setTitle($data['title']);
-            $page->setContent($data['content']);
-            // ... Mettre à jour les autres propriétés de la page
-
-            // Enregistrer les modifications dans la base de données
-            $page->update();
-        }
-
-        // Redirection vers la liste des pages après l'édition
-        $this->redirect('/dashboard/page');
-    }*/
 }

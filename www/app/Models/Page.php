@@ -10,8 +10,8 @@ class Page extends Model
     protected int $id;
     protected int $userId;
     protected string $title;
-    protected string $date;
-    protected string $dateUpdated;
+    protected string $createdAt;
+    protected string $updatedAt;
     protected string $slug;
     protected string $description;
     protected bool $isNoFollow;
@@ -20,7 +20,7 @@ class Page extends Model
     protected ?array $fillable = [
         "user_id",
         "title",
-        "date_updated",
+        "updated_at",
         "slug",
         "description",
         "is_no_follow",
@@ -57,36 +57,36 @@ class Page extends Model
 
     public function getTitle(): string
     {
+        
         return $this->title;
     }
 
     public function setTitle(string $title): void
     {   
-
-        
+        strip_tags($title);
         $this->title = $title;
     }
 
   
 
-    public function getDate(): string
+    public function getCreatedAt(): string
     {
-        return $this->date;
+        return $this->createdAt;
     }
 
-    public function setDate(string $date): void
+    public function setCreatedAt(string $date): void
     {
-        $this->date = $date;
+        $this->createdAt = $date;
     }
 
-    public function getDateUpdated(): string
+    public function getUpdatedAt(): string
     {
-        return $this->dateUpdated;
+        return $this->updatedAt;
     }
 
-    public function setDateUpdated(string $dateUpdated): void
+    public function setUpdatedAt(string $date): void
     {
-        $this->dateUpdated = $dateUpdated;
+        $this->updatedAt = $date;
     }
 
     public function getSlug(): string
@@ -106,6 +106,8 @@ class Page extends Model
 
     public function setDescription(string $description): void
     {
+        
+        strip_tags($description);
         $this->description = $description;
     }
 

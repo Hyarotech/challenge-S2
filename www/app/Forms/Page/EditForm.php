@@ -3,7 +3,7 @@ namespace App\Forms\Page;
 
 use App\Forms\Abstract\AForm;
 
-class CreateForm extends AForm
+class EditForm extends AForm
 {
     protected string $method = "POST";
 
@@ -25,10 +25,13 @@ class CreateForm extends AForm
                     "rules" => ["required", "min:2", "max:200", "slug"],
                 ],
                 "is_no_follow" => [
-                    "rules" => ["required", "boolean"],
+                    "rules" => ["required"],
                 ],
                 "visibility" => [
                     "rules" => ["required", "integer","visibility"],
+                ],
+                "id" => [
+                    "rules" => ["required", "integer"],
                 ],
                 "user_id" => [
                     "rules" => ["required", "integer"],

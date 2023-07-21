@@ -34,7 +34,7 @@ class Resource {
         $this->template = $template;
     }
 
-
+    
     public function modal($name, $config):void
     {
         include ROOT."/app/Views/Modals/".$name.".php";
