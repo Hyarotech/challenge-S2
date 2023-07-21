@@ -63,7 +63,11 @@ class Router
         }
         return false;
     }
-
+    public static function redirectToUrl(string $url): void
+    {
+        header("Location: " . $url);
+        exit;
+    }
     public function getRouteByName(string $name)
     {
         $routes = array_filter($this->routes, function (Route $route) use ($name) {
@@ -85,6 +89,7 @@ class Router
             return $route->getPath();
         }
         $url = $route->getPath();
+
         foreach ($params as $key => $value) {
             $url = str_replace(":$key", $value, $url);
         }

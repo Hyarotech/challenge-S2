@@ -3,7 +3,9 @@ class Navbar {
 
     constructor() {
       this.setElement();
+
     }
+
     
     navMobileClickEvent() {
         const mobileToggleNav = this.getElement().find('.mobileToggleNav');

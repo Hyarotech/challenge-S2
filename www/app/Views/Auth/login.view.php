@@ -35,7 +35,7 @@
                     </label>
                     <input type="password" name="password" placeholder="***********" class="input input-bordered w-full" />
                     <label class="label">
-                        <span class="label-text-alt text-red-500">
+                        <span class="label-text-alt text-red-500 w-full">
                             <?= \Core\Session::getError("password") ?>
                         </span>
                     </label>
