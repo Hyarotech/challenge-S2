@@ -1,5 +1,5 @@
-<h1 class="text-4xl font-bold text-center w-full p-5"><?= $title ?></h1>
-<p class="p-5 "><?= "Créée le ". $createdAt ?></p>
+<input type="hidden" id="GES_PAGE_TITLE" value="<?= $title ?>">
+<input type="hidden" id="GES_PAGE_CREATED_AT" value="<?= $createdAt ?>">
 <script src="https://cdn.tailwindcss.com/3.3.3"></script>
 
 <style>
@@ -8,6 +8,6 @@
 
 <?= $content->computedHTML ?>
 
-<script>
+<script defer>
 <?= $content->computedJs ?>
 </script>

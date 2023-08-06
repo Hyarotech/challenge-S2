@@ -57,8 +57,9 @@ class PageController
     {
         
         $route = Router::getActualRoute();
-        $page = Page::findBy('id', $route->getParam('id'));
-
+        
+        $page = Page::findBy('id', (int)$route->getParam('id'));
+        
         if(!$page)
             Router::redirectTo("errors.404");        
         
