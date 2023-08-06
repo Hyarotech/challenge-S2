@@ -65,7 +65,7 @@ abstract class Rules
     }
     public static function integer($value, $data, &$listOfErrors): bool
     {
-        if(!filter_var($value, FILTER_VALIDATE_INT)){
+        if(filter_var($value, FILTER_VALIDATE_INT) === false){
             $listOfErrors[$data["name"]][] = "Le champ " . $data["name"] . " doit être un nombre entier.";
             return false;
         }

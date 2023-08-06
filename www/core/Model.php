@@ -157,7 +157,7 @@ abstract class Model
         return null;
     }
 
-    public static function delete(string $attribute,mixed $value): void
+    public static function delete(string $attribute,mixed $value): bool
     {
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
@@ -166,6 +166,8 @@ abstract class Model
         $queryPrepared = $pdo->prepare("DELETE FROM " . $instance->table . " WHERE ".$attribute ." = " . ":".$attribute);
         $queryPrepared->bindValue($attribute, $value);
         $queryPrepared->execute();
+
+        return ($queryPrepared->rowCount() > 0);
     }
 
 

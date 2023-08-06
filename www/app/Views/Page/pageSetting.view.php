@@ -8,10 +8,14 @@
 
 <form method="POST" action="<?= $formAction ?>" class="card grid bg-base-300 p-5 gap-4">
   <p class="text-accent font-bold">Page Information</p>
-  <?= isset($pageId)
-    ? '<a target="_blank" class="btn btn-secondary flex justify-self-end" href="'.\Core\Router::generateDynamicRoute('page.builder.edit',['id' => $pageId]).'">Constructeur de page</a>'
-    : '';
-   ?>
+
+  <div class="w-full flex gap-2">
+    <a href="<?= \Core\Router::generateRoute("page.list") ?>" class="btn btn-primary btn-sm">Liste des pages</a>
+    <?= isset($pageId)
+      ? '<a target="_blank" class="btn btn-secondary btn-sm" href="'.\Core\Router::generateDynamicRoute('page.builder.edit',['id' => $pageId]).'">Constructeur de page</a>'
+      : '';
+    ?>
+   </div>
 
 
 

@@ -14,7 +14,6 @@ class PageController
     {
         $page = new PageControllerApi();
         $pageDataResponse = $page->readOne(new Request())->getData();
-        
         if($pageDataResponse['success'] === false)
             Router::redirectTo("errors.404");
 

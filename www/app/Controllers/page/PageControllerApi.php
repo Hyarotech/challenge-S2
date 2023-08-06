@@ -124,6 +124,11 @@ class PageControllerApi implements IControllerApi
 
     public function delete(Request $request)
     {
-            Page::delete('id',$request->get('id'));
+            $result = Page::delete('id',(int)$request->get('id'));
+            $response = array();
+            $response['success'] = $result;
+            header('Content-Type: application/json');
+            echo json_encode($response);
+
     }
 }
