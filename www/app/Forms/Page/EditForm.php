@@ -25,7 +25,7 @@ class EditForm extends AForm
                     "rules" => ["required", "min:2", "max:200", "slug"],
                 ],
                 "is_no_follow" => [
-                    "rules" => ["required"],
+                    "rules" => ["required","boolean"],
                 ],
                 "visibility" => [
                     "rules" => ["required", "integer","visibility"],

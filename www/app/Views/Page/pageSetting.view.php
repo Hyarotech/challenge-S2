@@ -58,7 +58,7 @@
       <div class="form-control">
     <label class="label cursor-pointer">
       <span class="label-text"> Oui</span> 
-      <input type="radio" name="is_no_follow" value="true" class="radio checked:bg-accent"
+      <input type="radio" name="is_no_follow" value="1" class="radio checked:bg-accent"
         <?= isset($isNoFollow) && $isNoFollow === true 
                     ? 'checked' : '' ?>    
       />
@@ -68,7 +68,7 @@
   <div class="form-control">
     <label class="label cursor-pointaaer">
       <span class="label-text"> Non</span> 
-      <input type="radio" name="is_no_follow" value="false" class="radio checked:bg-accent"
+      <input type="radio" name="is_no_follow" value="0" class="radio checked:bg-accent"
         <?= isset($isNoFollow) && $isNoFollow === false 
                     ? 'checked' : '' ?>    
       />

@@ -50,11 +50,17 @@ abstract class Rules
     }
     public static function boolean($value, $data, &$listOfErrors): bool
     {
-
-        if (!filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
+        /**
+         *  Les chaines de caractères "true" et "false" ne sont pas considérés comme des boolean 
+         *  car leur conversion implicite donne un résultat inexact.
+         * */
+        $validateBool = [true,false,"0","1",0,1];
+   
+        if (!in_array($value, $validateBool)) {
             $listOfErrors[$data["name"]][] = "Le champ " . $data["name"] . " doit être un booléen.";
             return false;
         }
+        
         return true;
     }
     public static function integer($value, $data, &$listOfErrors): bool

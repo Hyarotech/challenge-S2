@@ -45,8 +45,9 @@ class PageControllerApi implements IControllerApi
         $page->setSlug($request->get('slug'));
         $page->setUserId($request->get('user_id'));
         $page->setDescription($request->get('description'));
-        $page->setIsNoFollow((bool)$request->get('is_no_follow'));
+        $page->setIsNoFollow($request->get('is_no_follow'));
         $page->setVisibility($request->get('visibility'));
+        $page->setUserId($request->get('user_id'));
 
         $dateUpdated = new \DateTime();
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
@@ -61,7 +62,6 @@ class PageControllerApi implements IControllerApi
             Router::redirectTo("page.create");
             return false;
         }
-        
         FlashNotifier::success("La page a bien été créée");
         Page::save($page);
         Router::redirectTo("page.create");
@@ -82,13 +82,13 @@ class PageControllerApi implements IControllerApi
             $response->addError("page", "Page not found");
             return $response;
         }
-    
+     
         $page->setTitle($request->get('title'));
         $page->setSlug($request->get('slug'));
         $page->setDescription($request->get('description'));
         $page->setIsNoFollow((bool)$request->get('is_no_follow'));
         $page->setVisibility($request->get('visibility'));
-        
+        $page->setUserId($request->get('user_id'));
         $dateUpdated = new \DateTime();
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
         $page->setUpdatedAt($dateUpdated);
@@ -104,7 +104,7 @@ class PageControllerApi implements IControllerApi
             Router::redirectToUrl($url);
             return $response;
         }
-    
+        
         FlashNotifier::success("La page a bien été mise à jour");
         $data = [
             'title' => $page->getTitle(),

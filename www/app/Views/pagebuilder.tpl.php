@@ -13,7 +13,7 @@
   crossorigin="anonymous"></script>
     <script src="https://unpkg.com/grapesjs"></script>
     <script src="https://unpkg.com/grapesjs-tailwind"></script>
-   
+
     <script type="module" defer src="<?= getJS() ?>"></script>
 
     <title>GES CMS</title>

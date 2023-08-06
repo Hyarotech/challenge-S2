@@ -113,12 +113,13 @@ class Page extends Model
 
     public function getIsNoFollow(): bool
     {
+
         return $this->isNoFollow;
     }
 
     public function setIsNoFollow(bool $isNoFollow): void
     {
-        $this->isNoFollow = $isNoFollow;
+        $this->isNoFollow = (bool)$isNoFollow;
     }
 
     public function getVisibility()
