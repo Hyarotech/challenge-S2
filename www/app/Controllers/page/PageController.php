@@ -51,6 +51,12 @@ class PageController
         return $view;
     }
 
+    public function list(){
+        $pages = Page::findAll();
+        $view = new Resource("Page/list","back");
+        $view->assign('pages',$pages);
+        return $view;
+    }
  
 
     public function edit()

@@ -64,7 +64,7 @@ class PageControllerApi implements IControllerApi
         }
         FlashNotifier::success("La page a bien été créée");
         Page::save($page);
-        Router::redirectTo("page.create");
+        Router::redirectTo("page.list");
 
         
 

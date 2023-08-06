@@ -7,6 +7,7 @@ const projectEndpoint = '/dashboard/page/builder/create';
 const saveInterval = 2;
 
 let editor; // Déclaration de la variable pour stocker l'instance de l'éditeur
+
 const storageManagerConfig = {
   type: 'remote',
   stepsBeforeSave: saveInterval,
@@ -45,6 +46,34 @@ editor = grapesjs.init({
   storageManager: storageManagerConfig,
   selectorManager: { escapeName },
   plugins: ['grapesjs-tailwind'],
+});
+
+['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(tag => {
+  editor.DomComponents.addType(tag, {
+    model: {
+      defaults: {
+        name: tag.toUpperCase(),
+        tagName: tag,
+        draggable: '[data-gjs-type=root], [data-gjs-type=wrapper], [data-gjs-type=column], [data-gjs-type=row]',
+        stylable: true,
+        'stylable-require': ['display'],
+        traits: [
+          'id',
+          'title',
+          'class'
+        ],
+      },
+    },
+    view: {},
+  });
+});
+
+['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(tag => {
+  editor.BlockManager.add(tag, {
+    label: tag.toUpperCase(),
+    attributes: { class:'gjs-fonts gjs-f-'+ tag },
+    content: `<${tag}>Texte de l'entête</${tag}>`,
+  });
 });
 
 const history = new HistoryPanel(editor);
