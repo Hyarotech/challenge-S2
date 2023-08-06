@@ -131,8 +131,8 @@ abstract class Model
             $data = array_intersect_key($data, array_flip($instance->fillable));
         }
         $columns = [];
-        foreach ($data as $key => $value) {
-            if (is_bool($value))
+        foreach ($data as $key => $value){
+            if(is_bool($value))
                 $data[$key] = (int)$value;
             $columns[] = $key . "=:" . $key;
         }
