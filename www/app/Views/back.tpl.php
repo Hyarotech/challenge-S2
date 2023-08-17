@@ -37,7 +37,7 @@
             <?php component('Nav/navbar'); ?>
         </div>
 
-        <div class="w-full mt-[66px] md:w-[calc(100%_-_80px)] relative md:left-[80px]">
+        <div id="app" class="w-full mt-[66px] md:w-[calc(100%_-_80px)] relative flex flex-col md:left-[80px]">
             <?php include $this->view; ?>
         </div>
     </div>

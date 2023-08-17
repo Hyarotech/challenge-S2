@@ -86,7 +86,7 @@
                 <ul tabindex="0" class="dropdown-content z-[1] menu shadow bg-base-100 rounded-box">
                   <li><a href="<?= \Core\Router::generateDynamicRoute('page',['slug'=> $page->getSlug()]) ?>"><i class="fa-solid fa-eye text-primary"></i> Voir</a></li>
                   <li><a href="<?= \Core\Router::generateDynamicRoute('page.edit',['id'=> $page->getId()]) ?>"><i class="fa-solid fa-pen-to-square text-secondary"></i> Editer</a></li>
-                  <li><a class="text-red-500"><i class="fa-solid fa-trash text-error"></i>Supprimer</a></li>
+                  <li class="delete-page"><a class="text-red-500"><i class="fa-solid fa-trash text-error"></i>Supprimer</a></li>
                 </ul>
               </div>
 

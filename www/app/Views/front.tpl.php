@@ -28,7 +28,7 @@ getJS();
     <div class="z-40 w-full fixed top-0 ">
         <?php component('Nav/navbar'); ?>
     </div>
-        <div class="w-full relative ">
+        <div id="app" class="flex flex-col w-full relative ">
             <?php include $this->view; ?>
         </div>
     </div>
