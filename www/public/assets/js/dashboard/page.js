@@ -1,4 +1,11 @@
-import DaisyDatatable from "/assets/js/DaisyDataTable.js";
+import PageTable from "./page/PageTable.js"; // Mettez à jour le chemin
 
-let pageTable = new DaisyDatatable('#page-table');
-pageTable.init();
+let pageTableInstance = new PageTable('#page-table');
+
+pageTableInstance.init();
+
+
+
+
+
+
