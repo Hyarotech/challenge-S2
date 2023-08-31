@@ -32,3 +32,4 @@ services:
 networks:
   default:
       name: challenge-s2
+      external: true
