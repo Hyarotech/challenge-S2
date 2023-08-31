@@ -26,7 +26,6 @@ $router->get("/dashboard/page/edit/:id", [PageController::class, "edit"])->setNa
 // Afficher formulaire de création de page
 $router->get('/dashboard/page/create', [PageController::class, 'create'])->setName('page.create');
 
-
 //Delete une page
 $router->post("/dashboard/page/delete", [PageControllerApi::class, "delete"])->setName("page.delete");
 

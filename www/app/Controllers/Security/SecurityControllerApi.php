@@ -31,6 +31,7 @@ class SecurityControllerApi
             "email" => $request->get("email"),
             "password" => password_hash($request->get("password"), PASSWORD_DEFAULT),
             "verif_token" => password_hash($token, PASSWORD_DEFAULT),
+            "role" => "member"
         ];
         User::save($data);
         $data["verif_token"] = $token;
@@ -65,7 +66,7 @@ class SecurityControllerApi
                 "lastname" => $user->getLastname(),
                 "email" => $user->getEmail(),
                 "verified" => true,
-                "verif_token" => null,
+                "verif_token" => null
             ];
             User::update($user->getId(), $data);
             FlashNotifier::success("Votre compte a bien été vérifié");

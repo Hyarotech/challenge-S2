@@ -14,7 +14,6 @@ class PageController
     {
         $page = new PageControllerApi();
         $pageDataResponse = $page->readOne(new Request())->getData();
-        
         if($pageDataResponse['success'] === false)
             Router::redirectTo("errors.404");
 
@@ -51,14 +50,21 @@ class PageController
         return $view;
     }
 
+    public function list(){
+        $pages = Page::findAll();
+        $view = new Resource("Page/list","back");
+        $view->assign('pages',$pages);
+        return $view;
+    }
  
 
     public function edit()
     {
         
         $route = Router::getActualRoute();
-        $page = Page::findBy('id', $route->getParam('id'));
-
+        
+        $page = Page::findBy('id', (int)$route->getParam('id'));
+        
         if(!$page)
             Router::redirectTo("errors.404");        
         

@@ -16,7 +16,7 @@ class PageForm {
     }
 
     generateSlug = (title) => {
-        return title.replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-');
+        return title.replace(/[^a-zA-Z0-9]+/g, '-').replace(/-+/g, '-').toLowerCase();
     }
 
 }

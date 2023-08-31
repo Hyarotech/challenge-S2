@@ -14,12 +14,8 @@ class PageUpdateRequest extends Request
         parent::__construct();
         $this->setMethod("POST");
         $form = new EditForm();
-        if(isset($_POST['is_no_follow']))
-            $_POST['is_no_follow'] = (bool)$_POST['is_no_follow'];
-            
     
         $errors = Verificator::form($form->getConfig(), $this->getData());
-        
         if(!empty($errors)) {
             Session::set("errors", $errors);
             $url = Router::generateDynamicRoute("page.edit", ["id" => $this->get("id")]);

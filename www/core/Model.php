@@ -75,9 +75,12 @@ abstract class Model
             $instance = $data;    
             $data = $listData;
         }
+
+        foreach($data as $key => $value){
+            if(is_bool($value))
+                $data[$key] = (int)$value;
+        }
         $columns = array_keys($data);
-        
-        
         $queryPrepared = $pdo->prepare("INSERT INTO " . $instance->table . " (" . implode(",", $columns) . ") 
                             VALUES (:" . implode(",:", $columns) . ")");
         return  $queryPrepared->execute($data);
@@ -93,10 +96,9 @@ abstract class Model
             $data = array_intersect_key($data, array_flip($instance->fillable));
         }
         $columns = [];
-        foreach ($data as $key => $value) {
-            if (is_bool($value)) {
-                $data[$key] = $value ? "true" : "false";
-            }
+        foreach ($data as $key => $value){
+            if(is_bool($value))
+                $data[$key] = (int)$value;
             $columns[] = $key . "=:" . $key;
         }
         $data["id"] = $id;
@@ -155,7 +157,7 @@ abstract class Model
         return null;
     }
 
-    public static function delete(string $attribute,mixed $value): void
+    public static function delete(string $attribute,mixed $value): bool
     {
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
@@ -164,6 +166,8 @@ abstract class Model
         $queryPrepared = $pdo->prepare("DELETE FROM " . $instance->table . " WHERE ".$attribute ." = " . ":".$attribute);
         $queryPrepared->bindValue($attribute, $value);
         $queryPrepared->execute();
+
+        return ($queryPrepared->rowCount() > 0);
     }
 
 

@@ -11,5 +11,6 @@ www/vendor
 .volumes
 
 www/node_modules
-
+node_modules
 www/.env
+www/public/assets/css/style.css
