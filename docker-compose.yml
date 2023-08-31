@@ -1,7 +1,8 @@
 version: '3'
 services:
   web:
-    build: site
+    build: ./.docker/site
+    restart: "always"
     ports :
      - 6002:80
     volumes:
@@ -16,9 +17,19 @@ services:
     build: ./.docker/composer
     volumes:
       - ./www:/app
-    command: install --optimize-autoloader
+    command: install --optimize-autoloader --ignore-platform-reqs
     restart: "no"
+
+  maildev:
+      image: maildev/maildev
+      container_name: progMail
+      command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+      ports:
+        - "1081:80"
+        - "27:25"
+      restart: always
 
 networks:
   default:
       name: challenge-s2
+      external: true
