@@ -3,7 +3,7 @@ set search_path to esgi;
 
 CREATE TABLE IF NOT EXISTS "category"
 (
-    id integer NOT NULL,
+    id SERIAL NOT NULL,
     name character varying(45),
     CONSTRAINT category_pkey PRIMARY KEY (id)
     );
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS "category"
 
 CREATE TABLE IF NOT EXISTS "user"
 (
-    id integer NOT NULL,
+    id SERIAL NOT NULL,
     firstname character varying(120),
     lastname character varying(120),
     email character varying(120),
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS "user"
 
 CREATE TABLE IF NOT EXISTS page
 (
-    id integer NOT NULL,
+    id SERIAL NOT NULL,
     title character varying(200),
     created_at date NOT NULL DEFAULT now(),
     slug character varying(200),
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS page
 
 CREATE TABLE IF NOT EXISTS pagebuilder
 (
-    id integer NOT NULL,
+    id SERIAL NOT NULL,
     page_id integer NOT NULL,
     state json NOT NULL,
     created_at timestamp,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS pagebuilder
 
 CREATE TABLE IF NOT EXISTS comment
 (
-    id integer NOT NULL,
+    id SERIAL NOT NULL,
     content character varying(120),
     created_at date,
     user_id integer NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS comment
 
 CREATE TABLE IF NOT EXISTS cat_page
 (
-    id integer,
+    id SERIAL,
     page_id integer,
     category_id integer,
     CONSTRAINT cat_page_category_id_fk FOREIGN KEY (category_id)
