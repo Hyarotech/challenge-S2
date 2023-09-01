@@ -20,15 +20,6 @@ services:
     command: install --optimize-autoloader --ignore-platform-reqs
     restart: "no"
 
-  maildev:
-      image: maildev/maildev
-      container_name: progMail
-      command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
-      ports:
-        - "1080:80"
-        - "26:25"
-      restart: always
-
 networks:
   default:
       name: challenge-s2

@@ -13,7 +13,18 @@ jobs:
       - name: Get the latest code
         uses: actions/checkout@v3
 
-      - name: 📂 Sync files
+      - name: 📂 Sync docker files
+        uses: appleboy/scp-action@v0.1.3
+        env:
+          HOST: ${{ secrets.SSH_SERVER }}
+          USERNAME: ${{ secrets.SSH_USER }}
+          PORT: ${{ secrets.SSH_PORT }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        with:
+          source: "./docker-compose.global.yml"
+          target: "/root/challenge"
+
+      - name: 📂 Sync code files
         uses: appleboy/scp-action@v0.1.3
         env:
           HOST: ${{ secrets.SSH_SERVER }}
@@ -24,10 +35,26 @@ jobs:
           source: "."
           target: "/root/challenge/preprod"
 
-      - name: restart project
+      - name: delete docker files on project
         uses: garygrossgarten/github-action-ssh@0.7.0
         with:
-          command: cd "/root/challenge/preprod" && docker compose -f docker-compose.dev.yml down && docker compose -f docker-compose.dev.yml up -d --build
+          command: cd "/root/challenge/preprod" && rm docker-compose.yml docker-compose.global.yml
+          host: ${{ secrets.SSH_SERVER }}
+          username: ${{ secrets.SSH_USER }}
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: restart global containers
+        uses: garygrossgarten/github-action-ssh@0.7.0
+        with:
+          command: cd "/root/challenge" && docker compose -f docker-compose.global.yml down --remove-orphans && docker compose -f docker-compose.global.yml up -d --build
+          host: ${{ secrets.SSH_SERVER }}
+          username: ${{ secrets.SSH_USER }}
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: restart project containers
+        uses: garygrossgarten/github-action-ssh@0.7.0
+        with:
+          command: cd "/root/challenge/preprod" && docker compose -f docker-compose.dev.yml down --remove-orphans && docker compose -f docker-compose.dev.yml up -d --build
           host: ${{ secrets.SSH_SERVER }}
           username: ${{ secrets.SSH_USER }}
           privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
