@@ -13,6 +13,12 @@ jobs:
       - name: Get the latest code
         uses: actions/checkout@v3
 
+      - name: install npm dependencies
+        run: cd www && npm install
+
+      - name: build the css
+        run: cd www && npm run build:ui:prod
+
       - name: 📂 Sync docker files
         uses: appleboy/scp-action@v0.1.3
         env:
