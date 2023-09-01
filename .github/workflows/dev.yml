@@ -54,7 +54,7 @@ jobs:
       - name: restart project containers
         uses: garygrossgarten/github-action-ssh@0.7.0
         with:
-          command: cd "/root/challenge" && docker compose -f docker-compose.dev.yml down --remove-orphans && docker compose -f docker-compose.dev.yml up -d --build
+          command: cd "/root/challenge/preprod" && docker compose -f docker-compose.dev.yml down --remove-orphans && docker compose -f docker-compose.dev.yml up -d --build
           host: ${{ secrets.SSH_SERVER }}
           username: ${{ secrets.SSH_USER }}
           privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
