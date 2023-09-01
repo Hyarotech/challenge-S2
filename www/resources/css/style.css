@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.daisy-table .dataTables_paginate .paginate_button {
+    @apply btn btn-sm m-4 btn-outline;
+}
+
+.daisy-table .dataTables_paginate .current {
+    @apply btn btn-sm m-4 btn-primary;
+}
+.daisy-table .dataTables_paginate{
+    @apply flex justify-end;
+}
+
+.daisy-table :where(.table *:last-child) :where(*:last-child) :where(th, td):first-child {
+    @apply rounded-b-none;
+}
+
+.daisy-table :where(.table *:last-child) :where(*:last-child) :where(th, td):last-child {
+    @apply rounded-b-none;
+}
+
+.daisy-table select {
+    @apply select select-bordered btn-md m-2;
+}
+
+.daisy-table .page-table_filter {
+    @apply m-2;
+}
+
+.daisy-table input {
+    @apply input input-bordered input-sm m-2;
+}
