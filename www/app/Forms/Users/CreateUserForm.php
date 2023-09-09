@@ -2,7 +2,9 @@
 
 namespace App\Forms\Users;
 
-class UpdateUserForm extends \App\Forms\Abstract\AForm
+use App\Forms\Abstract\AForm;
+
+class CreateUserForm extends AForm
 {
 
     protected string $method = "POST";
@@ -16,14 +18,17 @@ class UpdateUserForm extends \App\Forms\Abstract\AForm
             ],
             "inputs" => [
                 "firstname" => [
-                    "rules"=>["min:2","max:120"],
+                    "rules"=>["required","min:2","max:120"],
                 ],
                 "lastname" => [
-                    "rules"=>["min:2","max:120"],
+                    "rules"=>["required","min:2","max:120"],
                 ],
                 "email" => [
-                    "rules"=>["email"],
-                ]
+                    "rules"=>["required","email"],
+                ],
+                "password"=>[
+                    "rules"=>["required","min:8","max:120"],
+                ],
             ]
         ];
     }

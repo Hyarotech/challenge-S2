@@ -197,6 +197,17 @@ class Router
         return $route;
     }
 
+    public function delete(string $path, array $callable): Route
+    {
+        $route = new Route();
+        $route->setPath($path);
+        $route->setController($callable[0]);
+        $route->setAction($callable[1]);
+        $route->setMethod("DELETE");
+        $this->routes[] = $route;
+        return $route;
+    }
+
     private function getRouteByDynamicURL($uri, $method)
     {
         foreach ($this->routes as $route) {
