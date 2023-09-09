@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Models\User;
 use App\Requests\Users\UpdateUserRequest;
+use App\Requests\Users\CreateUserRequest;
 use Core\FlashNotifier;
 use Core\Request;
 use Core\ResourceView;
@@ -37,6 +38,32 @@ class UsersController
         $view = new ResourceView("admin/users/viewOne", "back");
         $view->assign("user", $user);
         return $view;
+    }
+
+    public function create(): ResourceView
+    {
+        return new ResourceView("admin/users/create", "back");
+
+    }
+
+    #[CreateUserRequest]
+    public function createHandle(Request $request)
+    {
+        $data = [
+            "email" => $request->get("email"),
+            "firstname" => $request->get("firstname"),
+            "lastname" => $request->get("lastname"),
+            "password" => password_hash("password", PASSWORD_DEFAULT),
+            "role" => $request->get("role")
+        ];
+        $created = User::save($data);
+        if (!$created) {
+            FlashNotifier::error("Création non prise en compte réessayez");
+
+            Router::redirectTo("admin.users.create");
+        }
+        FlashNotifier::success("Création effectué");
+        Router::redirectTo("admin.users.viewAll");
     }
 
     public function update()
@@ -76,7 +103,9 @@ class UsersController
         $data = [
             "email" => $request->get("email"),
             "firstname" => $request->get("firstname"),
-            "lastname" => $request->get("lastname")
+            "lastname" => $request->get("lastname"),
+            "verified" => $request->get('verified') === "on",
+            "role" => $request->get("role")
         ];
         $updated = User::update($id, $data);
         if (!$updated) {

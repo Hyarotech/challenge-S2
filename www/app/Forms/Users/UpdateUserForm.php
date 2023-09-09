@@ -23,6 +23,12 @@ class UpdateUserForm extends \App\Forms\Abstract\AForm
                 ],
                 "email" => [
                     "rules"=>["email"],
+                ],
+                "verified" => [
+                    "rules"=>["boolean"],
+                ],
+                "role"=>[
+                    "rules"=>["string"]
                 ]
             ]
         ];

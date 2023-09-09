@@ -1,9 +1,9 @@
 <div class = "card w-full h-full bg-base-100 shadow-xl">
     <div class = "card-body">
-        <h1 class = "text-2xl font-bold w-auto h-auto">Liste des pages</h1>
-        <p class = "w-auto h-auto flex-grow-0">Dans cette section se trouve la liste des pages, on peut ajouter, supprimer ou modifier une page</p>
+        <h1 class = "text-2xl font-bold w-auto h-auto">Liste des utilisateurs</h1>
+        <p class = "w-auto h-auto flex-grow-0">Dans cette section se trouve la liste des utilsateurs, on peut ajouter, supprimer ou modifier un utilisateur</p>
         <div class="w-full p-2">
-            <a  target="_blank" href="<?= \Core\Router::generateRoute("page.create") ?>" class="btn btn-sm btn-primary">Ajouter une page</a>
+            <a href="<?= \Core\Router::generateRoute("admin.users.create") ?>" class="btn btn-sm btn-primary">Ajouter un utilisateur</a>
         </div>
 
         <div class="overflow-auto daisy-table">
@@ -52,10 +52,9 @@
                                 <?php endif; ?>
 
                             </div>
-                        </td>
-                        <td>
+                        </td><td>
                             <div class = "w-full h-full flex justify-center">
-
+                                <?= $user->getRole(); ?>
                             </div>
                         </td>
                         <td>
@@ -68,7 +67,6 @@
                                         <li class="delete-user"><a class="text-red-500"><i class="fa-solid fa-trash text-error"></i>Supprimer</a></li>
                                     </ul>
                                 </div>
-
                             </div>
                         </td>
                     </tr>

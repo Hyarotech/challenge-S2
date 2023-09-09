@@ -66,8 +66,9 @@ function frenchDate(){
 
 
 
-function realEmpty($value){
-    if($value == 0 || $value == false)
+function realEmpty($value): bool
+{
+    if($value == 0 || !$value)
         return false;
         
     return empty($value);

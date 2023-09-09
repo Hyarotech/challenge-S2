@@ -4,7 +4,7 @@ namespace App\Forms\Users;
 
 use App\Forms\Abstract\AForm;
 
-class CreateUserForm extends AForm
+class RegisterUserForm extends AForm
 {
 
     protected string $method = "POST";
@@ -26,8 +26,8 @@ class CreateUserForm extends AForm
                 "email" => [
                     "rules"=>["required","email"],
                 ],
-                "role"=>[
-                    "rules"=>["required"],
+                "password"=>[
+                    "rules"=>["required","min:8","max:120"],
                 ],
             ]
         ];

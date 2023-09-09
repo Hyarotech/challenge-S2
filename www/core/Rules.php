@@ -13,6 +13,16 @@ abstract class Rules
         return true;
     }
 
+    public static function string($value,$data,&$listOfErrors)
+    {
+        if(!is_string($value)){
+            $listOfErrors[$data["name"]][] = "Le champ " . $data["name"]." doit être une chaine de caractères";
+            return false;
+        }
+        return true;
+    }
+
+
     public static function min($value, $data, &$listOfErrors): bool
     {
         if(strlen($value) < $data["args"][0]) {
