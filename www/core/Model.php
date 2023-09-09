@@ -126,7 +126,6 @@ abstract class Model
     {
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
-
         $instance = new static();
         if ($instance->fillable) {
             $data = array_intersect_key($data, array_flip($instance->fillable));
@@ -171,7 +170,6 @@ abstract class Model
 
         $instance = new static();
         $results = $pdo->query("SELECT * FROM " . $instance->table)->fetchAll();
-
         return array_map(function ($result) {
             return static::hydrate($result);
         }, $results);

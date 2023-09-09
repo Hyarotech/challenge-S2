@@ -4,11 +4,13 @@ namespace App\Requests\Users;
 
 use App\Forms\Security\AddUser;
 use App\Forms\Users\UpdateUserForm;
+use Attribute;
 use Core\Request;
 use Core\Router;
 use Core\Session;
 use Core\Verificator;
 
+#[Attribute]
 class UpdateUserRequest extends Request
 {
     public function __construct()
