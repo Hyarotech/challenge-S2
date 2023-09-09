@@ -1,6 +1,6 @@
 import Component from "/assets/js/Component.js";
 import MenuForm from "./MenuForm.js";
-import { randString } from "../../helper.Js";
+import { randString } from "../../helper.js";
 class MenuItem extends Component {
     constructor(type = 'page',title,link,menu) {
         super();    
