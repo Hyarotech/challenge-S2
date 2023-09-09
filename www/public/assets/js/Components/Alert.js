@@ -32,6 +32,7 @@ class Alert extends Component {
     }
 
     createElement() {
+        this.removeElement();
         // Create the main alert div
         const alertDiv = document.createElement('div');
         alertDiv.className = `alert ${this.typeObject[this.type].class} justify-start w-auto h-auto m-2 self-end fixed top-[60px] z-[52] right-0` + this.getClassString();
