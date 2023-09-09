@@ -5,7 +5,7 @@ import MenuItem from "./MenuItem.js";
 class Menu extends Component {
     constructor(menuElement) {
         super();    
-        this.listMenuItem = {};
+        this.listMenuItem = [];
         this.element = menuElement;
     }
 
@@ -14,7 +14,7 @@ class Menu extends Component {
     }
     removeMenuItem(menuItem) {
         this.listMenuItem = this.listMenuItem.filter((item) => {
-            return JSON.parse(item) != JSON.parse(menuItem);
+            return menuItem.id != item.id;
         });
     }
     getMenuItemById(id){

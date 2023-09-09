@@ -1,4 +1,4 @@
-import { generateUniqueID } from "../../helper.Js";
+import { generateUniqueID } from "./helper.js";
 class Component {
     constructor() {
         this.element = null;
