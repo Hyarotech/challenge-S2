@@ -1,9 +1,18 @@
+import { generateUniqueID } from "../../helper.Js";
 class Component {
     constructor() {
         this.element = null;
+        this.NAME_COMPONENT = null; // Nom du composant pour le supprimer facilement dans le dom
         this.elementClass = [];
+        this.id = generateUniqueID();
     }
 
+    removeAllElementWithNameComponent(){
+        const elements = document.querySelectorAll('.'+this.NAME_COMPONENT);
+        elements.forEach(element => {
+            element.remove();
+        });
+    }
     createElement() {
         throw new Error("Method 'createElement' must be implemented in derived classes.");
     }
@@ -23,16 +32,13 @@ class Component {
     }
 
     render(insideElement, isPrepend = true) {
-        if (this.element !== null) 
-            this.removeElement();
-        
-        this.createElement();
         if (isPrepend) 
             insideElement.prepend(this.element);
         else 
              insideElement.appendChild(this.element);
         
     }
+
 
     removeElement() {
         if (this.element !== null) {
