@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Requests;
+namespace App\Requests\Setting;
 
 use App\Forms\Setting\MenuSaveForm;
 use Core\Request;

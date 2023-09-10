@@ -13,7 +13,7 @@ class Menu extends Component {
             menuItem.render(this.element,false);
         });
 
-        document.querySelector('[data-menu="saveMenu"]')
+      this.saveMenuEvent();
     }
     menuToJson() {
             const getMenuItems = (parent) => {
@@ -38,7 +38,15 @@ class Menu extends Component {
 
             return menuJsonString;
     }
-
+    saveMenuEvent(){
+        let formElement = document.getElementById('formMenu');
+        let menuJsonInput = formElement.querySelector('[name="menu_json"]');
+        formElement.addEventListener('submit', (e) => {
+            e.preventDefault();
+            menuJsonInput.value = this.menuToJson();
+            formElement.submit();
+        });
+    }
     jsonToMenu(jsonStr) {
         const jsonObj = JSON.parse(jsonStr);
         this.listMenuItem = [];  // Réinitialiser la liste des éléments de menu

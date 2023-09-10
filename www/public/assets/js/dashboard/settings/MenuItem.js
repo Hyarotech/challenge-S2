@@ -30,7 +30,9 @@ class MenuItem extends Component {
             childs: childsJson,
         };
     }
-    
+    saveMenuEvent(){
+        
+    }
     getElement() {
         return this.element;
     }
