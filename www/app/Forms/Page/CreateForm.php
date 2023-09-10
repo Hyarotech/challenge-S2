@@ -30,6 +30,9 @@ class CreateForm extends AForm
                 "visibility" => [
                     "rules" => ["required", "integer","visibility"],
                 ],
+                "page_type" => [
+                    "rules" => ["required", "integer","page_type"],
+                ],
                 "user_id" => [
                     "rules" => ["required", "integer"],
                 ],

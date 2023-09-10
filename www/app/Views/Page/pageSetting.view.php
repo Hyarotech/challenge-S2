@@ -36,7 +36,12 @@
         ? '<input type="hidden" name="id" value="'.$pageId.'"/>'
         : '' 
      ?>
+  <select name="page_type" class="col-span-6 select select-bordered">
+    <option <?= $page_type ?? 'selected' ?>  disabled>Type de page</option>
 
+    <option value="<?= App\Configs\PageConfig::TYPE['page']; ?>">Page</option>      
+    <option value="<?= App\Configs\PageConfig::TYPE['article']; ?>">Article</option>
+  </select>
       <select name="visibility" class="col-span-6 select select-bordered">
         <option <?= $visibility ?? 'selected' ?>  disabled>Visibilité</option>
         <option <?= isset($visibility) && $visibility === 1 
@@ -54,6 +59,8 @@
       <span class="label-text-alt text-red-500 col-span-6">
                             <?= \Core\Session::getError("user_id") ?>
                         </span>
+
+                          
       <div class="col-span-6 flex items-center">
       <label class="label font-bold cursor-pointer">Indexé par les moteurs de recherche ?</label>
       
@@ -67,6 +74,7 @@
     </label>
   </div>
   
+
   <div class="form-control">
     <label class="label cursor-pointaaer">
       <span class="label-text"> Non</span> 
@@ -81,7 +89,7 @@
                         </span>
     </div>
   </div>
-  
+
   <button type="submit" class="flex self-end btn btn-primary">Enregistrer la page</button>
 </form>
 

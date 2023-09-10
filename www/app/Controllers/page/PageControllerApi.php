@@ -48,6 +48,7 @@ class PageControllerApi implements IControllerApi
         $page->setIsNoFollow($request->get('is_no_follow'));
         $page->setVisibility($request->get('visibility'));
         $page->setUserId($request->get('user_id'));
+        $page->setPageType($request->get('page_type'));
 
         $dateUpdated = new \DateTime();
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
@@ -86,6 +87,7 @@ class PageControllerApi implements IControllerApi
         $page->setIsNoFollow((bool)$request->get('is_no_follow'));
         $page->setVisibility($request->get('visibility'));
         $page->setUserId($request->get('user_id'));
+        $page->setPageType($request->get('page_type'));
         $dateUpdated = new \DateTime();
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
         $page->setUpdatedAt($dateUpdated);

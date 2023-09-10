@@ -51,8 +51,16 @@ class PageController
     }
 
     public function list(){
-        $pages = Page::findAll();
+        $route = Router::getActualRoute();
+        $pageType = (int)$route->getParam('page_type');
+        if(!in_array($pageType,PageConfig::TYPE))
+            $pages = Page::findAll();
+        else
+            $pages = Page::findAllBy('page_type',$pageType);
+        
+        $pageTypeName = array_search($pageType,PageConfig::TYPE) ?? 'pages';
         $view = new Resource("Page/list","back");
+        $view->assign('pageTypeName',$pageTypeName);
         $view->assign('pages',$pages);
         return $view;
     }
@@ -79,7 +87,7 @@ class PageController
         $view->assign('description',$page->getDescription());
         $view->assign('isNoFollow',$page->getisNoFollow());
         $view->assign('visibility',$page->getVisibility());
-
+        $view->assign('page_type',$page->getPageType());
         return $view;
     }
 }

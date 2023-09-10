@@ -17,8 +17,8 @@ $router = Router::getInstance();
 //Affichage d'une page sur le site 
 $router->get("/page/:slug", [PageController::class, "page"])->setName("page");
 
-// Afficher la liste des pages
-$router->get("/dashboard/page", [PageController::class, "list"])->setName("page.list");
+// Afficher la liste des pages et articles
+$router->get("/dashboard/page/:page_type", [PageController::class, "list"])->setName("page.list");
 
 // Afficher la page à éditer
 $router->get("/dashboard/page/edit/:id", [PageController::class, "edit"])->setName("page.edit");

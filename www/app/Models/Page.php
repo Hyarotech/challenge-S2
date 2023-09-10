@@ -16,6 +16,7 @@ class Page extends Model
     protected string $description;
     protected bool $isNoFollow;
     protected $visibility;
+    protected int $pageType;
 
     protected ?array $fillable = [
         "user_id",
@@ -24,7 +25,8 @@ class Page extends Model
         "slug",
         "description",
         "is_no_follow",
-        "visibility"
+        "visibility",
+        "page_type"
     ];
 
 
@@ -136,6 +138,26 @@ class Page extends Model
         return $this->findBy('id', $this->getId()) || $this->findBy('slug', $this->getSlug());
     }
 
+
+    /**
+     * Get the value of pageType
+     */ 
+    public function getPageType()
+    {
+        return $this->pageType;
+    }
+
+    /**
+     * Set the value of pageType
+     *
+     * @return  self
+     */ 
+    public function setPageType($pageType)
+    {
+        $this->pageType = $pageType;
+
+        return $this;
+    }
 }
 
 
