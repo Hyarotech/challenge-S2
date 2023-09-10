@@ -146,9 +146,9 @@ class MenuItem extends Component {
             
 
             this.element = new DOMParser().parseFromString(
-                `<div data-id="${this.id}" data-type="page" data-link="" data-title="" class="flex flex-col" data-selector="menu-item">
+                `<div data-id="${this.id}" data-type="page" data-link="`+this.link+`" data-title="`+this.title+`" class="flex flex-col" data-selector="menu-item">
                     <div class="card flex flex-row p-3 justify-between bg-base-100" data-selector="menu-item-main">
-                        <p>`+randString(20)+`</p>
+                        <p>`+this.title+`</p>
                         <div class="flex gap-2">
                             <button data-selector="remove" title="Supprimer le lien" class="btn btn-xs btn-error btn-circle btn-outline">
                             <i class="fa-solid fa-trash"></i>
