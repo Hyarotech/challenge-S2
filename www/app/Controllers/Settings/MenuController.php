@@ -6,9 +6,9 @@ use Core\Request;
 use Core\Router;
 use App\Models\Page;
 use App\Models\Setting;
-use App\Configs\SettingConfig;
-use App\Requests\MenuSaveRequest;
+use App\Requests\Setting\MenuSaveRequest;
 use Core\FlashNotifier;
+use Core\Session;
 class MenuController 
 {
 
@@ -27,7 +27,18 @@ class MenuController
     #[MenuSaveRequest]
     public function save(Request $request){
         $data = $request->getData();
-        FlashNotifier :: success("Le menu a bien été sauvegardé");
+        Setting::delete("key","menu_json");
+        $isSaved = Setting::save([
+            "key" => "menu_json",
+            "value" => $data["menu_json"]
+        ]);
+
+        if($isSaved)
+            FlashNotifier :: success("Le menu a bien été sauvegardé");
+        else
+            FlashNotifier :: success("Le menu n'a été sauvegardé");
+
+        Session::set("menu_json",$data["menu_json"]);
         Router::redirectTo("dashboard.settings.menu");
     }
 

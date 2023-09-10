@@ -15,7 +15,7 @@ class MenuSaveForm extends AForm
                 "method" => $this->getMethod()
             ],
             "inputs" => [
-                "menu_data" => [
+                "menu_json" => [
                     "rules" => ["required","json"]
                 ]
             ]
