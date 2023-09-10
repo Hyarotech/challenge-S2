@@ -7,9 +7,30 @@ class MenuItem extends Component {
         this.menu = menu;
         this.title = title;
         this.link = link;
+        this.type = type;
         this.createElement(title,link);
         this.menu.pushMenuItem(this);
     }
+    menuItemToJson() {
+        let childsJson = [];
+    
+        const childsElement = this.element.querySelector('[data-selector="menu-item-childs"]');
+        const childsArray = Array.from(childsElement.children);
+        childsArray.forEach(child => {
+            const childItem = this.menu.getMenuItemById(child.getAttribute('data-id'));
+            if (childItem) {
+                childsJson.push(childItem.menuItemToJson());
+            }
+        });
+    
+        return {
+            title: this.title,
+            type: this.type,
+            link: this.link,
+            childs: childsJson,
+        };
+    }
+    
     getElement() {
         return this.element;
     }
@@ -33,14 +54,20 @@ class MenuItem extends Component {
     addItemChildEvent(){
         this.element.querySelector('[data-selector="menu-item-main"] [data-selector="addChild"]').addEventListener('click', (e) => {
             e.preventDefault();
-            let menuItem = new MenuItem('page','Non défini','Non défini',this.menu);
+            let menuItem = new MenuItem('page','','',this.menu);
             this.appendChild(menuItem);
         });
+    }
+    updateValue(){
+        this.element.setAttribute('data-title',this.title);
+        this.element.setAttribute('data-link',this.link);
+        this.element.setAttribute('data-type',this.type);
+        this.element.querySelector('[data-selector="menu-item-main"] p').textContent = this.title;
     }
     addItemEvent(){
         this.element.querySelector('[data-selector="menu-item-main"] [data-selector="add"]').addEventListener('click', (e) => {
             e.preventDefault();
-            let menuItem = new MenuItem('page','Non défini','Non défini',this.menu);
+            let menuItem = new MenuItem('page','','',this.menu);
             this.element.after(menuItem.getElement());
         });
     }
@@ -108,7 +135,7 @@ class MenuItem extends Component {
 
         
     }
-
+   
 
     createElement() {
         if(this.element instanceof HTMLElement)
@@ -116,7 +143,7 @@ class MenuItem extends Component {
             
 
             this.element = new DOMParser().parseFromString(
-                `<div data-type="page" data-link="" data-title="" class="flex flex-col" data-selector="menu-item">
+                `<div data-id="${this.id}" data-type="page" data-link="" data-title="" class="flex flex-col" data-selector="menu-item">
                     <div class="card flex flex-row p-3 justify-between bg-base-100" data-selector="menu-item-main">
                         <p>`+randString(20)+`</p>
                         <div class="flex gap-2">
