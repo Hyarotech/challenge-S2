@@ -3,6 +3,7 @@
 namespace App\Requests\Setting;
 
 use App\Forms\Setting\MenuSaveForm;
+use Core\FlashNotifier;
 use Core\Request;
 use Core\Router;
 use Core\Session;
