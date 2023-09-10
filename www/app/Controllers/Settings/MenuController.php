@@ -29,6 +29,11 @@ class MenuController
         return $view;
     }
 
+    public function getMenu(){
+        $menuJson = Setting::findBy("key","menu_json")->getValue();
+        
+        return $menuJson;
+    }
     #[MenuSaveRequest]
     public function save(Request $request){
         $data = $request->getData();

@@ -20,6 +20,7 @@ getJS();
     crossorigin="anonymous"></script>
   
     <script type="module" defer src="<?= getJS() ?>"></script>
+    <script type="module" defer src="<?= '/assets/js/main.js'?>"></script>
 
     <title>GES CMS - <?= $title ?? '' ?></title>
     <?= $isNoFollow ? '<meta name="robots" content="noindex, nofollow">' : '' ?>

@@ -14,6 +14,7 @@
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" defer></script>
   
   <script type="module" defer src="<?= getJS() ?>"></script>
+  <script type="module" defer src="<?= '/assets/js/main.js'?>"></script>
 
     <title>GES CMS</title>
 
