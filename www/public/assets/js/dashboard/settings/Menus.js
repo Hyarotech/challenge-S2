@@ -14,6 +14,10 @@ class Menu extends Component {
         });
 
       this.saveMenuEvent();
+      let menuJsonInput = document.querySelector('#formMenu input[name="menu_json"]');
+      
+      if(menuJsonInput.value != "")
+        this.jsonToMenu(atob(menuJsonInput.value));
     }
     menuToJson() {
             const getMenuItems = (parent) => {

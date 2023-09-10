@@ -20,7 +20,12 @@ class MenuController
     
         foreach($listPage as $key => $page)
             $listPage[$key] = $page->toArray();
+        $menuJson = Session::get("menu_json");
+        if(!$menuJson)
+            $menuJson = Setting::findBy("key","menu_json")->getValue();
         $view->assign("pageListJson",json_encode($listPage,JSON_UNESCAPED_UNICODE));
+        $view->assign("menuJson",base64_encode($menuJson));
+        Session::remove("menu_json");
         return $view;
     }
 
@@ -28,6 +33,7 @@ class MenuController
     public function save(Request $request){
         $data = $request->getData();
         Setting::delete("key","menu_json");
+
         $isSaved = Setting::save([
             "key" => "menu_json",
             "value" => $data["menu_json"]

@@ -10,6 +10,7 @@ class MenuItem extends Component {
         this.type = type;
         this.createElement(title,link);
         this.menu.pushMenuItem(this);
+
     }
     menuItemToJson() {
         let childsJson = [];
@@ -31,7 +32,7 @@ class MenuItem extends Component {
         };
     }
     saveMenuEvent(){
-        
+
     }
     getElement() {
         return this.element;
