@@ -16,15 +16,11 @@ class UsersTable extends DaisyDatatable {
     deleteUser(id) {
         let table = this.getDataTable();
         let deleteAlert = new Alert();
-        $.delete(`/api/admin/users/${id}`, (data) => {
+        $.post(`/api/admin/users/delete`,{id:id}, (data) => {
             if (data.success){
                 table.row('.user-row[data-id="' + id + '"]').remove().draw(false);
                 deleteAlert.setType('success');
-                deleteAlert.setMessage('La page a bien été supprimée');
-            }
-            else{
-                deleteAlert.setType('error');
-                deleteAlert.setMessage('L\'utilisateur à supprimer n\'a pas été trouvé');
+                deleteAlert.setMessage('L\'utilisateur a bien été supprimée');
             }
         }).fail((data) => {
 

@@ -2263,6 +2263,20 @@ html {
   align-items: center;
 }
 
+.navbar-start {
+  width: 50%;
+  justify-content: flex-start;
+}
+
+.navbar-center {
+  flex-shrink: 0;
+}
+
+.navbar-end {
+  width: 50%;
+  justify-content: flex-end;
+}
+
 .radio {
   flex-shrink: 0;
   --chkbg: var(--bc);
@@ -3761,6 +3775,22 @@ html {
   line-height: 2rem;
 }
 
+.menu-horizontal {
+  display: inline-flex;
+  width: -moz-max-content;
+  width: max-content;
+  flex-direction: row;
+}
+
+.menu-horizontal :where(li) {
+  flex-direction: row;
+}
+
+.menu-horizontal > :where(li) > :where(ul) {
+  top: 100%;
+  left: initial;
+}
+
 .avatar.online:before {
   content: "";
   position: absolute;
@@ -3882,6 +3912,34 @@ html {
   line-height: 1.25rem;
 }
 
+.menu-horizontal > :where(li:first-child) {
+  border-top-left-radius: inherit;
+  border-top-right-radius: unset;
+  border-bottom-right-radius: unset;
+  border-bottom-left-radius: inherit;
+}
+
+.menu-horizontal > :where(li:first-child) > :where(*:not(ul)) {
+  border-top-left-radius: inherit;
+  border-top-right-radius: unset;
+  border-bottom-right-radius: unset;
+  border-bottom-left-radius: inherit;
+}
+
+.menu-horizontal > :where(li:last-child) {
+  border-top-left-radius: unset;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: unset;
+}
+
+.menu-horizontal > :where(li:last-child) > :where(*:not(ul)) {
+  border-top-left-radius: unset;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: unset;
+}
+
 .fixed {
   position: fixed;
 }
@@ -3948,6 +4006,10 @@ html {
 
 .z-\[2\] {
   z-index: 2;
+}
+
+.z-\[300\] {
+  z-index: 300;
 }
 
 .z-\[52\] {
@@ -4139,14 +4201,6 @@ html {
   max-width: 20rem;
 }
 
-.flex-1 {
-  flex: 1 1 0%;
-}
-
-.flex-none {
-  flex: none;
-}
-
 .shrink-0 {
   flex-shrink: 0;
 }
@@ -4157,6 +4211,11 @@ html {
 
 .flex-grow-0 {
   flex-grow: 0;
+}
+
+.translate-y-full {
+  --tw-translate-y: 100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .cursor-pointer {
@@ -4247,6 +4306,10 @@ html {
 
 .overflow-y-auto {
   overflow-y: auto;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 
 .rounded-full {
@@ -4366,6 +4429,11 @@ html {
   padding: 1.25rem;
 }
 
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
 .px-12 {
   padding-left: 3rem;
   padding-right: 3rem;
@@ -4374,11 +4442,6 @@ html {
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-}
-
-.px-5 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
 }
 
 .px-6 {
@@ -5641,5 +5704,15 @@ html {
 
   .md\:w-\[calc\(100\%_-_80px\)\] {
     width: calc(100% - 80px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:flex {
+    display: flex;
+  }
+
+  .lg\:hidden {
+    display: none;
   }
 }

@@ -30,6 +30,7 @@ getJS();
 </head>
 
 <body class="min-h-screen bg-base-100">
+<?php component('partials/flash', [], 'tpl'); ?>
 <div class="flex flex-col h-auto">
     <div class="z-40 w-full fixed top-0 ">
         <?php component('Nav/navbar'); ?>

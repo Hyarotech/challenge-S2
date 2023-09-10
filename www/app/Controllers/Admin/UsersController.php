@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Models\Page;
 use App\Models\User;
 use App\Requests\Users\UpdateUserRequest;
 use App\Requests\Users\CreateUserRequest;
@@ -10,6 +11,7 @@ use Core\Request;
 use Core\ResourceView;
 use Core\Route;
 use Core\Router;
+use Core\Session;
 
 class UsersController
 {
@@ -116,23 +118,22 @@ class UsersController
         Router::redirectTo("admin.users.viewAll");
     }
 
-    public function delete(): void
+    public function delete(Request $request): void
     {
-        $actualRoute = Router::getActualRoute();
-        $params = $actualRoute->getParams();
-        $id = $params["id"];
-        if (!isset($id)) {
-            FlashNotifier::error("Utilisateur invalide");
-            Router::redirectTo("admin.users.viewAll");
+        $userSession = Session::get("user");
+        $user = User::findBy('email', $userSession['email']);
+        if ($user->getId() === (int)$request->get('id')) {
+            $response = array();
+            $response['success'] = false;
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } else {
+            $result = User::delete('id', (int)$request->get('id'));
+            $response = array();
+            $response['success'] = $result;
+            header('Content-Type: application/json');
+            echo json_encode($response);
         }
-        $user = User::findOne($id);
-        if (!$user) {
-            FlashNotifier::error("Utilisateur inexistant");
-            Router::redirectTo("admin.users.viewAll");
-        }
-        User::delete($id);
-        FlashNotifier::success("Suppression terminé");
-        Router::redirectTo("admin.users.viewAll");
     }
 
 }

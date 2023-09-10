@@ -7,4 +7,4 @@ $router->post("/admin/users",[\App\Controllers\Admin\UsersController::class, "cr
 $router->get("/admin/users/:id",[\App\Controllers\Admin\UsersController::class, "viewOne"])->setName("admin.users.viewOne");
 $router->get("/admin/users/update/:id",[\App\Controllers\Admin\UsersController::class, "update"])->setName("admin.users.update");
 $router->post("/admin/users/:id",[\App\Controllers\Admin\UsersController::class, "updateHandle"])->setName("admin.users.update.handle");
-$router->get("/admin/users/delete/:id",[\App\Controllers\Admin\UsersController::class, "delete"])->setName("admin.users.delete");
+$router->post("/api/admin/users/delete",[\App\Controllers\Admin\UsersController::class, "delete"])->setName("api.admin.users.delete");
