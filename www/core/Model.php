@@ -147,6 +147,8 @@ abstract class Model
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
         $instance = new static();
+        if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $column))
+            throw new InvalidArgumentException("Seuls les caracères [a-zA-Z0-9_\-] sont autorisé en nom de column");
 
         $queryPrepared = $pdo->prepare("SELECT * FROM " . $instance->table . " WHERE " . $column . " = :value");
         $queryPrepared->bindValue(":value", $value);
