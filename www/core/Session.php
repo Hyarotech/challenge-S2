@@ -43,4 +43,20 @@ class Session
         }
         return "";
     }
+
+    private static function clearCsrf(): void
+    {
+        $csrf = $_SESSION['csrf'];
+        foreach ($csrf as $key => $value) {
+            if ($value->getExpireAt() < time()) {
+                unset($csrf[$key]);
+            }
+        }
+        $_SESSION['csrf'] = $csrf;
+    }
+
+    public function __destruct()
+    {
+        $this->clearCsrf();
+    }
 }

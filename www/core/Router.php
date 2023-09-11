@@ -140,6 +140,23 @@ class Router
         if (!$route) {
             $this->redirectTo("errors.404");
         }
+        if($route->getMethod() === "POST" && !$route->isApi()){
+            if(!isset($_SESSION['csrf'])){
+                $this->redirectTo("errors.404");
+            }
+            $csrf = $_SESSION['csrf'];
+            $token = $_POST['csrf'];
+            $found = false;
+            foreach ($csrf as $key => $value) {
+                if ($value->getToken() === $token && $value->getExpireAt() > time()) {
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                $this->redirectTo("errors.404");
+            }
+        }
         $request = new Request();
         $middlewares = $route->getMiddlewares();
         if (!empty($middlewares)) {
@@ -214,7 +231,6 @@ class Router
             if ($route->getMethod() !== $method) {
                 continue;
             }
-
             $pattern = preg_replace_callback('#:(\w+)#', function ($matches) {
                 return '(?<' . $matches[1] . '>[^/]+)';
             }, $route->getPath());
