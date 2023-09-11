@@ -18,38 +18,38 @@ $router = Router::getInstance();
 $router->get("/page/:slug", [PageController::class, "page"])->setName("page");
 
 // Afficher la liste des pages
-$router->get("/admin/page", [PageController::class, "list"])->setName("page.list");
+$router->get("/admin/page", [PageController::class, "list"])->setName("admin.page.list");
 
 // Afficher la page à éditer
-$router->get("/admin/page/edit/:id", [PageController::class, "edit"])->setName("page.edit");
+$router->get("/admin/page/edit/:id", [PageController::class, "edit"])->setName("admin.page.edit");
 
 // Afficher formulaire de création de page
-$router->get('/admin/page/create', [PageController::class, 'create'])->setName('page.create');
+$router->get('/admin/page/create', [PageController::class, 'create'])->setName('admin.page.create');
 
 //Delete une page
-$router->post("/admin/page/delete", [PageControllerApi::class, "delete"])->setName("page.delete");
+$router->post("/api/admin/page/delete", [PageControllerApi::class, "delete"])->setName("api.admin.page.delete");
 
 // Créer une page
-$router->post("/admin/page/create", [PageControllerApi::class, "create"])->setName("page.create.handle");
+$router->post("/admin/page/create", [PageControllerApi::class, "create"])->setName("admin.page.create.handle");
 
 // Editer une page
-$router->post("/admin/page/edit", [PageControllerApi::class, "update"])->setName("page.edit.handle");
+$router->post("/admin/page/edit", [PageControllerApi::class, "update"])->setName("admin.page.edit.handle");
 
 
 // Afficher page builder
-$router->get("/admin/page/builder/edit/:id", [PageBuilderController::class, "edit"])->setName("page.builder.edit");
+$router->get("/admin/page/builder/edit/:id", [PageBuilderController::class, "edit"])->setName("admin.page.builder.edit");
 
 // Build une page
-$router->post("/admin/page/builder/create", [PageBuilderControllerApi::class, "create"])->setName("page.builder.create.handle");
+$router->post("/api/admin/page/builder/create", [PageBuilderControllerApi::class, "create"])->setName("api.admin.page.builder.create.handle");
 
 // Historique des pages
-$router->get("/admin/page/builder/history/:page_id", [PageBuilderControllerApi::class, "readAll"])->setName("page.builder.history.all");
+$router->get("/api/admin/page/builder/history/:page_id", [PageBuilderControllerApi::class, "readAll"])->setName("api.admin.page.builder.history.all");
 
 // Build une page
-$router->post("/admin/page/builder/delete", [PageBuilderControllerApi::class, "delete"])->setName("page.builder.delete.handle");
+$router->post("/api/admin/page/builder/delete", [PageBuilderControllerApi::class, "delete"])->setName("api.admin.page.builder.delete.handle");
 
 // Récupérer données d'un memento
-$router->get("/admin/page/builder/get/:id", [PageBuilderControllerApi::class, "readOne"])->setName("page.builder.get.handle");
+$router->get("/api/admin/page/builder/get/:id", [PageBuilderControllerApi::class, "readOne"])->setName("api.admin.page.builder.get.handle");
 
 // Récupérer dernier memento à partir de page_id
-$router->get("/admin/page/builder/history/last/:page_id", [PageBuilderControllerApi::class, "readLast"])->setName("page.builder.history.last");
+$router->get("/api/admin/page/builder/history/last/:page_id", [PageBuilderControllerApi::class, "readLast"])->setName("api.admin.page.builder.history.last");

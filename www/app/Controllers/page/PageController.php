@@ -43,7 +43,7 @@ class PageController
     public function create()
     {
         $view = new Resource("Page/pageSetting","back");
-        $formAction = Router::generateRoute("page.create.handle");
+        $formAction = Router::generateRoute("admin.page.create.handle");
         $view->assign('formAction',$formAction);
 
         
@@ -69,7 +69,7 @@ class PageController
             Router::redirectTo("errors.404");        
         
         $view = new Resource("Page/pageSetting","back");
-        $formAction = Router::generateRoute("page.edit.handle");
+        $formAction = Router::generateRoute("admin.page.edit.handle");
         $view->assign('formAction',$formAction);
         $view->assign('pageId',$route->getParam('id'));
         $view->assign('title',$page->getTitle());

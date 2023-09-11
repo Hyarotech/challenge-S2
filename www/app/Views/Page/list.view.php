@@ -3,7 +3,7 @@
          <h1 class = "text-2xl font-bold w-auto h-auto">Liste des pages</h1>
          <p class = "w-auto h-auto flex-grow-0">Dans cette section se trouve la liste des pages, on peut ajouter, supprimer ou modifier une page</p>
          <div class="w-full p-2" target="_blank">
-          <a href="<?= \Core\Router::generateRoute("page.create") ?>" class="btn btn-sm btn-primary">Ajouter une page</a>
+          <a href="<?= \Core\Router::generateRoute("admin.page.create") ?>" class="btn btn-sm btn-primary">Ajouter une page</a>
          </div>
          
 <div class="overflow-auto daisy-table">
@@ -85,7 +85,7 @@
                 <label tabindex="0" class="btn btn-sm m-1">Action</label>
                 <ul tabindex="0" class="dropdown-content z-[1] menu shadow bg-base-100 rounded-box">
                   <li><a href="<?= \Core\Router::generateDynamicRoute('page',['slug'=> $page->getSlug()]) ?>"><i class="fa-solid fa-eye text-primary"></i> Voir</a></li>
-                  <li><a href="<?= \Core\Router::generateDynamicRoute('page.edit',['id'=> $page->getId()]) ?>"><i class="fa-solid fa-pen-to-square text-secondary"></i> Editer</a></li>
+                  <li><a href="<?= \Core\Router::generateDynamicRoute('admin.page.edit',['id'=> $page->getId()]) ?>"><i class="fa-solid fa-pen-to-square text-secondary"></i> Editer</a></li>
                   <li class="delete-page"><a class="text-red-500"><i class="fa-solid fa-trash text-error"></i>Supprimer</a></li>
                 </ul>
               </div>
