@@ -8,6 +8,11 @@ class PageConfig {
         'public' => 1
     ];
 
+    public const TYPE = [
+        'page' => 1,
+        'article' => 2
+    ];
+
     
     
 }

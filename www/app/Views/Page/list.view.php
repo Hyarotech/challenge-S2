@@ -1,6 +1,6 @@
 <div class = "card w-full h-full bg-base-100 shadow-xl">
     <div class = "card-body">
-         <h1 class = "text-2xl font-bold w-auto h-auto">Liste des pages</h1>
+         <h1 class = "text-2xl font-bold w-auto h-auto">Liste des <?= $pageTypeName ?></h1>
          <p class = "w-auto h-auto flex-grow-0">Dans cette section se trouve la liste des pages, on peut ajouter, supprimer ou modifier une page</p>
          <div class="w-full p-2" target="_blank">
           <a href="<?= \Core\Router::generateRoute("page.create") ?>" class="btn btn-sm btn-primary">Ajouter une page</a>
@@ -10,7 +10,8 @@
   <table class="table w-full relative" id="page-table">
     <thead>
       <tr>
-        <th class="sticky top-0 z-[2] text-center">ID</th>      
+        <th class="sticky top-0 z-[2] text-center">ID</th>   
+        <th class="sticky top-0 z-[2] text-center">Type</th>         
         <th class="sticky top-0 z-[2] text-center">Nom</th>
         <th class="sticky top-0 z-[2] text-center">Slug</th>
         <th class="sticky top-0 z-[2] text-center">Crée le</th>
@@ -28,6 +29,11 @@
           <td>
             <div class = "w-full h-full flex justify-center">
               <?= $page->getId(); ?>
+            <div>
+          </td>
+          <td>
+            <div class = "w-full h-full flex justify-center">
+              <?= array_search($page->getPageType(),App\Configs\PageConfig::TYPE) ?>
             <div>
           </td>
           <td>

@@ -147,6 +147,8 @@ abstract class Model
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
         $instance = new static();
+        if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $column))
+            throw new InvalidArgumentException("Seuls les caracères [a-zA-Z0-9_\-] sont autorisé en nom de column");
 
         $queryPrepared = $pdo->prepare("SELECT * FROM " . $instance->table . " WHERE " . $column . " = :value");
         $queryPrepared->bindValue(":value", $value);
@@ -174,7 +176,24 @@ abstract class Model
             return static::hydrate($result);
         }, $results);
     }
-
+    public static function findAllBy(string $column, string $value): array
+    {
+        $dbConnector = DBConnector::getInstance();
+        $pdo = $dbConnector->getPDO();
+        if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $column))
+            throw new InvalidArgumentException("Seuls les caracères [a-zA-Z0-9_\-] sont autorisé en nom de column");
+    
+        $instance = new static();
+        $req = $pdo->prepare("SELECT * FROM " . $instance->table." WHERE $column = :value");
+        $req->execute([
+                ':value' => $value
+        ]);
+        $results = $req->fetchAll();
+      
+        return array_map(function ($result) {
+            return static::hydrate($result);
+        }, $results);
+    }
     public static function findOne(int $id): ?Model
     {
         $dbConnector = DBConnector::getInstance();
