@@ -2,6 +2,7 @@
     <div class="card h-auto bg-base-200 shadow-xl">
         <form action="<?= \Core\Router::generateRoute("admin.categories.create.handle") ?>"
               method="post" class="card-body">
+            <?php csrf() ?>
             <h1 class="text-3xl">Créer une catégorie</h1>
             <p class="text-sm mt-2 text-red-500 text-center"><?= \Core\Session::getError("global") ?></p>
 

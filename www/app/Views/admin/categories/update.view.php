@@ -2,6 +2,7 @@
     <div class="card h-auto bg-base-200 shadow-xl">
         <form action="<?= \Core\Router::generateDynamicRoute("admin.categories.update.handle",['id'=>$category->getId()]) ?>"
               method="post" class="card-body">
+            <?php csrf() ?>
             <h1 class="text-3xl">Editer la catégorie <?= $category->getName(); ?></h1>
             <p class="text-sm mt-2 text-red-500 text-center"><?= \Core\Session::getError("global") ?></p>
 

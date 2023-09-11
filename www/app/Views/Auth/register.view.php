@@ -8,6 +8,7 @@
 
         </div>
         <form class="card-body" action="<?= \Core\Router::generateRoute("security.register.handle") ?>" method="post">
+            <?php csrf() ?>
             <h1 class="text-3xl">S'inscrire</h1>
             <hr />
             <p class = "text-sm mt-2 text-red-500 text-center"><?= \Core\Session::getError("global") ?></p>

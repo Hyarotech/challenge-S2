@@ -8,7 +8,7 @@
         </div>
 
         <form action="<?= \Core\Router::generateRoute("security.login.handle") ?>" method="post" class="card-body">
-      
+            <?php csrf() ?>
         <h1 class="text-3xl">Se connecter</h1>
             <hr />
                 <p class = "text-sm mt-2 text-red-500 text-center"><?= \Core\Session::getError("global") ?></p>

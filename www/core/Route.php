@@ -162,6 +162,10 @@ class Route
         return $this->body;
     }
 
+    public function isApi(): bool
+    {
+        return str_starts_with($this->getPath(), '/api');
+    }
     /**
      * @param array|null $body
      * @return Route
