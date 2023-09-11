@@ -18,7 +18,7 @@ jobs:
 
       - name: build the css
         run: cd www && npm run build:ui:prod
-
+        
       - name: 📂 Sync docker files
         uses: appleboy/scp-action@v0.1.3
         env:
