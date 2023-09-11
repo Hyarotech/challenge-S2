@@ -45,6 +45,7 @@ class PageController
         $view = new Resource("Page/pageSetting","back");
         $formAction = Router::generateRoute("page.create.handle");
         $view->assign('formAction',$formAction);
+        $view->assign('pageType','');
 
         
         return $view;
@@ -58,9 +59,9 @@ class PageController
         else
             $pages = Page::findAllBy('page_type',$pageType);
         
-        $pageTypeName = array_search($pageType,PageConfig::TYPE) ?? 'pages';
+        $pageTypeName = array_search($pageType,PageConfig::TYPE);
         $view = new Resource("Page/list","back");
-        $view->assign('pageTypeName',$pageTypeName);
+        $view->assign('pageTypeName',$pageTypeName ? $pageTypeName : " pages");
         $view->assign('pages',$pages);
         return $view;
     }
@@ -75,7 +76,6 @@ class PageController
         
         if(!$page)
             Router::redirectTo("errors.404");        
-        
         $view = new Resource("Page/pageSetting","back");
         $formAction = Router::generateRoute("page.edit.handle");
         $view->assign('formAction',$formAction);
@@ -87,7 +87,7 @@ class PageController
         $view->assign('description',$page->getDescription());
         $view->assign('isNoFollow',$page->getisNoFollow());
         $view->assign('visibility',$page->getVisibility());
-        $view->assign('page_type',$page->getPageType());
+        $view->assign('pageType',$page->getPageType());
         return $view;
     }
 }

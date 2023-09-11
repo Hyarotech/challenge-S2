@@ -65,7 +65,12 @@ class PageControllerApi implements IControllerApi
         }
         FlashNotifier::success("La page a bien été créée");
         Page::save($page);
-        Router::redirectTo("page.list");
+
+        $urlPageList = Router::generateDynamicRoute("page.list", ["page_type" => $page->getPageType()]);
+        Router::redirectToUrl($urlPageList);
+
+        
+
     }
 
     #[PageUpdateRequest]
@@ -80,7 +85,6 @@ class PageControllerApi implements IControllerApi
             $response->addError("page", "Page not found");
             return $response;
         }
-     
         $page->setTitle($request->get('title'));
         $page->setSlug($request->get('slug'));
         $page->setDescription($request->get('description'));
@@ -112,7 +116,8 @@ class PageControllerApi implements IControllerApi
             'is_no_follow' => $page->getIsNoFollow(),
             'visibility' => $page->getVisibility(),
             'updated_at' => frenchDate()->format('Y-m-d'),
-            'user_id' => $page->getUserId()
+            'user_id' => $page->getUserId(),
+            'page_type' => $page->getPageType()
         ];
         Page::update($pageId,$data);
         Router::redirectToUrl($url);

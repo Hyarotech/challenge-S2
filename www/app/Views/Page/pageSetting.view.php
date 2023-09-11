@@ -10,7 +10,7 @@
   <p class="text-accent font-bold">Page Information</p>
     <?php csrf() ?>
   <div class="w-full flex gap-2">
-    <a href="<?= \Core\Router::generateRoute("page.list") ?>" class="btn btn-primary btn-sm">Liste des pages</a>
+    <a href="<?= \Core\Router::generateDynamicRoute("page.list",["page_type" => "0"]) ?>" class="btn btn-primary btn-sm">Liste des pages</a>
     <?= isset($pageId)
       ? '<a target="_blank" class="btn btn-secondary btn-sm" href="'.\Core\Router::generateDynamicRoute('page.builder.edit',['id' => $pageId]).'">Constructeur de page</a>'
       : '';
@@ -37,10 +37,13 @@
         : '' 
      ?>
   <select name="page_type" class="col-span-6 select select-bordered">
-    <option <?= $page_type ?? 'selected' ?>  disabled>Type de page</option>
+    <option <?= $pageType ?? 'selected' ?>  disabled>Type de page</option>
 
-    <option value="<?= App\Configs\PageConfig::TYPE['page']; ?>">Page</option>      
-    <option value="<?= App\Configs\PageConfig::TYPE['article']; ?>">Article</option>
+    <option <?=  $pageType == App\Configs\PageConfig::TYPE['page'] ? 'selected' : '' ?>
+            value="<?= App\Configs\PageConfig::TYPE['page']; ?>">Page</option>      
+
+    <option <?=  $pageType == App\Configs\PageConfig::TYPE['article'] ? 'selected' : '' ?>
+            value="<?= App\Configs\PageConfig::TYPE['article']; ?>">Article</option>
   </select>
       <select name="visibility" class="col-span-6 select select-bordered">
         <option <?= $visibility ?? 'selected' ?>  disabled>Visibilité</option>
