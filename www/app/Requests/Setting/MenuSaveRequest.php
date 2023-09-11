@@ -9,7 +9,7 @@ use Core\Router;
 use Core\Session;
 use Core\Verificator;
 
-class MenuSaveRequest extends Request
+#[\Attribute] class MenuSaveRequest extends Request
 {
     public function __construct()
     {

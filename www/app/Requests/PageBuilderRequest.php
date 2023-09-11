@@ -5,7 +5,7 @@ use Core\Router;
 use Core\Session;
 use Core\Verificator;
 
-class PageBuilderRequest extends Request
+#[\Attribute] class PageBuilderRequest extends Request
 {
     public function __construct()
     {

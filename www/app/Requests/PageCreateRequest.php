@@ -5,7 +5,7 @@ use Core\Router;
 use Core\Session;
 use Core\Verificator;
 use App\Forms\Page\CreateForm;
-class PageCreateRequest extends Request
+#[\Attribute] class PageCreateRequest extends Request
 {
     public function __construct()
     {

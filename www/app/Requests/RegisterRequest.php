@@ -7,7 +7,7 @@ use Core\Router;
 use Core\Session;
 use Core\Verificator;
 
-class RegisterRequest extends \Core\Request
+#[\Attribute] class RegisterRequest extends \Core\Request
 {
     public function __construct()
     {

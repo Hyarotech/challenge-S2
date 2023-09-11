@@ -65,13 +65,10 @@ class PageControllerApi implements IControllerApi
         FlashNotifier::success("La page a bien été créée");
         Page::save($page);
         Router::redirectTo("page.list");
-
-        
-
     }
 
     #[PageUpdateRequest]
-    public function update(Request $request)
+    public function update(Request $request): ResourceData
     {
         $pageId = $request->get('id');
         
@@ -122,7 +119,7 @@ class PageControllerApi implements IControllerApi
     }
     
 
-    public function delete(Request $request)
+    public function delete(Request $request): void
     {
             $result = Page::delete('id',(int)$request->get('id'));
             $response = array();
