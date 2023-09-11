@@ -23,7 +23,7 @@ class UsersController
         return $resource;
     }
 
-    public function viewOne()
+    public function viewOne(): ResourceView
     {
         $actualRoute = Router::getActualRoute();
         $params = $actualRoute->getParams();
@@ -49,14 +49,15 @@ class UsersController
     }
 
     #[CreateUserRequest]
-    public function createHandle(Request $request)
+    public function createHandle(Request $request): void
     {
         $data = [
             "email" => $request->get("email"),
             "firstname" => $request->get("firstname"),
             "lastname" => $request->get("lastname"),
             "password" => password_hash("password", PASSWORD_DEFAULT),
-            "role" => $request->get("role")
+            "role" => $request->get("role"),
+            "verified" => $request->get('verified') === "on",
         ];
         $created = User::save($data);
         if (!$created) {
@@ -68,7 +69,7 @@ class UsersController
         Router::redirectTo("admin.users.viewAll");
     }
 
-    public function update()
+    public function update(): ResourceView
     {
         $actualRoute = Router::getActualRoute();
         $params = $actualRoute->getParams();
@@ -88,7 +89,7 @@ class UsersController
     }
 
     #[UpdateUserRequest]
-    public function updateHandle(Request $request)
+    public function updateHandle(Request $request): void
     {
         $actualRoute = Router::getActualRoute();
         $params = $actualRoute->getParams();

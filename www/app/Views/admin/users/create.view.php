@@ -49,12 +49,25 @@
                     </label>
                     <select name="role" class="select w-full max-w-xs">
                         <option disabled selected>Pick a role</option>
-                        <option>ADMIN</option>
-                        <option>USER</option>
+                        <?php foreach (\Core\Role::getRoles() as $role) : ?>
+                            <option value="<?= $role ?>"><?= \Core\Role::getRoleName($role) ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <label class="label">
                         <span class="label-text-alt text-red-500">
                         <?= \Core\Session::getError("firstname") ?>
+                        </span>
+                    </label>
+                </div>
+
+                <div class=" col-span-6">
+                    <label class="label">
+                        <span class="label-text">Verified</span>
+                    </label>
+                    <input name="verified" type="checkbox" class="toggle toggle-success" />
+                    <label class="label">
+                        <span class="label-text-alt text-red-500">
+                        <?= \Core\Session::getError("verified") ?>
                         </span>
                     </label>
                 </div>

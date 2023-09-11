@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
-use Core\Session;
 use Core\ResourceView;
 
 class HomeController
