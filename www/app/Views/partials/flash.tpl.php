@@ -1,7 +1,7 @@
 <?php
 $error = Core\FlashNotifier::get("error");
 if ($error):?>
-    <div class="absolute top-10 right-10">
+    <div class="absolute top-10 right-10 z-[300]">
         <div class="alert alert-error">
             <div class="flex items-center">
                 <span class="select-none"><?= $error ?></span>
@@ -14,7 +14,7 @@ if ($error):?>
 <?php
 $success = Core\FlashNotifier::get("success");
 if($success):?>
-    <div class="absolute top-10 right-10">
+    <div class="absolute top-10 right-10 z-[300]">
         <div class="alert alert-success">
             <div class="flex items-center">
                 <span class="select-none"><?= $success ?></span>
@@ -26,7 +26,7 @@ if($success):?>
 <?php
 $warning = Core\FlashNotifier::get("warning");
 if($warning):?>
-    <div class="absolute top-10 right-10">
+    <div class="absolute top-10 right-10 z-[300]">
         <div class="alert alert-warning">
             <div class="flex items-center">
                 <span class="select-none"><?= $warning ?></span>
@@ -38,7 +38,7 @@ if($warning):?>
 <?php
 $info = Core\FlashNotifier::get("info");
 if($info):?>
-    <div class="absolute top-10 right-10">
+    <div class="absolute top-10 right-10 z-[300]">
         <div class="alert alert-info">
             <div class="flex items-center">
                 <span class="select-none"><?= $info?></span>

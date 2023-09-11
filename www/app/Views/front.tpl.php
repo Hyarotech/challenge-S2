@@ -13,8 +13,14 @@ getJS();
     src="https://code.jquery.com/jquery-3.7.0.min.js"
     integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
     crossorigin="anonymous"></script>
+
+        <script defer
+    src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+    crossorigin="anonymous"></script>
   
     <script type="module" defer src="<?= getJS() ?>"></script>
+    <script type="module" defer src="<?= '/assets/js/main.js'?>"></script>
 
     <title>GES CMS - <?= $title ?? '' ?></title>
     <?= $isNoFollow ? '<meta name="robots" content="noindex, nofollow">' : '' ?>
@@ -24,6 +30,7 @@ getJS();
 </head>
 
 <body class="min-h-screen bg-base-100">
+<?php component('partials/flash', [], 'tpl'); ?>
 <div class="flex flex-col h-auto">
     <div class="z-40 w-full fixed top-0 ">
         <?php component('Nav/navbar'); ?>

@@ -16,13 +16,19 @@ class UpdateUserForm extends \App\Forms\Abstract\AForm
             ],
             "inputs" => [
                 "firstname" => [
-                    "rules"=>["required","min:2","max:120"],
+                    "rules"=>["min:2","max:120"],
                 ],
                 "lastname" => [
-                    "rules"=>["required","min:2","max:120"],
+                    "rules"=>["min:2","max:120"],
                 ],
                 "email" => [
-                    "rules"=>["required","email"],
+                    "rules"=>["email"],
+                ],
+                "verified" => [
+                    "rules"=>["boolean"],
+                ],
+                "role"=>[
+                    "rules"=>["string"]
                 ]
             ]
         ];

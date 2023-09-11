@@ -3,19 +3,19 @@
 
         <div class="col-span-full">
             <span class="bg-base-200 p-4">Email:</span>
-            <span class="bg-base-300 p-4"><?= $user->email ?></span>
+            <span class="bg-base-300 p-4"><?= $user->getEmail() ?></span>
         </div>
         <div class="col-span-full">
             <span class="bg-base-200 p-4">Prénom:</span>
-            <span class="bg-base-300 p-4"><?= $user->firstname ?></span>
+            <span class="bg-base-300 p-4"><?= $user->getFirstName() ?></span>
         </div>
         <div class="col-span-full">
             <span class="bg-base-200 p-4">Nom:</span>
-            <span class="bg-base-300 p-4"><?= $user->lastname ?></span>
+            <span class="bg-base-300 p-4"><?= $user->getLastName() ?></span>
         </div>
         <div class="col-span-full">
             <span class="bg-base-200 p-4">role:</span>
-            <span class="bg-base-300 p-4"><?= $user->role ?></span>
+            <span class="bg-base-300 p-4"><?= $user->getRole() ?></span>
         </div>
 
     </div>

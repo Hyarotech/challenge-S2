@@ -12,7 +12,9 @@ class DaisyDatatable {
             paging: true,
             language: {
                  url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
-            }
+            },
+            "lengthMenu":[[5,10,25,50,100,-1],[5,10,25,50,100,'All']]
+
         };
         this.setOptions(options);
 

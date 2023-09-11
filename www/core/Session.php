@@ -16,7 +16,7 @@ class Session
 
     public static function get(string $key): mixed
     {
-        return $_SESSION[$key];
+        return $_SESSION[$key] ?? null;
     }
 
     public static function remove(string $key): void
@@ -42,5 +42,21 @@ class Session
             return $error;
         }
         return "";
+    }
+
+    private static function clearCsrf(): void
+    {
+        $csrf = $_SESSION['csrf'];
+        foreach ($csrf as $key => $value) {
+            if ($value->getExpireAt() < time()) {
+                unset($csrf[$key]);
+            }
+        }
+        $_SESSION['csrf'] = $csrf;
+    }
+
+    public function __destruct()
+    {
+        $this->clearCsrf();
     }
 }

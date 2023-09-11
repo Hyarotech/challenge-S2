@@ -140,6 +140,23 @@ class Router
         if (!$route) {
             $this->redirectTo("errors.404");
         }
+        if($route->getMethod() === "POST" && !$route->isApi()){
+            if(!isset($_SESSION['csrf'])){
+                $this->redirectTo("errors.404");
+            }
+            $csrf = $_SESSION['csrf'];
+            $token = $_POST['csrf'];
+            $found = false;
+            foreach ($csrf as $key => $value) {
+                if ($value->getToken() === $token && $value->getExpireAt() > time()) {
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                $this->redirectTo("errors.404");
+            }
+        }
         $request = new Request();
         $middlewares = $route->getMiddlewares();
         if (!empty($middlewares)) {
@@ -197,13 +214,23 @@ class Router
         return $route;
     }
 
+    public function delete(string $path, array $callable): Route
+    {
+        $route = new Route();
+        $route->setPath($path);
+        $route->setController($callable[0]);
+        $route->setAction($callable[1]);
+        $route->setMethod("DELETE");
+        $this->routes[] = $route;
+        return $route;
+    }
+
     private function getRouteByDynamicURL($uri, $method)
     {
         foreach ($this->routes as $route) {
             if ($route->getMethod() !== $method) {
                 continue;
             }
-
             $pattern = preg_replace_callback('#:(\w+)#', function ($matches) {
                 return '(?<' . $matches[1] . '>[^/]+)';
             }, $route->getPath());

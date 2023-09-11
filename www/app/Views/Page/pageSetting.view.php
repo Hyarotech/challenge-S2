@@ -8,7 +8,7 @@
 
 <form method="POST" action="<?= $formAction ?>" class="card grid bg-base-300 p-5 gap-4">
   <p class="text-accent font-bold">Page Information</p>
-
+    <?php csrf() ?>
   <div class="w-full flex gap-2">
     <a href="<?= \Core\Router::generateRoute("page.list") ?>" class="btn btn-primary btn-sm">Liste des pages</a>
     <?= isset($pageId)
@@ -24,13 +24,11 @@
       <span class="label-text-alt text-red-500 col-span-6">
                             <?= \Core\Session::getError("title") ?>
                         </span>
-      <input name="slug" readonly="text" placeholder="Slug" value="<?= $slug ?? '' ?>" class="col-span-6 input input-bordered" />
+      <input name="slug" placeholder="Slug" value="<?= $slug ?? '' ?>" class="col-span-6 input input-bordered" />
       <span class="label-text-alt text-red-500 col-span-6">
                             <?= \Core\Session::getError("slug") ?>
                         </span>
-      <textarea name="description" class="min-h-[200px] col-span-6 textarea textarea-bordered" placeholder="Description">
-        <?= $description ?? '' ?>
-      </textarea>
+      <textarea name="description" class="min-h-[200px] col-span-6 textarea textarea-bordered"><?= $description ?? '' ?></textarea>
       <span class="label-text-alt text-red-500 col-span-6">
                             <?= \Core\Session::getError("description") ?>
                         </span>

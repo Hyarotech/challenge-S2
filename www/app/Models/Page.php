@@ -34,7 +34,6 @@ class Page extends Model
         $this->setId(-1);
         $this->setUserId(-1);
     }
-
     public function getId(): int
     {
         return $this->id;
@@ -132,13 +131,11 @@ class Page extends Model
         $this->visibility = $visibility;
     }
 
-    public function exist(){
-        $pageData = $this->findBy('id',$this->getId()) ? true : 
-                    ($this->findBy('slug',$this->getSlug()) ? true : false);
-
-        return $pageData;
+    public function exist(): bool
+    {
+        return $this->findBy('id', $this->getId()) || $this->findBy('slug', $this->getSlug());
     }
-    
+
 }
 
 

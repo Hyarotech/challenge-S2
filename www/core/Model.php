@@ -50,6 +50,44 @@ abstract class Model
         return $result;
     }
 
+    public function load(string $relations)
+    {
+        $relations = explode(",", $relations);
+        foreach ($relations as $relation) {
+            $relation = trim($relation);
+            if (method_exists($this, $relation)) {
+                $this->$relation();
+            }
+        }
+    }
+
+    public function belongsTo(string $model, string $foreignKey, string $localKey = "id"): Model|null
+    {
+        throw new Exception("Not implemented");
+        $model = new $model();
+        return $model::findBy($localKey, $this->$foreignKey);
+    }
+
+    public function hasMany(string $model, string $foreignKey, string $localKey = "id"): array
+    {
+
+        throw new Exception("Not implemented");
+        $model = new $model();
+        $result = $model::findAllBy($foreignKey, $this->$localKey);
+        $this->$foreignKey = $result;
+        return $result;
+    }
+
+    public function hasOne(string $model, string $foreignKey, string $localKey = "id"): Model|null
+    {
+
+        throw new Exception("Not implemented");
+        $model = new $model();
+        $result = $model::findBy($foreignKey, $this->$localKey);
+        $this->$foreignKey = $result;
+        return $result;
+    }
+
     public static function save(Model|array $data = []): bool
     {
         $dbConnector = DBConnector::getInstance();
@@ -66,31 +104,28 @@ abstract class Model
                 $valueCamel = toCamelCase($value);
                 // Vérifier si la méthode getValeurFilled existe
                 $getterMethod = 'get' . ucfirst($valueCamel);
-                
+
                 if (method_exists($data, $getterMethod))
                     $listData[$value] = $data->{$getterMethod}();
-                
-                
             }
-            $instance = $data;    
+            $instance = $data;
             $data = $listData;
         }
 
-        foreach($data as $key => $value){
-            if(is_bool($value))
+        foreach ($data as $key => $value) {
+            if (is_bool($value))
                 $data[$key] = (int)$value;
         }
         $columns = array_keys($data);
         $queryPrepared = $pdo->prepare("INSERT INTO " . $instance->table . " (" . implode(",", $columns) . ") 
                             VALUES (:" . implode(",:", $columns) . ")");
-        return  $queryPrepared->execute($data);
+        return $queryPrepared->execute($data);
     }
 
     public static function update(string $id, array $data): bool
     {
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
-
         $instance = new static();
         if ($instance->fillable) {
             $data = array_intersect_key($data, array_flip($instance->fillable));
@@ -108,20 +143,20 @@ abstract class Model
 
     public static function findBy(string $column, string $value): ?Model
     {
-        
+
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
         $instance = new static();
 
         $queryPrepared = $pdo->prepare("SELECT * FROM " . $instance->table . " WHERE " . $column . " = :value");
         $queryPrepared->bindValue(":value", $value);
-      
-      
+
+
         $queryPrepared->execute();
-        
+
         $result = $queryPrepared->fetch();
 
-      
+
         if ($result) {
             return static::hydrate($result);
         }
@@ -135,7 +170,6 @@ abstract class Model
 
         $instance = new static();
         $results = $pdo->query("SELECT * FROM " . $instance->table)->fetchAll();
-
         return array_map(function ($result) {
             return static::hydrate($result);
         }, $results);
@@ -157,13 +191,13 @@ abstract class Model
         return null;
     }
 
-    public static function delete(string $attribute,mixed $value): bool
+    public static function delete(string $attribute, mixed $value): bool
     {
         $dbConnector = DBConnector::getInstance();
         $pdo = $dbConnector->getPDO();
 
         $instance = new static();
-        $queryPrepared = $pdo->prepare("DELETE FROM " . $instance->table . " WHERE ".$attribute ." = " . ":".$attribute);
+        $queryPrepared = $pdo->prepare("DELETE FROM " . $instance->table . " WHERE " . $attribute . " = " . ":" . $attribute);
         $queryPrepared->bindValue($attribute, $value);
         $queryPrepared->execute();
 
@@ -178,11 +212,11 @@ abstract class Model
         $properties = $reflection->getProperties();
         foreach ($properties as $property) {
             $property = $property->getName();
-            if ($property !== "table" && $property !== "fillable") 
+            if ($property !== "table" && $property !== "fillable")
                 $result[$property] = $this->$property;
-            
+
         }
         return $result;
     }
-    
+
 }
