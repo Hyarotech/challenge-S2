@@ -8,7 +8,7 @@ use Core\Router;
 use Core\Session;
 use Core\Verificator;
 
-class LoginRequest extends Request
+#[\Attribute] class LoginRequest extends Request
 {
     public function __construct()
     {

@@ -14,7 +14,8 @@ use App\Models\Page;
 class PageBuilderControllerApi implements IControllerApi {
     
     #[PageBuilderRequest]
-    public function readOne(Request $request){
+    public function readOne(Request $request): void
+    {
 
         $router = Router::getActualRoute();
         $id = $router->getParam("id");
@@ -33,7 +34,8 @@ class PageBuilderControllerApi implements IControllerApi {
         echo json_encode($pageBuilder->toArray());
     }
 
-    public function readAll(){
+    public function readAll(): void
+    {
 
         $route = Router::getActualRoute();
         $pageId = $route->getParam('page_id');
@@ -48,7 +50,8 @@ class PageBuilderControllerApi implements IControllerApi {
         
     }
 
-    public function readLast(){
+    public function readLast(): void
+    {
 
         $route = Router::getActualRoute();
         $pageId = $route->getParam('page_id');
@@ -58,7 +61,8 @@ class PageBuilderControllerApi implements IControllerApi {
         
     }
     #[PageBuilderCreateRequest]
-    public function create(Request $request){
+    public function create(Request $request): bool
+    {
 
          $pageId = $request->get("page_id");
          
@@ -86,7 +90,8 @@ class PageBuilderControllerApi implements IControllerApi {
     public function update(Request $request){}
 
     #[PageBuilderRequest]
-    public function delete(Request $request){
+    public function delete(Request $request): void
+    {
         $id = $request->get("id");
         PageBuilderManager::delete('id',$id);
     }

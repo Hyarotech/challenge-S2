@@ -12,7 +12,7 @@ use Core\Session;
 class MenuController 
 {
 
-    public function edit()
+    public function edit(): Resource
     {
         
         $view = new Resource("Settings/Menu/menuEditor","back");
@@ -30,12 +30,11 @@ class MenuController
     }
 
     public function getMenu(){
-        $menuJson = Setting::findBy("key","menu_json")->getValue();
-        
-        return $menuJson;
+        return Setting::findBy("key","menu_json")->getValue();
     }
     #[MenuSaveRequest]
-    public function save(Request $request){
+    public function save(Request $request): void
+    {
         $data = $request->getData();
         Setting::delete("key","menu_json");
 

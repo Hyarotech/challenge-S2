@@ -6,7 +6,7 @@ use Core\Session;
 use Core\Verificator;
 use App\Forms\Page\EditForm;
 
-class PageUpdateRequest extends Request
+#[\Attribute] class PageUpdateRequest extends Request
 {
     public function __construct()
     {
