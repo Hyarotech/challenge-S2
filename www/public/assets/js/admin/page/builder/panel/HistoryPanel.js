@@ -85,7 +85,7 @@ export default class HistoryPanel {
    deleteHistoryItem = async (id) => {
    
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/dashboard/page/builder/delete', true);
+    xhr.open('POST', '/admin/page/builder/delete', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     
     xhr.onreadystatechange = function() {

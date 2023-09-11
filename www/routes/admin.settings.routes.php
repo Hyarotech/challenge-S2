@@ -10,4 +10,4 @@ $router = Router::getInstance();
 $router->get("/admin/settings/menu", [MenuController::class, "edit"])->setName("admin.settings.menu");
 
 //Route vers l'editeur de menu 
-$router->post("/api/admin/settings/menu/save", [MenuController::class, "save"])->setName("admin.settings.menu.save");
+$router->post("/admin/settings/menu/save", [MenuController::class, "save"])->setName("admin.settings.menu.save");
