@@ -19,7 +19,7 @@ use Core\Verificator;
         $errors = Verificator::form($menuForm->getConfig(), $this->getData());
         if(!empty($errors)) {
             FlashNotifier::error("Le format JSON est invalide");
-            Router::redirectTo("dashboard.settings.menu");
+            Router::redirectTo("admin.settings.menu");
         }
     }
 

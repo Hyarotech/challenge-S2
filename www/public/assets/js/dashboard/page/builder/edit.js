@@ -3,7 +3,7 @@ import HistoryPanel from './panel/HistoryPanel.js';
 // Handle tailwind's use of slashes in css names
 const escapeName = (name) => `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, '-');
 
-const projectEndpoint = '/dashboard/page/builder/create';
+const projectEndpoint = '/admin/page/builder/create';
 const saveInterval = 2;
 
 let editor; // Déclaration de la variable pour stocker l'instance de l'éditeur

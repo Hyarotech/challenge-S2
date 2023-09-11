@@ -18,4 +18,4 @@ include ROOT . "/routes/comment.routes.php";
 include ROOT . "/routes/install.routes.php";
 include ROOT . "/routes/users.routes.php";
 include ROOT . "/routes/categories.routes.php";
-include ROOT . "/routes/dashboard.settings.routes.php";
+include ROOT . "/routes/admin.settings.routes.php";
