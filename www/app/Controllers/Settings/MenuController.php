@@ -49,7 +49,7 @@ class MenuController
             FlashNotifier :: success("Le menu n'a été sauvegardé");
 
         Session::set("menu_json",$data["menu_json"]);
-        Router::redirectTo("dashboard.settings.menu");
+        Router::redirectTo("admin.settings.menu");
     }
 
 }

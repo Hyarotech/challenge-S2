@@ -16,7 +16,7 @@ class PageTable extends DaisyDatatable {
     deletePage(id) {
         let table = this.getDataTable();
         let deleteAlert = new Alert();
-        $.post('/dashboard/page/delete', {id: id}, (data) => {
+        $.post('/api/admin/page/delete', {id: id}, (data) => {
             if (data.success == true){
                 table.row('.page-row[data-id="' + id + '"]').remove().draw(false);
                 deleteAlert.setType('success');

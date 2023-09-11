@@ -10,13 +10,12 @@
   <p class="text-accent font-bold">Page Information</p>
     <?php csrf() ?>
   <div class="w-full flex gap-2">
-    <a href="<?= \Core\Router::generateDynamicRoute("page.list",["page_type" => "0"]) ?>" class="btn btn-primary btn-sm">Liste des pages</a>
+    <a href="<?= \Core\Router::generateDynamicRoute("admin.page.list",["page_type" => "0"]) ?>" class="btn btn-primary btn-sm">Liste des pages</a>
     <?= isset($pageId)
-      ? '<a target="_blank" class="btn btn-secondary btn-sm" href="'.\Core\Router::generateDynamicRoute('page.builder.edit',['id' => $pageId]).'">Constructeur de page</a>'
+      ? '<a target="_blank" class="btn btn-secondary btn-sm" href="'.\Core\Router::generateDynamicRoute('admin.page.builder.edit',['id' => $pageId]).'">Constructeur de page</a>'
       : '';
     ?>
    </div>
-
 
 
     <div class="grid grid-cols-6 gap-3 w-full">

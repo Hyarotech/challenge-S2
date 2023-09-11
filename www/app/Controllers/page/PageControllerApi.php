@@ -55,18 +55,18 @@ class PageControllerApi implements IControllerApi
         $page->setUpdatedAt($dateUpdated);
         if(Page::findBy('slug', $page->getSlug())){
             FlashNotifier::error("Le slug existe déjà");
-            Router::redirectTo("page.create");
+            Router::redirectTo("admin.page.create");
             return false;
         }
         if(!User::findBy('id', $page->getUserId())){
             FlashNotifier::error("L'utilisateur n'existe pas");
-            Router::redirectTo("page.create");
+            Router::redirectTo("admin.page.create");
             return false;
         }
         FlashNotifier::success("La page a bien été créée");
         Page::save($page);
 
-        $urlPageList = Router::generateDynamicRoute("page.list", ["page_type" => $page->getPageType()]);
+        $urlPageList = Router::generateDynamicRoute("admin.page.list", ["page_type" => $page->getPageType()]);
         Router::redirectToUrl($urlPageList);
 
         
@@ -95,7 +95,7 @@ class PageControllerApi implements IControllerApi
         $dateUpdated = new \DateTime();
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
         $page->setUpdatedAt($dateUpdated);
-        $url = Router::generateDynamicRoute("page.edit", ["id" => $pageId]);
+        $url = Router::generateDynamicRoute("admin.page.edit", ["id" => $pageId]);
         if (!Page::findBy('slug', $page->getSlug())) {
             FlashNotifier::error("Le slug existe déjà");
             Router::redirectToUrl($url);
