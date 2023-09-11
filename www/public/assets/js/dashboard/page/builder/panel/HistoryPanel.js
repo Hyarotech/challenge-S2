@@ -25,7 +25,7 @@ export default class HistoryPanel {
   };
   loadLast = async () => {
     const pageId = document.getElementById('_page_id').value;
-    const url = `/dashboard/page/builder/history/last/${pageId}`;
+    const url = `/admin/page/builder/history/last/${pageId}`;
     const data = await this.fetchData(url);
     if (data) {
       this.editor.loadProjectData(JSON.parse(data.state));
@@ -67,7 +67,7 @@ export default class HistoryPanel {
 
   itemClickEvent = async (listItem) => {
     const itemId = listItem.getAttribute('data-id');
-    const url = `/dashboard/page/builder/get/${itemId}`;
+    const url = `/admin/page/builder/get/${itemId}`;
     const data = await this.fetchData(url);
     if (data) {
       this.editor.clearDirtyCount();
@@ -110,7 +110,7 @@ export default class HistoryPanel {
   
   handleHistoryButton = async () => {
     const pageId = document.getElementById('_page_id').value;
-    const url = `/dashboard/page/builder/history/${pageId}`;
+    const url = `/admin/page/builder/history/${pageId}`;
     const data = await this.fetchData(url);
     if (data) {
       const itemList = this.createItemList(data);
