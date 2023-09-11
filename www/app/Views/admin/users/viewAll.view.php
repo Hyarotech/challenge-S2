@@ -54,7 +54,7 @@
                             </div>
                         </td><td>
                             <div class = "w-full h-full flex justify-center">
-                                <?= $user->getRole(); ?>
+                                <?= \Core\Role::getRoleName($user->getRole()); ?>
                             </div>
                         </td>
                         <td>

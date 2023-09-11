@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS "user"
     date_updated timestamp,
     verif_token character varying(255),
     user_description text,
-    role character varying(32),
+    role smallint NOT NULL DEFAULT 0,
     access_token character varying,
     reset_token character varying,
     CONSTRAINT user_pkey PRIMARY KEY (id),

@@ -9,6 +9,7 @@ use App\Requests\RegisterRequest;
 use Core\FlashNotifier;
 use Core\Request;
 use Core\ResourceView;
+use Core\Role;
 use Core\Router;
 use Core\Session;
 use Exception;
@@ -42,7 +43,7 @@ class SecurityController
             "email" => $request->get("email"),
             "password" => password_hash($request->get("password"), PASSWORD_DEFAULT),
             "verif_token" => password_hash($token, PASSWORD_DEFAULT),
-            "role" => "member"
+            "role" => Role::USER
         ];
         User::save($data);
         $data["verif_token"] = $token;

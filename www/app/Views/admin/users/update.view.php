@@ -59,12 +59,13 @@
                         <span class="label-text">Role</span>
                     </label>
                     <select name="role" class="select w-full max-w-xs">
-                        <option <?php if ($user->getRole() ==="ADMIN"):  ?> selected <?php endif; ?>>ADMIN</option>
-                        <option <?php if ($user->getRole() ==="USER"):  ?> selected <?php endif; ?>>USER</option>
+                        <?php foreach (\Core\Role::getRoles() as $role) : ?>
+                            <option <?php if ($user->getRole() === $role): ?> selected <?php endif; ?> value="<?= $role ?>"><?= \Core\Role::getRoleName($role) ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <label class="label">
                         <span class="label-text-alt text-red-500">
-                        <?= \Core\Session::getError("role") ?>
+                        <?= \Core\Session::getError("firstname") ?>
                         </span>
                     </label>
                 </div>
