@@ -141,6 +141,13 @@ abstract class Model
         return $queryPrepared->execute($data);
     }
 
+    public static function normalizeTableName($tableName) {
+        $tableName = explode(".", $tableName)[1];
+        $tableName = strtolower(
+            preg_replace('/([a-z])([A-Z])/', '$1_$2', $tableName)
+        );        
+        return $tableName;
+    }
     public static function findBy(string $column, string $value): ?Model
     {
 
@@ -216,8 +223,10 @@ abstract class Model
         $pdo = $dbConnector->getPDO();
 
         $instance = new static();
+
         $queryPrepared = $pdo->prepare("DELETE FROM " . $instance->table . " WHERE " . $attribute . " = " . ":" . $attribute);
         $queryPrepared->bindValue($attribute, $value);
+        
         $queryPrepared->execute();
 
         return ($queryPrepared->rowCount() > 0);

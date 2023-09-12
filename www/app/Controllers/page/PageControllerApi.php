@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Page;
 
+use App\Models\CatPage;
 use App\Models\Page;
 use App\Models\User;
 use App\Requests\PageCreateRequest;
@@ -12,6 +13,8 @@ use Core\Request;
 use Core\Session;
 use Core\Router;
 use Core\ResourceData;
+use Core\ResourceJson;
+
 class PageControllerApi implements IControllerApi
 {
 
@@ -125,9 +128,24 @@ class PageControllerApi implements IControllerApi
         return $response;
     }
     
+    public function editCategories(Request $request): ResourceJson
+    {
+        $pageId = (int)$request->get('page_id');
+        $categoryId = (int)$request->get('category_id');
+        $addCategory = CatPage::deleteAndInsert($pageId,$categoryId);
+        
+        $response = new ResourceJson();
+        if(!$addCategory)
+            $response->addError("categorie", "Impossible d'ajouter la catégorie");
+            
+        header('Content-Type: application/json');
+        return $response;
+        
+    }
 
     public function delete(Request $request): void
     {
+            CatPage::delete('page_id',(int)$request->get('id'));
             $result = Page::delete('id',(int)$request->get('id'));
             $response = array();
             $response['success'] = $result;

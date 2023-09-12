@@ -11,9 +11,10 @@
     <thead>
       <tr>
         <th class="sticky top-0 z-[2] text-center">ID</th>   
-        <th class="sticky top-0 z-[2] text-center">Type</th>         
+        <th class="sticky top-0 z-[2] text-center">Type</th> 
         <th class="sticky top-0 z-[2] text-center">Nom</th>
         <th class="sticky top-0 z-[2] text-center">Slug</th>
+        <th class="sticky top-0 z-[2] text-center">Catégorie</th>         
         <th class="sticky top-0 z-[2] text-center">Crée le</th>
         <th class="sticky top-0 z-[2] text-center">Modifiée le</th>
         <th class="sticky top-0 z-[2] text-center">Auteur</th>
@@ -44,6 +45,26 @@
           <td>
             <div class = "w-full h-full flex justify-center">
             <?= $page->getSlug(); ?>
+
+            </div>
+          </td>
+          <td>
+            <div class = "w-full h-full flex justify-center">
+              <select name="editCategories">
+                <?php
+                  foreach($categoryList as $category): 
+                    $pageId = $page->getId();
+                    try{
+                      $categoryId = \App\Models\CatPage::findBy('page_id', $pageId)->getCategoryId();
+                    }catch(Error|Exception $e ){
+                      $categoryId = null;
+                    }
+                ?>
+                  <option 
+                    <?= $categoryId === $category->getId() ? 'selected' : '' ?>
+                  value="<?= $category->getId() ?>"><?= $category->getName() ?></option>
+                <?php endforeach; ?>
+              </select>
 
             </div>
           </td>

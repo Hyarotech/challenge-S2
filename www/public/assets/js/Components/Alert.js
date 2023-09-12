@@ -63,6 +63,8 @@ class Alert extends Component {
         alertDiv.appendChild(messageSpan);
         alertDiv.appendChild(button);
         this.element = alertDiv;
+
+        console.log(this.element);
     }
 
     render(insideElement, isPrepend = true) {

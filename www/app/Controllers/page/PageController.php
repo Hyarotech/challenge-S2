@@ -8,6 +8,8 @@ use Core\Request;
 use Core\Router;
 use App\Models\PageBuilderManager;
 use App\Configs\PageConfig;
+use Core\Session;
+
 class PageController 
 {
     public function page()
@@ -42,10 +44,12 @@ class PageController
     }
     public function create()
     {
+        
         $view = new Resource("Page/pageSetting","back");
         $formAction = Router::generateRoute("admin.page.create.handle");
         $view->assign('formAction',$formAction);
         $view->assign('pageType','');
+        $view->assign('selectedUser',Session::get('user')['id']);
 
         
         return $view;
@@ -61,6 +65,7 @@ class PageController
         
         $pageTypeName = array_search($pageType,PageConfig::TYPE);
         $view = new Resource("Page/list","back");
+        $view->assign('categoryList',\App\Models\Category::findAll());
         $view->assign('pageTypeName',$pageTypeName ? $pageTypeName : " pages");
         $view->assign('pages',$pages);
         return $view;
@@ -88,6 +93,7 @@ class PageController
         $view->assign('isNoFollow',$page->getisNoFollow());
         $view->assign('visibility',$page->getVisibility());
         $view->assign('pageType',$page->getPageType());
+        $view->assign('selectedUser',$page->getUserId());
         return $view;
     }
 }
