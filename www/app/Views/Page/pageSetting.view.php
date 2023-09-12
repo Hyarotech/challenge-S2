@@ -45,8 +45,16 @@
             value="<?= App\Configs\PageConfig::TYPE['article']; ?>">Article</option>
   </select>
   
-      <input type="text" placeholder="Auteur" name="user_id" value="<?= $userId ?? '' ?>" class="col-span-6 input input-bordered" />
-      <span class="label-text-alt text-red-500 col-span-6">
+  <label for="user_id" class="label font-bold cursor-pointer">Auteur : </label>
+  <select name="user_id" class="col-span-6 select select-bordered">
+    <?php foreach(\App\Models\User::findAll() as $user): ?>
+      <option <?= $user->getId() === $selectedUser ? 'selected' : '' ?> value="<?= $user->getId() ?>">
+        <?= strip_tags($user->getFirstName() . " " . $user->getLastName()) . ' ( '.$user->getEmail().' )' ?>
+      </option>
+
+    <?php endforeach; ?>
+  </select>
+    <span class="label-text-alt text-red-500 col-span-6">
                             <?= \Core\Session::getError("user_id") ?>
                         </span>
 
