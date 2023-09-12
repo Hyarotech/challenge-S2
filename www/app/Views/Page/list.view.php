@@ -54,7 +54,11 @@
                 <?php
                   foreach($categoryList as $category): 
                     $pageId = $page->getId();
-                    $categoryId = \App\Models\CatPage::findBy('page_id', $pageId)->getCategoryId();
+                    try{
+                      $categoryId = \App\Models\CatPage::findBy('page_id', $pageId)->getCategoryId();
+                    }catch(Error|Exception $e ){
+                      $categoryId = null;
+                    }
                 ?>
                   <option 
                     <?= $categoryId === $category->getId() ? 'selected' : '' ?>
