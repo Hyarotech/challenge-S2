@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Configs\PageConfig;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\User;

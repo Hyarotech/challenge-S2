@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Admin\CategoryController;
 use App\Middlewares\AdminMiddleware;
 use App\Middlewares\AuthMiddleware;
 
@@ -30,4 +31,5 @@ $router
     ->setName("api.admin.categories.delete")
     ->setMiddlewares([AuthMiddleware::class, AdminMiddleware::class]);
 
-$router->get("/category/",[CategoryController::class,"list"])->setName("category");
+$router->get("/category",[CategoryController::class,"list"])
+    ->setName("category");

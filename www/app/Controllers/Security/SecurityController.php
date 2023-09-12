@@ -26,6 +26,14 @@ class SecurityController
         return new ResourceView("Auth/login", "front");
     }
 
+    public function profile(): ResourceView
+    {
+        $user = User::findBy("email", Session::get("user")["email"]);
+        $view = new ResourceView("Auth/profile", "front");
+        $view->assign("user", $user);
+        return $view;
+    }
+
     /**
      * @throws Exception
      */
@@ -123,9 +131,9 @@ class SecurityController
             "id" => $userInDb->getId()
         ]);
         FlashNotifier::success("Vous êtes connecté");
-        if($userInDb->hasRole(Role::ADMIN)){
+        if ($userInDb->hasRole(Role::ADMIN)) {
             Router::redirectTo("admin");
-        }else{
+        } else {
             Router::redirectTo("home");
         }
     }

@@ -22,5 +22,6 @@ class App
     public function __destruct()
     {
         Session::clearCsrf();
+        new SitemapGenerator($this->router,env("APP_URL"));
     }
 }
