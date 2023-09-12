@@ -147,7 +147,7 @@ class Router
             $csrf = $_SESSION['csrf'];
             $token = $_POST['csrf'];
             $found = false;
-            foreach ($csrf as $key => $value) {
+            foreach ($csrf as $value) {
                 if ($value->getToken() === $token && $value->getExpireAt() > time()) {
                     $found = true;
                     break;
@@ -156,6 +156,11 @@ class Router
             if (!$found) {
                 $this->redirectTo("errors.404");
             }
+            //remove csrf token from session
+            $_SESSION['csrf'] = array_filter($_SESSION['csrf'], function ($value) use ($token) {
+                return $value->getToken() !== $token;
+            });
+
         }
         $request = new Request();
         $middlewares = $route->getMiddlewares();
