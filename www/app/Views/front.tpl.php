@@ -23,7 +23,7 @@ getJS();
     <script type="module" defer src="<?= '/assets/js/main.js'?>"></script>
 
     <title>GES CMS - <?= $title ?? '' ?></title>
-    <?= $isNoFollow ? '<meta name="robots" content="noindex, nofollow">' : '' ?>
+    <?= isset($isNoFollow) && $isNoFollow ? '<meta name="robots" content="noindex, nofollow">' : '' ?>
     
     <link rel="stylesheet" href="/assets/css/style.css">
 
@@ -35,7 +35,7 @@ getJS();
     <div class="z-40 w-full fixed top-0 ">
         <?php component('Nav/navbar'); ?>
     </div>
-        <div id="app" class="flex flex-col w-full relative ">
+        <div id="app" class="flex flex-col mt-[66px] w-full relative ">
             <?php include $this->view; ?>
         </div>
     </div>

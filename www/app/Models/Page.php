@@ -142,41 +142,31 @@ class Page extends Model
         return $this->findBy('id', $this->getId()) || $this->findBy('slug', $this->getSlug());
     }
 
-    public static function findAllByCategory(int $category_id) : Array {
+    public static function findAllByCategory(int $categoryId) : Array {
         $instance = new static();
         $table = array(
             'Page' => $instance->getTable(),
             'CatPage' => (new \App\Models\CatPage())->getTable(),
             'Category' => (new \App\Models\Category())->getTable()
         );
-
         $result = array();
-        /*$sql = 'SELECT '.$table['Page'].'.* FROM '.$table['Page'].' 
-                WHERE '.$table['Page'].'.page_type = :page_type
-                INNER JOIN '. $table['Category'].'.id';
-        */
-        $sql = 'SELECT '.$table['Page'].'.* FROM '.$table['Page'].' 
+        
+        $sql = 'SELECT '.$table['Page'].'.* FROM '.$table['Page'].'
+                INNER JOIN '.$table['CatPage'].' ON '.$table['CatPage'].'.page_id = '.$table['Page'].'.id
+                INNER JOIN '.$table['Category'].' ON '.$table['CatPage'].'.category_id = '.$table['Category'].'.id
                 WHERE 
                     '.$table['Page'].'.page_type = :page_type
-                    AND '. $table['Category'].'.id = :category_id
-                    AND '.$table['CatPage'].'.page_id = '.$table['Page'].'.id 
-                    AND '.$table['CatPage'].'.category_id = '.$table['Category'].'.id
+                    AND '.$table['Category'].'.id = :category_id
                 ORDER BY '.$table['Page'].'.created_at ASC';
         $db = DBConnector::getInstance()->getPDO();
         $req = $db->prepare($sql);
-       try{
-            $req->execute([
-                'category_id' => $category_id,
+
+        $req->execute([
+                'category_id' => $categoryId,
                 'page_type' => $instance->getPageType()
-            ]);
-        }catch(Exception|Error $e){
-            dd($e);
-        }
-
-        dd($req->fetchAll());
-
-        return $result;
-
+        ]);
+        
+        return $req->fetchAll();
     }
     /**
      * Get the value of pageType

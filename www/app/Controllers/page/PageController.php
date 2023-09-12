@@ -74,12 +74,18 @@ class PageController
  
     public function blogListArticle(){
         $route = Router::getActualRoute();
-        $category = Category::findBy('name',Category::formatName($route->getParam('cat_type')));
+        $categoryName = Category::formatName($route->getParam('cat_type'));
+        $category = Category::findBy('name',$categoryName);
         if(!$category)
            Router::redirectTo('errors.404'); 
         
         $listArticle = \App\Models\Article::findAllByCategory($category->getId());
-        dd($listArticle);
+
+        $view = new Resource('Page/blogListArticle','front');
+        $view->assign('listArticle',$listArticle);
+        $view->assign('categoryName',$categoryName);
+
+        return $view;
     }
     public function edit()
     {
