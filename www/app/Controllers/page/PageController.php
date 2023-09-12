@@ -24,21 +24,24 @@ class PageController
 
         if($pageDataResponse['visibility'] === PageConfig::VISIBILITY['private'])
             Router::redirectTo("errors.404");
-        
-        $pageLastState = PageBuilderManager::getLast($pageDataResponse['id']);
 
+        $pageLastState = PageBuilderManager::getLast($pageDataResponse['id']);
+        $author = \App\Models\User::findBy('id',$pageDataResponse['userId']);
+        
+        
         /*
          Si j'ai le temps : mettre une page d'erreur avec un modal au milieu qui dit que la page n'a pas de contenu
         */
         if(count($pageLastState) === 0)
             Router::redirectTo("errors.404");
-
         $pageLastState = $pageLastState[0]->toArray();
         $view = new Resource("Page/index","front");
         $view->assign('isNoFollow',$pageDataResponse['isNoFollow']);
         $view->assign('title',$pageDataResponse['title']);
         $view->assign('description',$pageDataResponse['description']);
         $view->assign('createdAt',$pageDataResponse['createdAt']);
+        $view->assign('pageType',$pageDataResponse['pageType']);
+        $view->assign('author', strip_tags($author->getFirstName() . " " . $author->getLastName()));
         $view->assign('content',json_decode($pageLastState['state']));
         
         return $view;    
@@ -66,7 +69,7 @@ class PageController
         
         $pageTypeName = array_search($pageType,PageConfig::TYPE);
         $view = new Resource("Page/list","back");
-        $view->assign('categoryList',\App\Models\Category::findAll());
+        $view->assign('categoryList',Category::findAll());
         $view->assign('pageTypeName',$pageTypeName ? $pageTypeName : " pages");
         $view->assign('pages',$pages);
         return $view;

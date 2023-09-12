@@ -165,8 +165,10 @@ class Page extends Model
                 'category_id' => $categoryId,
                 'page_type' => $instance->getPageType()
         ]);
-        
-        return $req->fetchAll();
+        $results = $req->fetchAll();
+        return array_map(function ($result) {
+            return static::hydrate($result);
+        }, $results);
     }
     /**
      * Get the value of pageType

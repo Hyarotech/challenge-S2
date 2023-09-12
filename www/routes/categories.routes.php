@@ -29,3 +29,4 @@ $router
     ->post("/api/admin/categories/delete", [\App\Controllers\Admin\CategoryController::class, "delete"])
     ->setName("api.admin.categories.delete")
     ->setMiddlewares([AuthMiddleware::class, AdminMiddleware::class]);;
+    $router->get("/category/",[CategoryController::class,"list"])->setName("category");
