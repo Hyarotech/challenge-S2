@@ -123,7 +123,11 @@ class SecurityController
             "id" => $userInDb->getId()
         ]);
         FlashNotifier::success("Vous êtes connecté");
-        Router::redirectTo("home");
+        if($userInDb->hasRole(Role::ADMIN)){
+            Router::redirectTo("admin");
+        }else{
+            Router::redirectTo("home");
+        }
     }
 
     public function logout(): void

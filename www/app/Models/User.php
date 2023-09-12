@@ -118,7 +118,6 @@ class User extends Model
     }
 
 
-
     public function isVerified(): bool
     {
         return $this->verified;
@@ -173,5 +172,10 @@ class User extends Model
     public function setAccessToken(?string $accessToken): void
     {
         $this->accessToken = $accessToken;
+    }
+
+    public function hasRole(int $role): bool
+    {
+        return $this->role === $role;
     }
 }

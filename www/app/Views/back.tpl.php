@@ -33,15 +33,16 @@
 <!--    --><?php // include  ROOT . "/app/Views/partials/flash.tpl.php" ?>
 <?php component('partials/flash', [], 'tpl'); ?>
 
-<div class="flex flex-col min-h-screen h-auto">
+<div class="flex h-full">
     <?php component('Nav/sidebar'); ?>
+    <div class="flex-1 flex flex-col">
+        <div>
+            <?php component('Nav/navbar'); ?>
+        </div>
 
-    <div class="z-40 w-full md:w-[calc(100%_-_80px)] md:left-[80px] fixed top-0">
-        <?php component('Nav/navbar'); ?>
-    </div>
-
-    <div id="app" class="w-full mt-[66px] md:w-[calc(100%_-_80px)] relative flex flex-col md:left-[80px]">
-        <?php include $this->view; ?>
+        <div id="app" class="flex flex-col flex-1">
+            <?php include $this->view; ?>
+        </div>
     </div>
 </div>
 
