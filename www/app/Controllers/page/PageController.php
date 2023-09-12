@@ -44,11 +44,12 @@ class PageController
     }
     public function create()
     {
+        
         $view = new Resource("Page/pageSetting","back");
         $formAction = Router::generateRoute("admin.page.create.handle");
         $view->assign('formAction',$formAction);
         $view->assign('pageType','');
-        $view->assign('selectedUser',Session::get('user')->getId());
+        $view->assign('selectedUser',Session::get('user')['id']);
 
         
         return $view;
