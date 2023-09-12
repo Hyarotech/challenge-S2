@@ -16,7 +16,7 @@ class EditForm extends AForm
             ],
             "inputs" => [
                 "title" => [
-                    "rules" => ["required", "min:2", "max:200", "title"],
+                    "rules" => ["required", "min:2", "max:200"],
                 ],
                 "description" => [
                     "rules" => ["required", "max:200"],

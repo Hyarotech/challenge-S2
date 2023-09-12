@@ -2,9 +2,12 @@
 namespace App\Models;
 
 use App\Configs\PageConfig;
+use Core\DBConnector;
 use Core\Model;
 
 use Core\Verificator;
+use Exception;
+
 class Page extends Model
 {
     protected int $id;
@@ -35,6 +38,7 @@ class Page extends Model
         parent::__construct();
         $this->setId(-1);
         $this->setUserId(-1);
+        $this->setPageType(PageConfig::TYPE['page']);
     }
     public function getId(): int
     {
@@ -138,7 +142,34 @@ class Page extends Model
         return $this->findBy('id', $this->getId()) || $this->findBy('slug', $this->getSlug());
     }
 
-    
+    public static function findAllByCategory(int $categoryId) : Array {
+        $instance = new static();
+        $table = array(
+            'Page' => $instance->getTable(),
+            'CatPage' => (new \App\Models\CatPage())->getTable(),
+            'Category' => (new \App\Models\Category())->getTable()
+        );
+        $result = array();
+        
+        $sql = 'SELECT '.$table['Page'].'.* FROM '.$table['Page'].'
+                INNER JOIN '.$table['CatPage'].' ON '.$table['CatPage'].'.page_id = '.$table['Page'].'.id
+                INNER JOIN '.$table['Category'].' ON '.$table['CatPage'].'.category_id = '.$table['Category'].'.id
+                WHERE 
+                    '.$table['Page'].'.page_type = :page_type
+                    AND '.$table['Category'].'.id = :category_id
+                ORDER BY '.$table['Page'].'.created_at ASC';
+        $db = DBConnector::getInstance()->getPDO();
+        $req = $db->prepare($sql);
+
+        $req->execute([
+                'category_id' => $categoryId,
+                'page_type' => $instance->getPageType()
+        ]);
+        $results = $req->fetchAll();
+        return array_map(function ($result) {
+            return static::hydrate($result);
+        }, $results);
+    }
     /**
      * Get the value of pageType
      */ 

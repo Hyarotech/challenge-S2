@@ -37,14 +37,20 @@ class Category extends \Core\Model
     {
         return $this->name;
     }
-
+    public static function formatName(string $name){
+        $instance = new static();
+        $instance->setName($name);
+        return $instance->getName();
+    }
     /**
      * @param string $name
      * @return Category
      */
     public function setName(string $name): Category
     {
-        $this->name = $name;
+        $this->name = strip_tags(
+            ucfirst(strtolower($name))
+        );
         return $this;
     }
 

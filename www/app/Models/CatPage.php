@@ -73,23 +73,9 @@ class CatPage extends \Core\Model
         return $this;
     }
     
-    /**
-     * @return string
-     */
-    public function getTable(): string
-    {
-        return $this->table;
-    }
+  
 
-    /**
-     * @param string $table
-     * @return CatPage
-     */
-    public function setTable(string $table): CatPage
-    {
-        $this->table = $table;
-        return $this;
-    }
+
 
     /**
      * Delete the existing record and insert a new one with the given pageId and categoryId.
