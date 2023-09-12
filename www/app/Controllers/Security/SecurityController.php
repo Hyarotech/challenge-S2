@@ -120,6 +120,7 @@ class SecurityController
         Session::set("user", [
             "email" => $userInDb->getEmail(),
             "accessToken" => $setAccessToken,
+            "id" => $userInDb->getId()
         ]);
         FlashNotifier::success("Vous êtes connecté");
         Router::redirectTo("home");
