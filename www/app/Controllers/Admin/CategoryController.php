@@ -21,10 +21,21 @@ class CategoryController
         return $resource;
     }
 
+    public function list(): ResourceView
+    {
+        $categories = Category::findAll();
+        $view = new ResourceView("Categories/list",'front');
+
+        $view->assign('categories',$categories);
+
+        return $view;
+    }
+
     public function create(): ResourceView
     {
         return new ResourceView("admin/categories/create", "back");
     }
+
 
     #[CreateCategoryRequest]
     public function handleCreate(Request $request): void

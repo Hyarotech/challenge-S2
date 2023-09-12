@@ -4,9 +4,10 @@ use App\Models\Category;
 use Core\Route;
 ?>
 <div class="p-5">
-    <div class="flex w-full flex-col items-center">
-        <h1 class="text-4xl text-center font-bold mb-5">Liste des articles</h1>
-        <p><span class="badge flex font-bold text-center badge-primary"><?= $categoryName ?></span></p>
+    <div class="flex w-full flex-col gap-5 items-center">
+        <h1 class="text-4xl text-center font-bold">Liste des articles</h1>
+        <p><span class="badge flex font-bold text-center badge-secondary"><?= $categoryName ?></span></p>
+        <a href="<?= \Core\Router::generateRoute('categories.list') ?>" class="btn btn-sm btn-primary">Liste des catégories</a>
     </div>
     <div class="mt-10">
         <?php foreach($listArticle as $article): ?>

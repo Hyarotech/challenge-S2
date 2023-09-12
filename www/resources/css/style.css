@@ -6,6 +6,21 @@
     @apply btn btn-sm m-4 btn-outline;
 }
 
+@layer utilities {
+    @variants responsive {
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+    }
+}
+
 .daisy-table .dataTables_paginate .current {
     @apply btn btn-sm m-4 btn-primary;
 }

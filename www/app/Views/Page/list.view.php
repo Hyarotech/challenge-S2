@@ -38,12 +38,12 @@
             <div>
           </td>
           <td>
-            <div class = "w-full h-full flex justify-center">
+            <div class = "max-w-[150px] overflow-auto no-scrollbar text-ellipsis h-full flex justify-center">
               <?= $page->getTitle(); ?>
             </div>
           </td>
           <td>
-            <div class = "w-full h-full flex justify-center">
+            <div class = "w-full max-w-[100px] overflow-hidden text-ellipsis h-full flex justify-center">
             <?= $page->getSlug(); ?>
 
             </div>
