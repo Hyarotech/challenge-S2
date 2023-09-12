@@ -20,6 +20,7 @@ class SitemapGenerator
             $path = $route->getPath();
             if ($route->getMethod() === 'GET'
                 && !str_contains($path, ":")
+                && !str_contains($path, "install")
                 && !in_array(AdminMiddleware::class, $middlewares)) {
                 $this->routes[] = $route->getPath();
             }
