@@ -20,18 +20,18 @@ $router
     ->setName("admin.users.create.handle")
     ->setMiddlewares([AuthMiddleware::class, AdminMiddleware::class]);
 $router
-    ->get("/admin/users/:id", [UsersController::class, "viewOne"])->
-    setName("admin.users.viewOne")
+    ->get("/admin/users/:id", [UsersController::class, "viewOne"])
+    ->setName("admin.users.viewOne")
     ->setMiddlewares([AuthMiddleware::class, AdminMiddleware::class]);
 $router
     ->get("/admin/users/update/:id", [UsersController::class, "update"])->
     setName("admin.users.update")
     ->setMiddlewares([AuthMiddleware::class, AdminMiddleware::class]);
 $router
-    ->post("/admin/users/:id", [UsersController::class, "updateHandle"])->
-    setName("admin.users.update.handle")
+    ->post("/admin/users/:id", [UsersController::class, "updateHandle"])
+    ->setName("admin.users.update.handle")
     ->setMiddlewares([AuthMiddleware::class, AdminMiddleware::class]);
 $router
-    ->post("/api/admin/users/delete", [UsersController::class, "delete"])->
-    setName("api.admin.users.delete")
+    ->post("/api/admin/users/delete", [UsersController::class, "delete"])
+    ->setName("api.admin.users.delete")
     ->setMiddlewares([AuthMiddleware::class, AdminMiddleware::class]);

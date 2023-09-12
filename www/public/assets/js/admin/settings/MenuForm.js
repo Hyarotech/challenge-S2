@@ -41,7 +41,7 @@ class MenuForm extends Component {
     createPageList() {
         const container = document.createElement('div');
      
-        container.className = 'card max-h-full overflow-y-auto absolute top-0 right-[-65%] [100px]card bg-base-300 p-2';
+        container.className = 'card max-h-full overflow-y-auto relative top-0 left-0 bottom-0 max-w-[220px] max-h-[200px] card bg-base-300 p-2';
         const displayClass = this.menuItem.type == "page" ? "block" : "none";
         this.pageList.forEach(page => {
             const pageItem = document.createElement('div');

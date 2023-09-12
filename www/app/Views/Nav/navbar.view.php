@@ -20,7 +20,7 @@ function renderMenu(string $menuItems,bool $isRelative = false) {
             
         
         $children = json_encode($item['children'],true);
-        echo '<li tabindex="0">';
+        echo '<li class="z-[1]" tabindex="0">';
         if (empty($item['children'])) 
             echo '<a class="whitespace-nowrap" href="' . $item['link'] . '">' . $item['title'] . '</a>';
         else {

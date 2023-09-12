@@ -25,7 +25,6 @@ class CategoryController
     {
         $categories = Category::findAll();
         $view = new ResourceView("Categories/list",'front');
-
         $view->assign('categories',$categories);
 
         return $view;

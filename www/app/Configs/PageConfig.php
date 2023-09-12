@@ -1,7 +1,7 @@
 <?php
 namespace App\Configs;
 
-class PageConfig {
+enum PageConfig {
 
     public const VISIBILITY = [
         'private' => 0,
