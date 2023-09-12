@@ -22,11 +22,6 @@ class HomeController
         return $view;
     }
 
-    public function contact()
-    {
-        $view = new ResourceView("Main/contact", "front");
-    }
-
     public function dashboard(): ResourceView
     {
         $totalUsers = User::count();

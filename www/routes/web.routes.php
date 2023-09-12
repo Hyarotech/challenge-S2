@@ -1,12 +1,18 @@
 <?php
 
 use App\Controllers\HomeController;
+use App\Middlewares\AdminMiddleware;
+use App\Middlewares\AuthMiddleware;
 use Core\Router;
 
 $router = Router::getInstance();
-$router->get("/", [HomeController::class, "index"])->setName("home");
-$router->get("/admin", [HomeController::class, "dashboard"])->setName("admin");
-$router->get("/contact", [HomeController::class, "contact"])->setName("contact");
+$router
+    ->get("/", [HomeController::class, "index"])
+    ->setName("home");
+$router
+    ->get("/admin", [HomeController::class, "dashboard"])
+    ->setName("admin")
+    ->setMiddlewares([AuthMiddleware::class, AdminMiddleware::class]);
 
 
 
