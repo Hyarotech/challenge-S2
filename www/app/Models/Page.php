@@ -138,7 +138,7 @@ class Page extends Model
         return $this->findBy('id', $this->getId()) || $this->findBy('slug', $this->getSlug());
     }
 
-
+    
     /**
      * Get the value of pageType
      */ 

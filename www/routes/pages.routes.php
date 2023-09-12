@@ -17,8 +17,10 @@ $router = Router::getInstance();
 //Affichage d'une page sur le site 
 $router->get("/page/:slug", [PageController::class, "page"])->setName("page");
 
+$router->post("/api/admin/page/edit_categories", [PageControllerApi::class, "editCategories"])->setName("api.admin.page.editCategories");
+
 // Afficher la liste des pages
-$router->get("/admin/page", [PageController::class, "list"])->setName("admin.page.list");
+$router->get("/admin/page/:page_type", [PageController::class, "list"])->setName("admin.page.list");
 
 // Afficher la page à éditer
 $router->get("/admin/page/edit/:id", [PageController::class, "edit"])->setName("admin.page.edit");

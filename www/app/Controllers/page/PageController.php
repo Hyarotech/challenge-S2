@@ -61,6 +61,7 @@ class PageController
         
         $pageTypeName = array_search($pageType,PageConfig::TYPE);
         $view = new Resource("Page/list","back");
+        $view->assign('categoryList',\App\Models\Category::findAll());
         $view->assign('pageTypeName',$pageTypeName ? $pageTypeName : " pages");
         $view->assign('pages',$pages);
         return $view;
