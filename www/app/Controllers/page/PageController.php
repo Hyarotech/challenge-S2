@@ -8,6 +8,7 @@ use Core\Request;
 use Core\Router;
 use App\Models\PageBuilderManager;
 use App\Configs\PageConfig;
+use App\Models\Category;
 use Core\Session;
 
 class PageController 
@@ -71,7 +72,15 @@ class PageController
         return $view;
     }
  
-
+    public function blogListArticle(){
+        $route = Router::getActualRoute();
+        $category = Category::findBy('name',Category::formatName($route->getParam('cat_type')));
+        if(!$category)
+           Router::redirectTo('errors.404'); 
+        
+        $listArticle = \App\Models\Article::findAllByCategory($category->getId());
+        dd($listArticle);
+    }
     public function edit()
     {
         

@@ -219,7 +219,20 @@ abstract class Model
         }
         return null;
     }
+    public function getTable(): string {
+        $str = $this->table;
+        $str = preg_replace('/.*\./', '', $this->table);
+        $str[0] = strtolower($str[0]);
 
+        $str = preg_replace_callback('/[A-Z]/',function($matches){
+            return '_' . strtolower($matches[0]);
+        } , $str);
+        return $str;
+    }
+
+    public function setTable(string $tableName): void {
+        $this->table = $tableName;
+    }
     public static function delete(string $attribute, mixed $value): bool
     {
         $dbConnector = DBConnector::getInstance();

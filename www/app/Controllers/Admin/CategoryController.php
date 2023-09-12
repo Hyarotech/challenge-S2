@@ -30,7 +30,7 @@ class CategoryController
     public function handleCreate(Request $request): void
     {
         $data = [
-            "name" => $request->get("name"),
+            "name" => Category::formatName($request->get("name")),
         ];
         //check if category already exist
         $category = Category::findBy("name",$data["name"]);
@@ -103,7 +103,7 @@ class CategoryController
             Router::redirectTo("admin.categories.index");
         }
         $data = [
-            "name" => $request->get("name"),
+            "name" => Category::formatName($request->get("name")),
         ];
         $category = Category::findBy("name",$data["name"]);
         if($category){

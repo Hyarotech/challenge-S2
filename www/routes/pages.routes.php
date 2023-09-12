@@ -16,7 +16,7 @@ $router = Router::getInstance();
 
 //Affichage d'une page sur le site 
 $router->get("/page/:slug", [PageController::class, "page"])->setName("page");
-
+$router->get("/blog/:cat_type",[PageController::class,"blogListArticle"])->setName("blog.article.list");
 $router->post("/api/admin/page/edit_categories", [PageControllerApi::class, "editCategories"])->setName("api.admin.page.editCategories");
 
 // Afficher la liste des pages
