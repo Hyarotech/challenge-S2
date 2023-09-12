@@ -23,6 +23,12 @@ class Router
         return self::$instance;
     }
 
+    public function getRoutes(): array
+    {
+        $router = self::getInstance();
+        return $router->routes;
+    }
+
     public static function getActualRoute(): ?Route
     {
         $router = self::getInstance();
