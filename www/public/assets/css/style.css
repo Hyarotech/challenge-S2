@@ -1957,6 +1957,13 @@ html {
   flex-grow: 1;
 }
 
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
 .card figure {
   display: flex;
   align-items: center;
@@ -3040,6 +3047,12 @@ html {
 }
 
 .card.bordered {
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));
+}
+
+.card-bordered {
   border-width: 1px;
   --tw-border-opacity: 1;
   border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));
@@ -4351,6 +4364,12 @@ html {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+.space-x-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(2rem * var(--tw-space-x-reverse));
+  margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .self-start {
   align-self: flex-start;
 }
@@ -4636,6 +4655,31 @@ html {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-accent-focus {
+  --tw-shadow-color: hsl(var(--af, var(--a)));
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-primary-focus {
+  --tw-shadow-color: hsl(var(--pf, var(--p)));
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-accent-content {
+  --tw-shadow-color: hsl(var(--ac));
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-primary-content {
+  --tw-shadow-color: hsl(var(--pc));
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-base-300 {
+  --tw-shadow-color: hsl(var(--b3, var(--b2)));
+  --tw-shadow: var(--tw-shadow-colored);
 }
 
 .filter {

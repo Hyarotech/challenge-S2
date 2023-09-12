@@ -7,6 +7,7 @@ use App\Models\Page;
 use App\Models\User;
 use Carbon\Carbon;
 use Core\ResourceView;
+use Core\Session;
 use Core\SqlOperator;
 use DateTime;
 

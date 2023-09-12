@@ -67,9 +67,9 @@ function token(): string
 }
 
 
-function csrf($time = 3600): void
+function csrf(string $id): void
 {
-    $csrf = new Csrf($time);
+    $csrf = new Csrf($id);
     $token = $csrf->getToken();
     echo "<input type='hidden' name='csrf' value='$token'>";
 }

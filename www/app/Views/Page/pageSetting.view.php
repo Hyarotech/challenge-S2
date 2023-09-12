@@ -8,7 +8,7 @@
 
 <form method="POST" action="<?= $formAction ?>" class="card grid bg-base-300 p-5 gap-4">
   <p class="text-accent font-bold">Page Information</p>
-    <?php csrf() ?>
+    <?php csrf("create-page") ?>
   <div class="w-full flex gap-2">
     <a href="<?= \Core\Router::generateDynamicRoute("admin.page.list",["page_type" => "0"]) ?>" class="btn btn-primary btn-sm">Liste des pages</a>
     <?= isset($pageId)

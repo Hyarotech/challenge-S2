@@ -18,4 +18,9 @@ class App
         } catch (\Exception $e) {
         }
     }
+
+    public function __destruct()
+    {
+        Session::clearCsrf();
+    }
 }

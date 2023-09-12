@@ -55,7 +55,7 @@ class Router
 
     public static function redirectDynamicTo(string $routeName, array $params)
     {
-        $url =  self::generateDynamicRoute($routeName,$params);
+        $url = self::generateDynamicRoute($routeName, $params);
         if (!$url) {
             die("La route " . $routeName . " n'existe pas");
         }
@@ -73,11 +73,13 @@ class Router
         }
         return false;
     }
+
     public static function redirectToUrl(string $url): void
     {
         header("Location: " . $url);
         exit;
     }
+
     public function getRouteByName(string $name)
     {
         $routes = array_filter($this->routes, function (Route $route) use ($name) {
@@ -140,8 +142,8 @@ class Router
         if (!$route) {
             $this->redirectTo("errors.404");
         }
-        if($route->getMethod() === "POST" && !$route->isApi()){
-            if(!isset($_SESSION['csrf'])){
+        if ($route->getMethod() === "POST" && !$route->isApi()) {
+            if (!isset($_SESSION['csrf'])) {
                 $this->redirectTo("errors.404");
             }
             $csrf = $_SESSION['csrf'];
@@ -156,11 +158,13 @@ class Router
             if (!$found) {
                 $this->redirectTo("errors.404");
             }
-            //remove csrf token from session
-            $_SESSION['csrf'] = array_filter($_SESSION['csrf'], function ($value) use ($token) {
-                return $value->getToken() !== $token;
-            });
-
+            //update csrf to remove = true
+            foreach ($csrf as $value) {
+                if ($value->getToken() === $token) {
+                    $value->remove = true;
+                    break;
+                }
+            }
         }
         $request = new Request();
         $middlewares = $route->getMiddlewares();
