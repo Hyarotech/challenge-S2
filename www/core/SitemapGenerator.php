@@ -4,6 +4,7 @@ namespace Core;
 
 use App\Configs\PageConfig;
 use App\Middlewares\AdminMiddleware;
+use App\Middlewares\AuthMiddleware;
 use App\Models\Category;
 use App\Models\CatPage;
 use App\Models\Page;
@@ -21,6 +22,7 @@ class SitemapGenerator
             if ($route->getMethod() === 'GET'
                 && !str_contains($path, ":")
                 && !str_contains($path, "install")
+                && !in_array(AuthMiddleware::class, $middlewares)
                 && !in_array(AdminMiddleware::class, $middlewares)) {
                 $this->routes[] = $route->getPath();
             }

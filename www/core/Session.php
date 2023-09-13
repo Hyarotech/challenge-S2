@@ -4,10 +4,6 @@ namespace Core;
 
 class Session
 {
-    public function __construct()
-    {
-        self::set("csrf", []);
-    }
 
     public static function set(string $key, mixed $value): void
     {

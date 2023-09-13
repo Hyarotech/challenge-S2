@@ -17,6 +17,7 @@ class App
             $this->router->run();
         } catch (\Exception $e) {
         }
+        Session::set("csrf",[]);
     }
 
     public function __destruct()

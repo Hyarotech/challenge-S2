@@ -19,4 +19,6 @@ RUN usermod -u 1000 www-data
 
 RUN a2enmod rewrite
 
+RUN chown -R www-data:www-data /var/www/html
+
 WORKDIR /var/www/html
