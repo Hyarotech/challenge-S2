@@ -3,6 +3,8 @@
 namespace App\Controllers\Comment;
 
 use App\Models\Comment;
+use App\Models\User;
+use App\Requests\Comment\CommentCreateRequest;
 use Core\FlashNotifier;
 use Core\IControllerApi;
 use Core\Request;
@@ -36,6 +38,7 @@ class CommentControllerApi implements IControllerApi
         // Handle reading all comments
     }
 
+    #[CommentCreateRequest]
     public function create(Request $request): ResourceData
     {
         $comment = new Comment();
@@ -49,7 +52,17 @@ class CommentControllerApi implements IControllerApi
             return $response;
         }
         $comment->setPageId($request->get('page_id'));
-      
+        
+        $user = User::findBy('id',Session::get('user')['id']);
+
+        if($user->getRole() !== \Core\Role::ADMIN){
+            if($comment->getUserId() != Session::get('user')['id']){
+                FlashNotifier::error('Le commentaire n\'a pas pu être créé');
+                \Core\Router::redirectToUrl($request->get('redirection'));
+                return $response;
+            }
+        }
+
         $result = Comment::save([
             'message' => $comment->getMessage(),
             'user_id' => $comment->getUserId(),
@@ -96,13 +109,20 @@ class CommentControllerApi implements IControllerApi
         // Handle comment deletion
         $commentId = $request->get('id');
         $comment = Comment::findBy('id',$commentId);
+        $user = User::findBy('id',Session::get('user')['id']);
+        $response = new ResourceJson(); // Updated to use ResourceJson
 
+        if($user->getRole() !== \Core\Role::ADMIN){
+            if($comment->getUserId() != Session::get('user')['id']){
+                $response->addError('comment','impossible de supprimer');
+                return $response;
+            }
+        }
         $result = false;
         if ($comment) 
             $result = Comment::delete('id',$commentId);
         
 
-        $response = new ResourceJson(); // Updated to use ResourceJson
         if(!$result)
             $response->addError('comment','impossible de supprimer');
         return $response;

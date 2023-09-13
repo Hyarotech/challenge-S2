@@ -80,5 +80,17 @@ class Comment extends Model
         $this->pageId = $pageId;
     }
 
+    public static function resortRecent(array $listComment)
+    {
+        $timestamps = [];
+    
+        foreach ($listComment as $comment) {
+            $timestamps[] = strtotime($comment->getCreatedAt());
+        }
+    
+        array_multisort($timestamps, SORT_DESC, $listComment);
+    
+        return $listComment;
+    }
     
 }

@@ -25,7 +25,7 @@
 
 
 <?php if($isCommentEnabled): ?>
-    <p class="text-3xl mt-10 font-bold">Espace commentaire</p>
+    <p class="text-3xl my-10 font-bold">Espace commentaire</p>
 
     <div class="p-2 md:w-3/4 flex mx-auto gap-5 flex-col">
         <?php component('partials/Comment/commentForm',[
@@ -37,6 +37,9 @@
 
         <?php
             $commentList = \App\Models\Comment::findAllBy('page_id',$pageId);
+            if($commentList)
+                $commentList = \App\Models\Comment::resortRecent($commentList);
+            
             foreach($commentList as $comment): 
                 $user = User::findBy('id',$comment->getUserId());
                 $userName = $user->getFirstName() ." ". $user->getLastName();

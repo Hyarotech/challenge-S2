@@ -35,7 +35,7 @@ function deleteCommentaireEvent(element){
     })
     .catch((error) => {
         deleteAlert.setType('error');
-        deleteAlert.setMessage(error.message);
+        deleteAlert.setMessage('Le commentaire à supprimer n\'a pas été trouvée');
     })
     .finally(() => {
         deleteAlert.createElement();
