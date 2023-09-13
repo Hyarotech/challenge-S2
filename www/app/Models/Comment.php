@@ -1,132 +1,75 @@
 <?php
-
 namespace App\Models;
 
-class Comment extends \Core\Model
-{
-    protected int $id =0;
+use Core\Model;
 
-    protected string $content;
-    protected \DateTime $createdAt;
-    protected \DateTime $updatedAt;
-    protected User|int $userId;
-    protected Page|int $pageId;
-    protected string $table = "comment";
+class Comment extends Model
+{
+    protected int $id;
+    protected ?string $message;
+    protected int $user_id;
+    protected string $created_at;
+    protected string $updated_at;
+    protected int $page_id;
 
     protected ?array $fillable = [
-        "content",
-        "created_at",
-        "user_id"
+        "message",
+        "user_id",
+        "page_id"
     ];
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     * @return Comment
-     */
-    public function setId(int $id): Comment
+    public function getMessage(): ?string
     {
-        $this->id = $id;
-        return $this;
+        return $this->message;
     }
 
-    /**
-     * @return string
-     */
-    public function getContent(): string
+    public function setMessage(?string $message): void
     {
-        return $this->content;
+        $this->message = $message;
     }
 
-    /**
-     * @param string $content
-     * @return Comment
-     */
-    public function setContent(string $content): Comment
+    public function getUserId(): int
     {
-        $this->content = $content;
-        return $this;
+        return $this->user_id;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
+    public function setUserId(int $user_id): void
     {
-        return $this->createdAt;
+        $this->user_id = $user_id;
     }
 
-    /**
-     * @param \DateTime $createdAt
-     * @return Comment
-     */
-    public function setCreatedAt(\DateTime $createdAt): Comment
+    public function getCreatedAt(): string
     {
-        $this->createdAt = $createdAt;
-        return $this;
+        return $this->created_at;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt(): \DateTime
+    public function setCreatedAt(string $created_at): void
     {
-        return $this->updatedAt;
+        $this->created_at = $created_at;
     }
 
-    /**
-     * @param \DateTime $updatedAt
-     * @return Comment
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): Comment
+    public function getUpdatedAt(): string
     {
-        $this->updatedAt = $updatedAt;
-        return $this;
+        return $this->updated_at;
     }
 
-    /**
-     * @return User
-     */
-    public function getUserId(): User
+    public function setUpdatedAt(string $updated_at): void
     {
-        return $this->userId;
+        $this->updated_at = $updated_at;
     }
 
-    /**
-     * @param User $userId
-     * @return Comment
-     */
-    public function setUserId(User $userId): Comment
+    public function getPageId(): int
     {
-        $this->userId = $userId;
-        return $this;
+        return $this->page_id;
     }
 
-    /**
-     * @return Post|int
-     */
-    public function getPostId(): int|Post
+    public function setPageId(int $page_id): void
     {
-        return $this->postId;
+        $this->page_id = $page_id;
     }
-
-    /**
-     * @param Post|int $postId
-     * @return Comment
-     */
-    public function setPostId(int|Post $postId): Comment
-    {
-        $this->postId = $postId;
-        return $this;
-    }
-
-
-
 }
