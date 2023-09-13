@@ -68,8 +68,7 @@ class Page extends Model
 
     public function setTitle(string $title): void
     {   
-        strip_tags($title);
-        $this->title = $title;
+        $this->title = strip_tags($title);
     }
 
   
@@ -112,8 +111,7 @@ class Page extends Model
     public function setDescription(string $description): void
     {
         
-        strip_tags($description);
-        $this->description = $description;
+        $this->description = strip_tags($description);
     }
 
     public function getIsNoFollow(): bool

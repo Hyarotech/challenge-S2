@@ -30,6 +30,8 @@ class Comment extends Model
 
     public function setMessage(?string $message): void
     {
+
+        $message = strip_tags($message);
         $this->message = $message;
     }
 
