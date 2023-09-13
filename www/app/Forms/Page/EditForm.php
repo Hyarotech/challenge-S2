@@ -27,6 +27,9 @@ class EditForm extends AForm
                 "is_no_follow" => [
                     "rules" => ["required","boolean"],
                 ],
+                "is_comment_enabled" => [
+                    "rules" => ["required","boolean"],
+                ],
                 "visibility" => [
                     "rules" => ["required", "integer","visibility"],
                 ],

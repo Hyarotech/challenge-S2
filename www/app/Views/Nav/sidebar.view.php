@@ -5,5 +5,7 @@
         <?php component('Nav/sideLink',["title"=>"Users","routeName"=>"admin.users.viewAll","icon"=>"fa-solid fa-user"]) ?>
         <?php component('Nav/sideLink',["title"=>"Categories","routeName"=>"admin.categories.index","icon"=>"fa-solid fa-border-all"]) ?>
         <?php component('Nav/sideLink',["title"=>"Pages","routeName"=>"admin.page.list","icon"=>"fa-solid fa-pager"]) ?>
+        <?php component('Nav/sideLink',["title"=>"Menu","routeName"=>"admin.settings.menu","icon"=>"fa-solid fa-bars"]) ?>
+
     </div>
 </zdiv>

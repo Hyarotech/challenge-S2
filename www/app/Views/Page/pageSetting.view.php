@@ -111,7 +111,37 @@
   <span class="label-text-alt text-red-500 col-span-6">
                             <?= \Core\Session::getError("is_no_follow") ?>
                         </span>
+
     </div>
+
+    <div class="col-span-6 flex items-center">
+
+      <label class="label font-bold cursor-pointer">Espace commentaire activé ?</label>
+      
+      <div class="form-control">
+    <label class="label cursor-pointer">
+      <span class="label-text"> Oui</span> 
+      <input type="radio" name="is_comment_enabled" value="1" class="radio checked:bg-accent"
+        <?= isset($isCommentEnabled) && $isCommentEnabled === true 
+                    ? 'checked' : '' ?>    
+      />
+    </label>
+  </div>
+  
+
+  <div class="form-control">
+    <label class="label cursor-pointer">
+      <span class="label-text"> Non</span> 
+      <input type="radio" name="is_comment_enabled" value="0" class="radio checked:bg-accent"
+        <?= isset($isCommentEnabled) && $isCommentEnabled === false 
+                    ? 'checked' : '' ?>    
+      />
+    </label>
+  </div>
+  <span class="label-text-alt text-red-500 col-span-6">
+                            <?= \Core\Session::getError("is_comment_enabled") ?>
+                        </span>
+                        </div>
   </div>
 
   <button type="submit" class="flex self-end btn btn-primary">Enregistrer la page</button>

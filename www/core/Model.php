@@ -120,7 +120,8 @@ abstract class Model
         $columns = array_keys($data);
         $queryPrepared = $pdo->prepare("INSERT INTO " . $instance->table . " (" . implode(",", $columns) . ") 
                             VALUES (:" . implode(",:", $columns) . ")");
-        return $queryPrepared->execute($data);
+        
+        return $queryPrepared->execute($data); 
     }
 
     public static function update(string $id, array $data): bool

@@ -20,6 +20,7 @@ $router = Router::getInstance();
 $router->get("/page/:slug", [PageController::class, "page"])
        ->setName("page")
        ->setMiddlewares([PageExistAndVisibleMiddleWare::class]);
+       
 $router->get("/blog/:cat_type",[PageController::class,"blogListArticle"])->setName("blog.article.list");
 
 $router->post("/api/admin/page/edit_categories", [PageControllerApi::class, "editCategories"])
