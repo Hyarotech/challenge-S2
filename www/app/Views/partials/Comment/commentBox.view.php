@@ -13,8 +13,7 @@
             <?= $message ?>
         </div>
         <div class="flex items-center space-x-2 mt-2">
-            
-            
+
             <div class="flex justify-end w-full space-x-1 ml-auto">
                 <div class="dropdown dropdown-bottom dropdown-end">
                     <label tabindex="0" class="fa-light pointer text-2xl fa-circle-ellipsis-vertical"></label>

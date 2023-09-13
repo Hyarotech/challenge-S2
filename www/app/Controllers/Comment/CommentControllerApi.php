@@ -3,8 +3,10 @@
 namespace App\Controllers\Comment;
 
 use App\Models\Comment;
+use Core\FlashNotifier;
 use Core\IControllerApi;
 use Core\Request;
+use Core\ResourceData;
 use Core\ResourceJson; // Updated to use ResourceJson
 use \Core\Session;
 class CommentControllerApi implements IControllerApi
@@ -34,12 +36,12 @@ class CommentControllerApi implements IControllerApi
         // Handle reading all comments
     }
 
-    public function create(Request $request): ResourceJson
+    public function create(Request $request): ResourceData
     {
         $comment = new Comment();
         $comment->setMessage($request->get('message'));
         $comment->setUserId(Session::get('user')['id']);
-        $response = new ResourceJson();
+        $response = new ResourceData();
         $pageId = $request->get('page_id');
 
         if(!\App\Models\Page::findBy('id',$pageId)){
@@ -55,8 +57,11 @@ class CommentControllerApi implements IControllerApi
         ]);
         
         if(!$result)
-            $response->addError('comment','Le commentaire n\'a pas pu se créer');
+            FlashNotifier::error('Le commentaire n\'a pas pu être créé');
+        else
+            FlashNotifier::success('Le commentaire a bien été créé');
 
+        \Core\Router::redirectToUrl($request->get('redirection'));
         return $response;
     }
 

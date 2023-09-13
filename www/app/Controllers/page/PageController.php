@@ -54,7 +54,6 @@ class PageController
         $view->assign('pageType','');
         $view->assign('selectedUser',Session::get('user')['id']);
 
-        
         return $view;
     }
 
