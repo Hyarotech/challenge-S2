@@ -37,3 +37,4 @@ networks:
   default:
     external:
       name: challenge-s2
+      external: true
