@@ -24,6 +24,10 @@ class App
 
     public function __destruct()
     {
+        //check if installed before
+        if(!file_exists(ROOT."/.env")){
+            return;
+        }
         Session::clearCsrf();
         new SitemapGenerator($this->router,env("APP_URL"));
     }

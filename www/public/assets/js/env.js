@@ -1,3 +1,3 @@
 export default {
-  "apiUrl": "http://localhost:6005/api"
+  "apiUrl": "https://staging-challenge.hyarotech.com/api"
 }
