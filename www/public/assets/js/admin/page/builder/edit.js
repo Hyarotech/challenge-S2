@@ -4,7 +4,7 @@ import HistoryPanel from './panel/HistoryPanel.js';
 const escapeName = (name) => `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, '-');
 
 const projectEndpoint = '/api/admin/page/builder/create';
-const saveInterval = 1;
+const saveInterval = 3;
 
 let editor; // Déclaration de la variable pour stocker l'instance de l'éditeur
 
