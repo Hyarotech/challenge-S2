@@ -18,7 +18,7 @@ use App\Forms\Page\CreateForm;
         
         if(!empty($errors)) {
             Session::set("errors", $errors);
-            Router::redirectTo("page.create");
+            Router::redirectTo("admin.page.create");
         }
     }
 

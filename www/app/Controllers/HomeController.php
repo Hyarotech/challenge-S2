@@ -2,9 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Configs\PageConfig;
+use App\Models\Category;
+use App\Models\Page;
 use App\Models\User;
-use Core\Session;
+use Carbon\Carbon;
 use Core\ResourceView;
+use Core\Session;
+use Core\SqlOperator;
+use DateTime;
 
 class HomeController
 {
@@ -17,13 +23,15 @@ class HomeController
         return $view;
     }
 
-    public function contact()
+    public function dashboard(): ResourceView
     {
-        $view = new ResourceView("Main/contact", "front");
-    }
-
-    public function dashboard()
-    {
-        $view = new ResourceView("Main/index", "back");
+        $totalUsers = User::count();
+        $totalCategories = Category::count();
+        $totalPages = Page::count();
+        $view = new ResourceView("Main/dashboard", "back");
+        $view->assign("totalUsers", $totalUsers);
+        $view->assign("totalCategories", $totalCategories);
+        $view->assign("totalPages", $totalPages);
+        return $view;
     }
 }

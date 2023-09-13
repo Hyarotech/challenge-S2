@@ -1,18 +1,20 @@
 <div class = "card w-full h-full bg-base-100 shadow-xl">
     <div class = "card-body">
-         <h1 class = "text-2xl font-bold w-auto h-auto">Liste des pages</h1>
+         <h1 class = "text-2xl font-bold w-auto h-auto">Liste des <?= $pageTypeName ?></h1>
          <p class = "w-auto h-auto flex-grow-0">Dans cette section se trouve la liste des pages, on peut ajouter, supprimer ou modifier une page</p>
          <div class="w-full p-2" target="_blank">
-          <a href="<?= \Core\Router::generateRoute("page.create") ?>" class="btn btn-sm btn-primary">Ajouter une page</a>
+          <a href="<?= \Core\Router::generateRoute("admin.page.create") ?>" class="btn btn-sm btn-primary">Ajouter une page</a>
          </div>
          
 <div class="overflow-auto daisy-table">
   <table class="table w-full relative" id="page-table">
     <thead>
       <tr>
-        <th class="sticky top-0 z-[2] text-center">ID</th>      
+        <th class="sticky top-0 z-[2] text-center">ID</th>   
+        <th class="sticky top-0 z-[2] text-center">Type</th> 
         <th class="sticky top-0 z-[2] text-center">Nom</th>
         <th class="sticky top-0 z-[2] text-center">Slug</th>
+        <th class="sticky top-0 z-[2] text-center">Catégorie</th>         
         <th class="sticky top-0 z-[2] text-center">Crée le</th>
         <th class="sticky top-0 z-[2] text-center">Modifiée le</th>
         <th class="sticky top-0 z-[2] text-center">Auteur</th>
@@ -32,12 +34,37 @@
           </td>
           <td>
             <div class = "w-full h-full flex justify-center">
+              <?= array_search($page->getPageType(),App\Configs\PageConfig::TYPE) ?>
+            <div>
+          </td>
+          <td>
+            <div class = "max-w-[150px] overflow-auto no-scrollbar text-ellipsis h-full flex justify-center">
               <?= $page->getTitle(); ?>
             </div>
           </td>
           <td>
-            <div class = "w-full h-full flex justify-center">
+            <div class = "w-full max-w-[100px] overflow-hidden text-ellipsis h-full flex justify-center">
             <?= $page->getSlug(); ?>
+
+            </div>
+          </td>
+          <td>
+            <div class = "w-full h-full flex justify-center">
+              <select name="editCategories">
+                <?php
+                  foreach($categoryList as $category): 
+                    $pageId = $page->getId();
+                    try{
+                      $categoryId = \App\Models\CatPage::findBy('page_id', $pageId)->getCategoryId();
+                    }catch(Error|Exception $e ){
+                      $categoryId = null;
+                    }
+                ?>
+                  <option 
+                    <?= $categoryId === $category->getId() ? 'selected' : '' ?>
+                  value="<?= $category->getId() ?>"><?= $category->getName() ?></option>
+                <?php endforeach; ?>
+              </select>
 
             </div>
           </td>
@@ -85,7 +112,7 @@
                 <label tabindex="0" class="btn btn-sm m-1">Action</label>
                 <ul tabindex="0" class="dropdown-content z-[1] menu shadow bg-base-100 rounded-box">
                   <li><a href="<?= \Core\Router::generateDynamicRoute('page',['slug'=> $page->getSlug()]) ?>"><i class="fa-solid fa-eye text-primary"></i> Voir</a></li>
-                  <li><a href="<?= \Core\Router::generateDynamicRoute('page.edit',['id'=> $page->getId()]) ?>"><i class="fa-solid fa-pen-to-square text-secondary"></i> Editer</a></li>
+                  <li><a href="<?= \Core\Router::generateDynamicRoute('admin.page.edit',['id'=> $page->getId()]) ?>"><i class="fa-solid fa-pen-to-square text-secondary"></i> Editer</a></li>
                   <li class="delete-page"><a class="text-red-500"><i class="fa-solid fa-trash text-error"></i>Supprimer</a></li>
                 </ul>
               </div>

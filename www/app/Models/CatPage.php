@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Core\DBConnector;
 
 class CatPage extends \Core\Model
 {
@@ -17,6 +18,10 @@ class CatPage extends \Core\Model
     /**
      * @return int
      */
+
+     public function __construct() {
+        $this->table = 'cat_page';
+    }
     public function getId(): int
     {
         return $this->id;
@@ -67,26 +72,39 @@ class CatPage extends \Core\Model
         $this->categoryId = $categoryId;
         return $this;
     }
+    
+  
+
+
 
     /**
-     * @return string
+     * Delete the existing record and insert a new one with the given pageId and categoryId.
+     *
+     * @param int $pageId
+     * @param int $categoryId
+     * @return bool True if the operation was successful, false otherwise.
      */
-    public function getTable(): string
+    public static function deleteAndInsert(int $pageId, int $categoryId): bool
     {
-        return $this->table;
+        $dbConnector = DBConnector::getInstance();
+        $pdo = $dbConnector->getPDO();
+
+        $static = new static();
+
+        $tableName = $static->table;
+        
+        // First, delete the existing record if it exists.
+        $queryDelete = $pdo->prepare("DELETE FROM " .  $tableName . " WHERE page_id = :pageId");
+        $queryDelete->bindValue(":pageId", $pageId);
+        $queryDelete->execute();
+        
+
+        // Now, insert the new record.
+        $queryInsert = $pdo->prepare("INSERT INTO " .  $tableName . " (page_id, category_id) VALUES (:pageId, :categoryId)");
+        $queryInsert->bindValue(":pageId", $pageId);
+        $queryInsert->bindValue(":categoryId", $categoryId);
+        return $queryInsert->execute();
     }
-
-    /**
-     * @param string $table
-     * @return CatPage
-     */
-    public function setTable(string $table): CatPage
-    {
-        $this->table = $table;
-        return $this;
-    }
-
-
 
 
 }

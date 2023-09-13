@@ -1,132 +1,96 @@
 <?php
-
 namespace App\Models;
 
-class Comment extends \Core\Model
+use Core\Model;
+
+class Comment extends Model
 {
-    protected int $id =0;
+    protected int $id;
+    protected ?string $message;
+    protected int $userId;
+    protected string $createdAt;
+    protected string $updatedAt;
+    protected int $pageId;
 
-    protected string $content;
-    protected \DateTime $createdAt;
-    protected \DateTime $updatedAt;
-    protected User|int $userId;
-    protected Page|int $pageId;
-    protected string $table = "comment";
-
+    protected string $table;
     protected ?array $fillable = [
-        "content",
-        "created_at",
-        "user_id"
+        "message",
+        "user_id",
+        "page_id",
+        "updated_at"
     ];
 
-    /**
-     * @return int
-     */
+    public function __construct(){
+        parent::__construct();
+        $this->table = $this->getTable();
+    }
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     * @return Comment
-     */
-    public function setId(int $id): Comment
+    public function getMessage(): ?string
     {
-        $this->id = $id;
-        return $this;
+        return $this->message;
     }
 
-    /**
-     * @return string
-     */
-    public function getContent(): string
+    public function setMessage(?string $message): void
     {
-        return $this->content;
+
+        $message = strip_tags($message);
+        $this->message = $message;
     }
 
-    /**
-     * @param string $content
-     * @return Comment
-     */
-    public function setContent(string $content): Comment
-    {
-        $this->content = $content;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     * @return Comment
-     */
-    public function setCreatedAt(\DateTime $createdAt): Comment
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     * @return Comment
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): Comment
-    {
-        $this->updatedAt = $updatedAt;
-        return $this;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUserId(): User
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @param User $userId
-     * @return Comment
-     */
-    public function setUserId(User $userId): Comment
+    public function setUserId(int $userId): void
     {
         $this->userId = $userId;
-        return $this;
     }
 
-    /**
-     * @return Post|int
-     */
-    public function getPostId(): int|Post
+    public function getCreatedAt(): string
     {
-        return $this->postId;
+        return $this->createdAt;
     }
 
-    /**
-     * @param Post|int $postId
-     * @return Comment
-     */
-    public function setPostId(int|Post $postId): Comment
+    public function setCreatedAt(string $createdAt): void
     {
-        $this->postId = $postId;
-        return $this;
+        $this->createdAt = $createdAt;
     }
 
+    public function getUpdatedAt(): string
+    {
+        return $this->updatedAt;
+    }
 
+    public function setUpdatedAt(string $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+    public function getPageId(): int
+    {
+        return $this->pageId;
+    }
 
+    public function setPageId(int $pageId): void
+    {
+        $this->pageId = $pageId;
+    }
+
+    public static function resortRecent(array $listComment)
+    {
+        $timestamps = [];
+    
+        foreach ($listComment as $comment) {
+            $timestamps[] = strtotime($comment->getCreatedAt());
+        }
+    
+        array_multisort($timestamps, SORT_DESC, $listComment);
+    
+        return $listComment;
+    }
+    
 }

@@ -29,6 +29,9 @@ class CreateUserForm extends AForm
                 "role"=>[
                     "rules"=>["required"],
                 ],
+                "verified"=>[
+                    "rules"=>["required"],
+                ],
             ]
         ];
     }

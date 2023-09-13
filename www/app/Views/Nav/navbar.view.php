@@ -20,7 +20,7 @@ function renderMenu(string $menuItems,bool $isRelative = false) {
             
         
         $children = json_encode($item['children'],true);
-        echo '<li tabindex="0">';
+        echo '<li class="z-[1]" tabindex="0">';
         if (empty($item['children'])) 
             echo '<a class="whitespace-nowrap" href="' . $item['link'] . '">' . $item['title'] . '</a>';
         else {
@@ -73,51 +73,67 @@ function renderMenuMobile(string $menuItems) {
       
       <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
         <?php
+        try{
             renderMenuMobile(
                 \App\Models\Setting::findBy('key','menu_json')->getValue()
             );
+        }catch(\Error $e){}
         ?>
             </ul>
     </div>
-    <button class="btn md:hidden mobileToggleNav z-51 btn-sm btn-square btn-primary"> 
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        class="inline-block w-5 h-5 stroke-current">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-    </button>
-    <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
 
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       <?php
+        try{
             renderMenu(
                 \App\Models\Setting::findBy('key','menu_json')->getValue()
             ); 
+        }catch(\Error $e){}
       ?>
     </ul>
   </div>
   <div class="navbar-end">
-  <div class="dropdown dropdown-end">
-                    <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                        <div class="w-10 rounded-full">
-                            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                        </div>
-                    </label>
-                   
-                    <ul tabindex="0"
-                        class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-                        <li>
-                            <a class="justify-between">
-                                Profile
-                                <span class="badge">New</span>
-                            </a>
-                        </li>
-                        <li><a>Settings</a></li>
-                        <li><a href="<?= \Core\Router::generateRoute('security.logout'); ?>">Logout</a></li>
-                    </ul>
-                </div>
+      <?php if (\Core\Session::has("user")): ?>
+          <div class="dropdown dropdown-end">
+              <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                        <span class="block w-10 rounded-full">
+                            <img src="https://source.unsplash.com/100x100/?portrait" class="rounded-full w-28 "
+                                 alt="profile picture" srcset="">
+                        </span>
+              </label>
+
+              <ul tabindex="0"
+                  class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+                  <li>
+                      <a href="<?= \Core\Router::generateRoute("security.profile") ?>" class="justify-between">
+                          Profile
+                      </a>
+                  </li>
+                  <li><a href="<?= \Core\Router::generateRoute('security.logout'); ?>">Logout</a></li>
+              </ul>
+          </div>
+      <?php else: ?>
+
+          <div class="dropdown dropdown-end">
+              <label tabindex="0" class="btn btn-primary btn-circle avatar">
+                        <span class="block w-10 rounded-full">
+                            <i class="fa fa-user"></i>
+                        </span>
+              </label>
+
+              <ul tabindex="0"
+                  class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+                  <li>
+                      <a href="<?= \Core\Router::generateRoute("security.login")?>" class="justify-between">
+                          Login
+                      </a>
+                  </li>
+                  <li><a href="<?= \Core\Router::generateRoute('security.register'); ?>">Register</a></li>
+              </ul>
+          </div>
+      <?php endif; ?>
 
   </div>
             

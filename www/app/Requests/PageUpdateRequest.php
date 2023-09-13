@@ -18,7 +18,7 @@ use App\Forms\Page\EditForm;
         $errors = Verificator::form($form->getConfig(), $this->getData());
         if(!empty($errors)) {
             Session::set("errors", $errors);
-            $url = Router::generateDynamicRoute("page.edit", ["id" => $this->get("id")]);
+            $url = Router::generateDynamicRoute("admin.page.edit", ["id" => $this->get("id")]);
             Router::redirectToUrl($url);
         }
     }

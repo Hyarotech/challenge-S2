@@ -19,7 +19,7 @@ class User extends Model
     protected ?string $accessToken;
     protected ?string $userDescription;
 
-    protected string $role = "USER";
+    protected int $role = 0;
 
     protected ?array $fillable = [
         "firstname",
@@ -118,7 +118,6 @@ class User extends Model
     }
 
 
-
     public function isVerified(): bool
     {
         return $this->verified;
@@ -149,12 +148,12 @@ class User extends Model
         $this->userDescription = $userDescription;
     }
 
-    public function getRole(): string
+    public function getRole(): int
     {
         return $this->role;
     }
 
-    public function setRole(string $role): void
+    public function setRole(int $role): void
     {
         $this->role = $role;
     }
@@ -173,5 +172,10 @@ class User extends Model
     public function setAccessToken(?string $accessToken): void
     {
         $this->accessToken = $accessToken;
+    }
+
+    public function hasRole(int $role): bool
+    {
+        return $this->role === $role;
     }
 }

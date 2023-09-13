@@ -9,6 +9,7 @@ use App\Requests\RegisterRequest;
 use Core\FlashNotifier;
 use Core\Request;
 use Core\ResourceView;
+use Core\Role;
 use Core\Router;
 use Core\Session;
 use Exception;
@@ -23,6 +24,14 @@ class SecurityController
     public function login(): ResourceView
     {
         return new ResourceView("Auth/login", "front");
+    }
+
+    public function profile(): ResourceView
+    {
+        $user = User::findBy("email", Session::get("user")["email"]);
+        $view = new ResourceView("Auth/profile", "front");
+        $view->assign("user", $user);
+        return $view;
     }
 
     /**
@@ -42,7 +51,7 @@ class SecurityController
             "email" => $request->get("email"),
             "password" => password_hash($request->get("password"), PASSWORD_DEFAULT),
             "verif_token" => password_hash($token, PASSWORD_DEFAULT),
-            "role" => "member"
+            "role" => Role::USER
         ];
         User::save($data);
         $data["verif_token"] = $token;
@@ -119,9 +128,14 @@ class SecurityController
         Session::set("user", [
             "email" => $userInDb->getEmail(),
             "accessToken" => $setAccessToken,
+            "id" => $userInDb->getId()
         ]);
         FlashNotifier::success("Vous êtes connecté");
-        Router::redirectTo("home");
+        if ($userInDb->hasRole(Role::ADMIN)) {
+            Router::redirectTo("admin");
+        } else {
+            Router::redirectTo("home");
+        }
     }
 
     public function logout(): void

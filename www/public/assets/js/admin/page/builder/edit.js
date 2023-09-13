@@ -3,8 +3,8 @@ import HistoryPanel from './panel/HistoryPanel.js';
 // Handle tailwind's use of slashes in css names
 const escapeName = (name) => `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, '-');
 
-const projectEndpoint = '/dashboard/page/builder/create';
-const saveInterval = 2;
+const projectEndpoint = '/api/admin/page/builder/create';
+const saveInterval = 20;
 
 let editor; // Déclaration de la variable pour stocker l'instance de l'éditeur
 
@@ -79,3 +79,54 @@ editor = grapesjs.init({
 const history = new HistoryPanel(editor);
 
 history.loadLast();
+
+// Ajouter un bouton "Enregistrer"
+const saveButton = document.createElement('button');
+saveButton.id = 'save-button';
+saveButton.textContent = 'Enregistrer';
+saveButton.style.position = "fixed"
+saveButton.style.left = "50%"
+saveButton.style.bottom = "10px"
+saveButton.style.transform = "translateX(-50%);"
+
+saveButton.style.zIndex = "999"
+saveButton.className = 'bg-blue-500 text-white rounded'
+document.body.appendChild(saveButton);
+
+// Gestionnaire d'événements pour le bouton "Enregistrer"
+saveButton.addEventListener('click', function() {
+  editor.store();
+});
+
+function saveContent(editor) {
+  // Récupérer le contenu généré par GrapesJS
+  const computedHTML = editor.getHtml();
+  const computedCSS = editor.getCss();
+  const computedJs = editor.getJs();
+
+  // Construire les données à envoyer au serveur
+  const requestData = {
+    computedHTML,
+    computedCSS,
+    computedJs,
+    // Autres données si nécessaire
+  };
+
+  // Effectuer l'appel fetch vers l'endpoint "create"
+  fetch(projectEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestData),
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Gérer la réponse du serveur ici
+      console.log('Enregistrement réussi :', data);
+    })
+    .catch(error => {
+      // Gérer les erreurs ici
+      console.error('Erreur lors de l\'enregistrement :', error);
+    });
+}

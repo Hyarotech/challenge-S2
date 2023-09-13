@@ -31,4 +31,12 @@ class PageRules extends Rules {
         }
         return true;
     }
+    public static function page_type($value, $data, &$listOfErrors): bool
+    {   
+        if (!in_array((int)$value,PageConfig::TYPE)) {
+            $listOfErrors[$data["name"]][] = "Le type de votre page est invalide";
+            return false;
+        }
+        return true;
+    }
 }

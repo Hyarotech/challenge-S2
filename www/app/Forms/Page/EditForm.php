@@ -16,7 +16,7 @@ class EditForm extends AForm
             ],
             "inputs" => [
                 "title" => [
-                    "rules" => ["required", "min:2", "max:200", "title"],
+                    "rules" => ["required", "min:2", "max:200"],
                 ],
                 "description" => [
                     "rules" => ["required", "max:200"],
@@ -25,6 +25,9 @@ class EditForm extends AForm
                     "rules" => ["required", "min:2", "max:200", "slug"],
                 ],
                 "is_no_follow" => [
+                    "rules" => ["required","boolean"],
+                ],
+                "is_comment_enabled" => [
                     "rules" => ["required","boolean"],
                 ],
                 "visibility" => [

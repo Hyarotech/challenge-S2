@@ -19,7 +19,8 @@
     "phpmailer/phpmailer": "^6.8",
     "ext-pdo": "*",
     "ext-libxml": "*",
-    "ext-dom": "*"
+    "ext-dom": "*",
+    "nesbot/carbon": "^2.70"
   },
   "require-dev": {
     "symfony/var-dumper": "6.0",

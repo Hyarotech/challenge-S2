@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Page;
 
+use App\Models\CatPage;
 use App\Models\Page;
 use App\Models\User;
 use App\Requests\PageCreateRequest;
@@ -12,6 +13,8 @@ use Core\Request;
 use Core\Session;
 use Core\Router;
 use Core\ResourceData;
+use Core\ResourceJson;
+
 class PageControllerApi implements IControllerApi
 {
 
@@ -48,23 +51,29 @@ class PageControllerApi implements IControllerApi
         $page->setIsNoFollow($request->get('is_no_follow'));
         $page->setVisibility($request->get('visibility'));
         $page->setUserId($request->get('user_id'));
-
+        $page->setPageType($request->get('page_type'));
+        $page->setIsCommentEnabled($request->get('is_comment_enabled'));
         $dateUpdated = new \DateTime();
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
         $page->setUpdatedAt($dateUpdated);
         if(Page::findBy('slug', $page->getSlug())){
             FlashNotifier::error("Le slug existe déjà");
-            Router::redirectTo("page.create");
+            Router::redirectTo("admin.page.create");
             return false;
         }
         if(!User::findBy('id', $page->getUserId())){
             FlashNotifier::error("L'utilisateur n'existe pas");
-            Router::redirectTo("page.create");
+            Router::redirectTo("admin.page.create");
             return false;
         }
         FlashNotifier::success("La page a bien été créée");
         Page::save($page);
-        Router::redirectTo("page.list");
+
+        $urlPageList = Router::generateDynamicRoute("admin.page.list", ["page_type" => $page->getPageType()]);
+        Router::redirectToUrl($urlPageList);
+
+        
+
     }
 
     #[PageUpdateRequest]
@@ -79,17 +88,18 @@ class PageControllerApi implements IControllerApi
             $response->addError("page", "Page not found");
             return $response;
         }
-     
         $page->setTitle($request->get('title'));
         $page->setSlug($request->get('slug'));
         $page->setDescription($request->get('description'));
         $page->setIsNoFollow((bool)$request->get('is_no_follow'));
         $page->setVisibility($request->get('visibility'));
         $page->setUserId($request->get('user_id'));
+        $page->setPageType($request->get('page_type'));
+        $page->setIsCommentEnabled((bool)$request->get('is_comment_enabled'));
         $dateUpdated = new \DateTime();
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
         $page->setUpdatedAt($dateUpdated);
-        $url = Router::generateDynamicRoute("page.edit", ["id" => $pageId]);
+        $url = Router::generateDynamicRoute("admin.page.edit", ["id" => $pageId]);
         if (!Page::findBy('slug', $page->getSlug())) {
             FlashNotifier::error("Le slug existe déjà");
             Router::redirectToUrl($url);
@@ -110,7 +120,9 @@ class PageControllerApi implements IControllerApi
             'is_no_follow' => $page->getIsNoFollow(),
             'visibility' => $page->getVisibility(),
             'updated_at' => frenchDate()->format('Y-m-d'),
-            'user_id' => $page->getUserId()
+            'user_id' => $page->getUserId(),
+            'page_type' => $page->getPageType(),
+            'is_comment_enabled' => $page->getIsCommentEnabled()
         ];
         Page::update($pageId,$data);
         Router::redirectToUrl($url);
@@ -118,9 +130,24 @@ class PageControllerApi implements IControllerApi
         return $response;
     }
     
+    public function editCategories(Request $request): ResourceJson
+    {
+        $pageId = (int)$request->get('page_id');
+        $categoryId = (int)$request->get('category_id');
+        $addCategory = CatPage::deleteAndInsert($pageId,$categoryId);
+        
+        $response = new ResourceJson();
+        if(!$addCategory)
+            $response->addError("categorie", "Impossible d'ajouter la catégorie");
+            
+        header('Content-Type: application/json');
+        return $response;
+        
+    }
 
     public function delete(Request $request): void
     {
+            CatPage::delete('page_id',(int)$request->get('id'));
             $result = Page::delete('id',(int)$request->get('id'));
             $response = array();
             $response['success'] = $result;

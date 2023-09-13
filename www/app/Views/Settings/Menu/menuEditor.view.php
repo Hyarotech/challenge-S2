@@ -3,9 +3,9 @@
     
         <div class="hidden" id="GES_PAGE_LIST"><?= $pageListJson; ?></div>
         <?= component("partials/flash",[],"tpl") ?>
-    <?php csrf() ?>
-        <form method="POST" id="formMenu" action="<?= \Core\Router::generateRoute("dashboard.settings.menu.save") ?>" class = "w-full flex justify-center p-4 gap-2 ">
+        <form method="POST" id="formMenu" action="<?= \Core\Router::generateRoute("admin.settings.menu.save") ?>" class = "w-full flex justify-center p-4 gap-2 ">
             <button type="submit" class="btn flex flex-self relative bottom-0 btn-sm btn-primary ">Enregistrer le menu</button>
+            <?php csrf("menu-builder"); ?>
             <input type="hidden" name="menu_json" value="<?= $menuJson ?>" />
             <button type="button" data-selector="addItem" class="btn btn-secondary btn-sm ">Ajouter</button>
         </form>

@@ -17,5 +17,14 @@ class App
             $this->router->run();
         } catch (\Exception $e) {
         }
+        if(!Session::has("csrf")){
+            Session::set("csrf",[]);
+        }
+    }
+
+    public function __destruct()
+    {
+        Session::clearCsrf();
+        new SitemapGenerator($this->router,env("APP_URL"));
     }
 }

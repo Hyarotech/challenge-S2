@@ -4,6 +4,7 @@ class PageTable extends DaisyDatatable {
     constructor(element, options = {}) {
         super(element, options);
         this.initDeleteHandler();
+        this.initEditCategoryHandler();
     }
 
     initDeleteHandler() {
@@ -12,11 +13,18 @@ class PageTable extends DaisyDatatable {
             this.deletePage(id);
         });
     }
+    initEditCategoryHandler() {
+        $(this.element).on('change', 'select[name="editCategories"]', (event) => {
+            let page_id = $(event.currentTarget).closest('.page-row').data('id');
+            let category_id = event.currentTarget.value;
+            this.changeCategory(page_id,category_id);
+        });
+    }
 
     deletePage(id) {
         let table = this.getDataTable();
         let deleteAlert = new Alert();
-        $.post('/dashboard/page/delete', {id: id}, (data) => {
+        $.post('/api/admin/page/delete', {id: id}, (data) => {
             if (data.success == true){
                 table.row('.page-row[data-id="' + id + '"]').remove().draw(false);
                 deleteAlert.setType('success');
@@ -32,7 +40,29 @@ class PageTable extends DaisyDatatable {
             deleteAlert.setMessage('Une erreur est survenue lors de la suppression');
            
         }).always(() => {
+            deleteAlert.createElement();
             deleteAlert.render(document.querySelector('#app'));  
+        });
+    }
+
+    changeCategory(page_id, category_id) {
+        let alertCat = new Alert();
+        $.post('/api/admin/page/edit_categories', {page_id: page_id,category_id: category_id}, (data) => {
+            if (data.success == true){
+                alertCat.setType('success');
+                alertCat.setMessage('La catégorie a bien été modifiée');
+            }
+            else{
+                alertCat.setType('error');
+                alertCat.setMessage('La catégorie n\'a pas été modifiée');
+            }
+        }).fail((data) => {
+            alertCat.setType('error');
+            alertCat.setMessage('Une erreur est survenue lors de l\'ajout de la catégorie');
+           
+        }).always(() => {
+            alertCat.createElement();
+            alertCat.render(document.querySelector('#app'));  
         });
     }
 }

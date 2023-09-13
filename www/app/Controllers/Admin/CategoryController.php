@@ -21,16 +21,26 @@ class CategoryController
         return $resource;
     }
 
+    public function list(): ResourceView
+    {
+        $categories = Category::findAll();
+        $view = new ResourceView("Categories/list",'front');
+        $view->assign('categories',$categories);
+
+        return $view;
+    }
+
     public function create(): ResourceView
     {
         return new ResourceView("admin/categories/create", "back");
     }
 
+
     #[CreateCategoryRequest]
     public function handleCreate(Request $request): void
     {
         $data = [
-            "name" => $request->get("name"),
+            "name" => Category::formatName($request->get("name")),
         ];
         //check if category already exist
         $category = Category::findBy("name",$data["name"]);
@@ -103,7 +113,7 @@ class CategoryController
             Router::redirectTo("admin.categories.index");
         }
         $data = [
-            "name" => $request->get("name"),
+            "name" => Category::formatName($request->get("name")),
         ];
         $category = Category::findBy("name",$data["name"]);
         if($category){

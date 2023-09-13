@@ -16,7 +16,7 @@ class CreateForm extends AForm
             ],
             "inputs" => [
                 "title" => [
-                    "rules" => ["required", "min:2", "max:200", "title"],
+                    "rules" => ["required", "min:2", "max:200"],
                 ],
                 "description" => [
                     "rules" => ["required", "max:200"],
@@ -27,8 +27,14 @@ class CreateForm extends AForm
                 "is_no_follow" => [
                     "rules" => ["required","boolean"],
                 ],
+                "is_comment_enabled" => [
+                    "rules" => ["required","boolean"],
+                ],
                 "visibility" => [
                     "rules" => ["required", "integer","visibility"],
+                ],
+                "page_type" => [
+                    "rules" => ["required", "integer","page_type"],
                 ],
                 "user_id" => [
                     "rules" => ["required", "integer"],
