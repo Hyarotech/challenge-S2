@@ -38,9 +38,11 @@ class PageController
         $view->assign('description',$pageDataResponse['description']);
         $view->assign('createdAt',$pageDataResponse['createdAt']);
         $view->assign('pageType',$pageDataResponse['pageType']);
+        $view->assign('pageId',$pageDataResponse['id']);
         $view->assign('author', strip_tags($author->getFirstName() . " " . $author->getLastName()));
         $view->assign('content',json_decode($pageLastState['state']));
-        
+        $view->assign('isCommentEnabled',$pageDataResponse['isCommentEnabled']);
+
         return $view;    
     }
     public function create()
@@ -106,6 +108,7 @@ class PageController
         $view->assign('createdAt',$page->getCreatedAt());
         $view->assign('description',$page->getDescription());
         $view->assign('isNoFollow',$page->getisNoFollow());
+        $view->assign('isCommentEnabled',$page->getIsCommentEnabled());
         $view->assign('visibility',$page->getVisibility());
         $view->assign('pageType',$page->getPageType());
         $view->assign('selectedUser',$page->getUserId());

@@ -52,7 +52,7 @@ class PageControllerApi implements IControllerApi
         $page->setVisibility($request->get('visibility'));
         $page->setUserId($request->get('user_id'));
         $page->setPageType($request->get('page_type'));
-
+        $page->setIsCommentEnabled($request->get('is_comment_enabled'));
         $dateUpdated = new \DateTime();
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
         $page->setUpdatedAt($dateUpdated);
@@ -95,6 +95,7 @@ class PageControllerApi implements IControllerApi
         $page->setVisibility($request->get('visibility'));
         $page->setUserId($request->get('user_id'));
         $page->setPageType($request->get('page_type'));
+        $page->setIsCommentEnabled((bool)$request->get('is_comment_enabled'));
         $dateUpdated = new \DateTime();
         $dateUpdated = $dateUpdated->format('Y-m-d H:i:s');
         $page->setUpdatedAt($dateUpdated);
@@ -120,7 +121,8 @@ class PageControllerApi implements IControllerApi
             'visibility' => $page->getVisibility(),
             'updated_at' => frenchDate()->format('Y-m-d'),
             'user_id' => $page->getUserId(),
-            'page_type' => $page->getPageType()
+            'page_type' => $page->getPageType(),
+            'is_comment_enabled' => $page->getIsCommentEnabled()
         ];
         Page::update($pageId,$data);
         Router::redirectToUrl($url);

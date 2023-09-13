@@ -20,6 +20,7 @@ class Page extends Model
     protected bool $isNoFollow;
     protected $visibility;
     protected int $pageType;
+    protected bool $isCommentEnabled;
 
     protected ?array $fillable = [
         "user_id",
@@ -29,7 +30,8 @@ class Page extends Model
         "description",
         "is_no_follow",
         "visibility",
-        "page_type"
+        "page_type",
+        "is_comment_enabled"
     ];
 
 
@@ -55,6 +57,7 @@ class Page extends Model
         return $this->userId;
     }
 
+    
     public function setUserId(int $userId): void
     {
         $this->userId = $userId;
@@ -125,6 +128,20 @@ class Page extends Model
         $this->isNoFollow = (bool)$isNoFollow;
     }
 
+    /**
+     * Summary of getIsCommentEnabled
+     * @return bool
+     */
+    public function getIsCommentEnabled(): bool
+    {
+
+        return $this->isCommentEnabled;
+    }
+
+    public function setIsCommentEnabled(bool $isCommentEnabled): void
+    {
+        $this->isCommentEnabled = (bool)$isCommentEnabled;
+    }
     public function getVisibility()
     {
         return $this->visibility;

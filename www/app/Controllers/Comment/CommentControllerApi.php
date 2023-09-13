@@ -3,9 +3,10 @@
 namespace App\Controllers\Comment;
 
 use App\Models\Comment;
+use Core\IControllerApi;
 use Core\Request;
 use Core\ResourceJson; // Updated to use ResourceJson
-
+use \Core\Session;
 class CommentControllerApi implements IControllerApi
 {
     public function readOne(Request $request): ResourceJson // Updated return type
@@ -33,15 +34,25 @@ class CommentControllerApi implements IControllerApi
         // Handle reading all comments
     }
 
-    public function create(Request $request)
+    public function create(Request $request): ResourceJson
     {
         $comment = new Comment();
         $comment->setMessage($request->get('message'));
         $comment->setUserId(Session::get('user')['id']);
+        $response = new ResourceJson();
+        $pageId = $request->get('page_id');
 
-
-        $response = new ResourceJson(); // Updated to use ResourceJson
-        $result = Comment::save($comment);
+        if(!\App\Models\Page::findBy('id',$pageId)){
+            $response->addError('comment','la page n\'existe pas');
+            return $response;
+        }
+        $comment->setPageId($request->get('page_id'));
+      
+        $result = Comment::save([
+            'message' => $comment->getMessage(),
+            'user_id' => $comment->getUserId(),
+            'page_id' => $comment->getPageId()
+        ]);
         
         if(!$result)
             $response->addError('comment','Le commentaire n\'a pas pu se créer');

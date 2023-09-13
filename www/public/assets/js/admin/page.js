@@ -4,6 +4,11 @@ let pageTableInstance = new PageTable('#page-table');
 
 pageTableInstance.init();
 
+function deleteCommentaire(id){
+    let commentaire = document.querySelector('.commentaire[data-id="'+id+'"]');
+    
+}
+
 
 
 

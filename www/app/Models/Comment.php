@@ -7,17 +7,23 @@ class Comment extends Model
 {
     protected int $id;
     protected ?string $message;
-    protected int $user_id;
-    protected string $created_at;
-    protected string $updated_at;
-    protected int $page_id;
+    protected int $userId;
+    protected string $createdAt;
+    protected string $updatedAt;
+    protected int $pageId;
 
+    protected string $table;
     protected ?array $fillable = [
         "message",
         "user_id",
-        "page_id"
+        "page_id",
+        "updated_at"
     ];
 
+    public function __construct(){
+        parent::__construct();
+        $this->table = $this->getTable();
+    }
     public function getId(): int
     {
         return $this->id;
@@ -37,41 +43,42 @@ class Comment extends Model
 
     public function getUserId(): int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(int $user_id): void
+    public function setUserId(int $userId): void
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
     }
 
     public function getCreatedAt(): string
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(string $created_at): void
+    public function setCreatedAt(string $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     public function getUpdatedAt(): string
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(string $updated_at): void
+    public function setUpdatedAt(string $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
-
     public function getPageId(): int
     {
-        return $this->page_id;
+        return $this->pageId;
     }
 
-    public function setPageId(int $page_id): void
+    public function setPageId(int $pageId): void
     {
-        $this->page_id = $page_id;
+        $this->pageId = $pageId;
     }
+
+    
 }
