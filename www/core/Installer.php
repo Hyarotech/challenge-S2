@@ -94,10 +94,7 @@ class Installer
         $this->settingsState = $settingsState;
     }
 
-    public function __destruct()
-    {
-        Session::set("installer", Installer::getInstance());
-    }
+
 
     /**
      * @param bool $smtpState
@@ -212,7 +209,10 @@ class Installer
         $query->bindValue(":role", $user->getRole());
         $query->execute();
         $this->setAdminState(true);
+    }
 
-
+    public function __destruct()
+    {
+        Session::set("installer", Installer::getInstance());
     }
 }
