@@ -100,7 +100,6 @@ class CommentControllerApi implements IControllerApi
         $response = new ResourceJson(); // Updated to use ResourceJson
         if(!$result)
             $response->addError('comment','impossible de supprimer');
-        header('Content-Type: application/json');
         return $response;
     }
 }

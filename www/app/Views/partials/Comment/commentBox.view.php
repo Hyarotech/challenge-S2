@@ -1,4 +1,4 @@
-<div data-id="<?= $id ?>" class="commentaire flex items-start space-x-4">
+<div data-id="<?= $id ?>" class="ges-commentaire-box flex items-start space-x-4">
     <div class="avatar">
     <div class="w-12 rounded-full">
         <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
@@ -19,7 +19,7 @@
                 <div class="dropdown dropdown-bottom dropdown-end">
                     <label tabindex="0" class="fa-light pointer text-2xl fa-circle-ellipsis-vertical"></label>
                      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li onclick="deleteCommentaire('<?= $id ?>')"><a><i class="fa-solid fa-trash text-error"></i> Supprimer</a></li>
+                        <li data-action="delete"><a><i class="fa-solid fa-trash text-error"></i> Supprimer</a></li>
                     </ul>
                 </div>
             </div>
